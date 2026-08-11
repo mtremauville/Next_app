@@ -5,7 +5,6 @@ Rails.application.routes.draw do
 
   resources :titles, only: [ :index, :show ] do
     post :import, on: :collection
-    post :resync_episodes, on: :member
   end
   resources :watchlist_entries, only: [ :index, :create, :update, :destroy ]
   resources :episodes, only: [] do

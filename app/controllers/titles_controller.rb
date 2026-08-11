@@ -6,7 +6,7 @@ class TitlesController < ApplicationController
 
   def show
     @title = Title.find(params[:id])
-    sync_seasons if @title.tv_series? && @title.seasons.empty?
+    sync_seasons if @title.tv_series? && (@title.seasons.empty? || @title.episodes.where(overview: nil).exists?)
 
     @watchlist_entry = current_user.watchlist_entries.find_by(title: @title)
 
@@ -41,14 +41,11 @@ class TitlesController < ApplicationController
     seasons_data = client.details(@title.tmdb_id, "tv_series")["seasons"] || []
 
     seasons_data.each do |season_data|
-      season = @title.seasons.create!(number: season_data["season_number"])
+      season = @title.seasons.find_or_create_by!(number: season_data["season_number"])
 
       client.season_episodes(@title.tmdb_id, season.number).each do |episode_data|
-        season.episodes.create!(
-          number: episode_data["episode_number"],
-          name: episode_data["name"],
-          overview: episode_data["overview"]
-        )
+        episode = season.episodes.find_or_initialize_by(number: episode_data["episode_number"])
+        episode.update!(name: episode_data["name"], overview: episode_data["overview"])
       end
     end
   end
