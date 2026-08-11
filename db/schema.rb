@@ -10,9 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_11_164259) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_11_170203) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "episode_views", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "episode_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.datetime "watched_at", null: false
+    t.index ["episode_id"], name: "index_episode_views_on_episode_id"
+    t.index ["user_id", "episode_id"], name: "index_episode_views_on_user_id_and_episode_id", unique: true
+    t.index ["user_id"], name: "index_episode_views_on_user_id"
+  end
+
+  create_table "episodes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.integer "number", null: false
+    t.bigint "season_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["season_id", "number"], name: "index_episodes_on_season_id_and_number", unique: true
+    t.index ["season_id"], name: "index_episodes_on_season_id"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "number", null: false
+    t.bigint "title_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title_id", "number"], name: "index_seasons_on_title_id_and_number", unique: true
+    t.index ["title_id"], name: "index_seasons_on_title_id"
+  end
 
   create_table "titles", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -49,6 +79,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_11_164259) do
     t.index ["user_id"], name: "index_watchlist_entries_on_user_id"
   end
 
+  add_foreign_key "episode_views", "episodes"
+  add_foreign_key "episode_views", "users"
+  add_foreign_key "episodes", "seasons"
+  add_foreign_key "seasons", "titles"
   add_foreign_key "watchlist_entries", "titles"
   add_foreign_key "watchlist_entries", "users"
 end

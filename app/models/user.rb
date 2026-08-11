@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :watchlist_entries, dependent: :destroy
+  has_many :episode_views, dependent: :destroy
 end
