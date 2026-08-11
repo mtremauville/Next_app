@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_11_170203) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_11_172554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,6 +29,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_11_170203) do
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.integer "number", null: false
+    t.text "overview"
     t.bigint "season_id", null: false
     t.datetime "updated_at", null: false
     t.index ["season_id", "number"], name: "index_episodes_on_season_id_and_number", unique: true
