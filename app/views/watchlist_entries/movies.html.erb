@@ -2,4 +2,5 @@
   <h1 class="mb-4">Ma watchlist — Films</h1>
   <%= render "status_filter", base_path: movies_watchlist_entries_path %>
   <%= render "grid", watchlist_entries: @watchlist_entries %>
+  <%= paginate @watchlist_entries %>
 </div>

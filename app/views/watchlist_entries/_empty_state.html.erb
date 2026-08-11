@@ -1,0 +1,5 @@
+<% if params[:status].present? %>
+  <p class="text-muted">Aucun titre avec le statut « <%= params[:status].humanize %> ».</p>
+<% else %>
+  <p class="text-muted">Ta watchlist est vide. <%= link_to "Rechercher un titre", titles_path %>.</p>
+<% end %>

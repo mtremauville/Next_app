@@ -14,10 +14,12 @@
   <%= render "watchlist_entries/status_filter", base_path: root_path %>
 
   <% if @watchlist_entries.empty? %>
-    <p class="text-muted">Ta watchlist est vide. <%= link_to "Rechercher un titre", titles_path %>.</p>
+    <%= render "watchlist_entries/empty_state" %>
   <% else %>
     <div class="list-group">
       <%= render partial: "watchlist_entries/entry", collection: @watchlist_entries, as: :entry %>
     </div>
+
+    <%= paginate @watchlist_entries %>
   <% end %>
 </div>
