@@ -9,6 +9,9 @@ class EpisodesController < ApplicationController
       current_user.episode_views.create!(episode: episode, watched_at: Time.current)
     end
 
-    redirect_to title_path(episode.season.title)
+    title = episode.season.title
+    current_user.watchlist_entries.find_by(title: title)&.refresh_status_from_progress!
+
+    redirect_to title_path(title)
   end
 end
