@@ -6,7 +6,16 @@ class TitlesController < ApplicationController
 
   def show
     @title = Title.find(params[:id])
+    sync_seasons if @title.tv_series? && @title.seasons.empty?
+
     @watchlist_entry = current_user.watchlist_entries.find_by(title: @title)
+
+    if @title.tv_series?
+      @watched_episode_ids = current_user.episode_views
+                                          .joins(episode: :season)
+                                          .where(seasons: { title_id: @title.id })
+                                          .pluck(:episode_id)
+    end
   end
 
   def import
@@ -23,5 +32,20 @@ class TitlesController < ApplicationController
     end
 
     redirect_to title_path(title)
+  end
+
+  private
+
+  def sync_seasons
+    client = TmdbClient.new
+    seasons_data = client.details(@title.tmdb_id, "tv_series")["seasons"] || []
+
+    seasons_data.each do |season_data|
+      season = @title.seasons.create!(number: season_data["season_number"])
+
+      client.season_episodes(@title.tmdb_id, season.number).each do |episode_data|
+        season.episodes.create!(number: episode_data["episode_number"], name: episode_data["name"])
+      end
+    end
   end
 end

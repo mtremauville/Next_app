@@ -12,6 +12,10 @@ class TmdbClient
     get("/#{media_type_for(kind)}/#{tmdb_id}")
   end
 
+  def season_episodes(tmdb_id, season_number)
+    get("/tv/#{tmdb_id}/season/#{season_number}")["episodes"] || []
+  end
+
   private
 
   def media_type_for(kind)
