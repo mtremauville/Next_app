@@ -5,10 +5,15 @@ class TitlesController < ApplicationController
   end
 
   def show
-    @title = Title.find_or_create_by(tmdb_id: params[:id]) do |title|
-      details = TmdbClient.new.details(params[:id], params[:kind])
+    @title = Title.find(params[:id])
+    @watchlist_entry = current_user.watchlist_entries.find_by(title: @title)
+  end
 
-      title.assign_attributes(
+  def import
+    title = Title.find_or_create_by(tmdb_id: params[:tmdb_id]) do |t|
+      details = TmdbClient.new.details(params[:tmdb_id], params[:kind])
+
+      t.assign_attributes(
         name: details["title"] || details["name"],
         kind: params[:kind],
         poster_path: details["poster_path"],
@@ -17,6 +22,6 @@ class TitlesController < ApplicationController
       )
     end
 
-    @watchlist_entry = current_user.watchlist_entries.find_by(title: @title)
+    redirect_to title_path(title)
   end
 end

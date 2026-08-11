@@ -13,8 +13,8 @@
   <div class="row row-cols-2 row-cols-md-4 g-3">
     <% @results.each do |result| %>
       <div class="col">
-        <%= link_to title_path(id: result["id"], kind: result["media_type"] == "tv" ? "tv_series" : "movie"),
-                    class: "text-decoration-none text-body" do %>
+        <%= button_to import_titles_path(tmdb_id: result["id"], kind: result["media_type"] == "tv" ? "tv_series" : "movie"),
+                      class: "btn btn-link p-0 border-0 bg-transparent w-100 text-start text-decoration-none text-body" do %>
           <div class="card h-100">
             <% if result["poster_path"] %>
               <%= image_tag "https://image.tmdb.org/t/p/w342#{result['poster_path']}", class: "card-img-top", alt: result["title"] || result["name"] %>
