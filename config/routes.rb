@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     post :import, on: :collection
   end
   resources :watchlist_entries, only: [ :index, :create, :update, :destroy ]
+  resources :episodes, only: [] do
+    post :toggle_watched, on: :member
+  end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
