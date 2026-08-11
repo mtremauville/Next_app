@@ -1,0 +1,4 @@
+<%= form_with url: titles_path, method: :get, class: "d-flex gap-2" do |f| %>
+  <%= f.text_field :query, value: @query, placeholder: "Titre d'un film ou d'une série", class: "form-control" %>
+  <%= f.submit "Rechercher", class: "btn btn-primary text-nowrap" %>
+<% end %>
