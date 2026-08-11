@@ -1,10 +1,9 @@
 <div class="container py-4">
   <h1 class="mb-4">Recherche</h1>
 
-  <%= form_with url: titles_path, method: :get, class: "d-flex gap-2 mb-4" do |f| %>
-    <%= f.text_field :query, value: @query, placeholder: "Titre d'un film ou d'une série", class: "form-control" %>
-    <%= f.submit "Rechercher", class: "btn btn-primary text-nowrap" %>
-  <% end %>
+  <div class="mb-4">
+    <%= render "search_form" %>
+  </div>
 
   <% if @query.present? && @results.empty? %>
     <p class="text-muted">Aucun résultat pour « <%= @query %> ».</p>
