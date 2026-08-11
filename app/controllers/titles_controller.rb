@@ -44,7 +44,11 @@ class TitlesController < ApplicationController
       season = @title.seasons.create!(number: season_data["season_number"])
 
       client.season_episodes(@title.tmdb_id, season.number).each do |episode_data|
-        season.episodes.create!(number: episode_data["episode_number"], name: episode_data["name"])
+        season.episodes.create!(
+          number: episode_data["episode_number"],
+          name: episode_data["name"],
+          overview: episode_data["overview"]
+        )
       end
     end
   end
