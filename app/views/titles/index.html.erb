@@ -1,0 +1,32 @@
+<div class="container py-4">
+  <h1 class="mb-4">Recherche</h1>
+
+  <%= form_with url: titles_path, method: :get, class: "d-flex gap-2 mb-4" do |f| %>
+    <%= f.text_field :query, value: @query, placeholder: "Titre d'un film ou d'une série", class: "form-control" %>
+    <%= f.submit "Rechercher", class: "btn btn-primary text-nowrap" %>
+  <% end %>
+
+  <% if @query.present? && @results.empty? %>
+    <p class="text-muted">Aucun résultat pour « <%= @query %> ».</p>
+  <% end %>
+
+  <div class="row row-cols-2 row-cols-md-4 g-3">
+    <% @results.each do |result| %>
+      <div class="col">
+        <%= link_to title_path(id: result["id"], kind: result["media_type"] == "tv" ? "tv_series" : "movie"),
+                    class: "text-decoration-none text-body" do %>
+          <div class="card h-100">
+            <% if result["poster_path"] %>
+              <%= image_tag "https://image.tmdb.org/t/p/w342#{result['poster_path']}", class: "card-img-top", alt: result["title"] || result["name"] %>
+            <% else %>
+              <div class="card-img-top bg-secondary-subtle" style="aspect-ratio: 2 / 3;"></div>
+            <% end %>
+            <div class="card-body p-2">
+              <p class="card-text small mb-0"><%= result["title"] || result["name"] %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
