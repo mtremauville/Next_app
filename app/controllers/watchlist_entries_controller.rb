@@ -1,0 +1,28 @@
+class WatchlistEntriesController < ApplicationController
+  before_action :set_watchlist_entry, only: [ :update, :destroy ]
+
+  def index
+    @watchlist_entries = current_user.watchlist_entries.includes(:title).order(created_at: :desc)
+  end
+
+  def create
+    current_user.watchlist_entries.create(title_id: params[:title_id])
+    redirect_back fallback_location: titles_path
+  end
+
+  def update
+    @watchlist_entry.update(status: params[:status])
+    redirect_back fallback_location: watchlist_entries_path
+  end
+
+  def destroy
+    @watchlist_entry.destroy
+    redirect_back fallback_location: watchlist_entries_path
+  end
+
+  private
+
+  def set_watchlist_entry
+    @watchlist_entry = current_user.watchlist_entries.find(params[:id])
+  end
+end
