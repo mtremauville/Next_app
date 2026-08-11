@@ -1,3 +1,5 @@
+require "net/http"
+
 class TmdbClient
   BASE_URL = "https://api.themoviedb.org/3"
 
@@ -18,12 +20,23 @@ class TmdbClient
 
   def get(path, params = {})
     uri = URI("#{BASE_URL}#{path}")
-    uri.query = URI.encode_www_form(params.merge(api_key: api_key, language: "fr-FR"))
-    response = Net::HTTP.get_response(uri)
-    JSON.parse(response.body)
+    uri.query = URI.encode_www_form(params.merge(language: "fr-FR"))
+
+    request = Net::HTTP::Get.new(uri)
+    request["Authorization"] = "Bearer #{access_token}"
+    request["Accept"] = "application/json"
+
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(request) }
+    body = JSON.parse(response.body)
+
+    unless response.is_a?(Net::HTTPSuccess)
+      Rails.logger.error("[TmdbClient] #{response.code} for #{uri.path}: #{body["status_message"]}")
+    end
+
+    body
   end
 
-  def api_key
+  def access_token
     Rails.application.credentials.dig(:tmdb, :api_key)
   end
 end
