@@ -5,6 +5,14 @@ class WatchlistEntriesController < ApplicationController
     @watchlist_entries = current_user.watchlist_entries.includes(:title).order(created_at: :desc)
   end
 
+  def movies
+    @watchlist_entries = current_user.watchlist_entries.joins(:title).merge(Title.movie).includes(:title).order(created_at: :desc)
+  end
+
+  def series
+    @watchlist_entries = current_user.watchlist_entries.joins(:title).merge(Title.tv_series).includes(:title).order(created_at: :desc)
+  end
+
   def create
     current_user.watchlist_entries.create(title_id: params[:title_id])
     redirect_back fallback_location: titles_path
