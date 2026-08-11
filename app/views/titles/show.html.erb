@@ -1,4 +1,6 @@
 <div class="container py-4">
+  <%= link_to "← Retour", request.referer || titles_path, class: "btn btn-sm btn-outline-secondary mb-3" %>
+
   <div class="row g-4">
     <div class="col-4 col-md-3">
       <% if @title.poster_path %>
