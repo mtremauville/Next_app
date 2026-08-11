@@ -16,5 +16,7 @@ class TitlesController < ApplicationController
         release_date: details["release_date"].presence || details["first_air_date"].presence
       )
     end
+
+    @watchlist_entry = current_user.watchlist_entries.find_by(title: @title)
   end
 end
