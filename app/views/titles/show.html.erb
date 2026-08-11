@@ -28,10 +28,28 @@
 
   <% if @title.tv_series? %>
     <div class="mt-4">
+      <% total_episodes = @title.episodes.count %>
+      <% watched_total = @watched_episode_ids.size %>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between small text-muted mb-1">
+          <span>Progression globale</span>
+          <span><%= watched_total %> / <%= total_episodes %></span>
+        </div>
+        <div class="progress" style="height: 6px;">
+          <div class="progress-bar" role="progressbar"
+               style="width: <%= total_episodes.zero? ? 0 : (watched_total * 100.0 / total_episodes).round %>%"></div>
+        </div>
+      </div>
+
       <% @title.seasons.order(:number).each do |season| %>
-        <h5 class="mt-3">Saison <%= season.number %></h5>
+        <% episodes = season.episodes.order(:number).to_a %>
+        <% season_watched = episodes.count { |episode| @watched_episode_ids.include?(episode.id) } %>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <h5 class="mb-0">Saison <%= season.number %></h5>
+          <span class="small text-muted"><%= season_watched %> / <%= episodes.size %></span>
+        </div>
         <ul class="list-group mb-3">
-          <% season.episodes.order(:number).each do |episode| %>
+          <% episodes.each do |episode| %>
             <li class="list-group-item">
               <div class="d-flex justify-content-between align-items-center gap-2">
                 <button type="button" class="btn btn-link p-0 text-start text-decoration-none text-body flex-grow-1"
