@@ -1,0 +1,30 @@
+<div class="container py-4">
+  <h1 class="mb-4">Ma watchlist</h1>
+
+  <% if @watchlist_entries.empty? %>
+    <p class="text-muted">Ta watchlist est vide. <%= link_to "Rechercher un titre", titles_path %>.</p>
+  <% end %>
+
+  <div class="list-group">
+    <% @watchlist_entries.each do |entry| %>
+      <div class="list-group-item d-flex align-items-center gap-3">
+        <% if entry.title.poster_path %>
+          <%= image_tag "https://image.tmdb.org/t/p/w92#{entry.title.poster_path}", alt: entry.title.name, style: "width: 46px;", class: "rounded" %>
+        <% end %>
+
+        <div class="flex-grow-1">
+          <%= link_to entry.title.name, title_path(entry.title), class: "text-decoration-none text-body fw-semibold" %>
+        </div>
+
+        <%= form_with url: watchlist_entry_path(entry), method: :patch do |f| %>
+          <%= f.select :status,
+                       WatchlistEntry.statuses.keys.map { |status| [ status.humanize, status ] },
+                       { selected: entry.status },
+                       class: "form-select form-select-sm", onchange: "this.form.requestSubmit()" %>
+        <% end %>
+
+        <%= button_to "Retirer", watchlist_entry_path(entry), method: :delete, class: "btn btn-sm btn-outline-danger" %>
+      </div>
+    <% end %>
+  </div>
+</div>

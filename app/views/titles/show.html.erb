@@ -17,6 +17,12 @@
         <% end %>
       </p>
       <p><%= @title.overview %></p>
+
+      <% if @watchlist_entry %>
+        <%= button_to "Retirer de ma watchlist", watchlist_entry_path(@watchlist_entry), method: :delete, class: "btn btn-outline-danger" %>
+      <% else %>
+        <%= button_to "Ajouter à ma watchlist", watchlist_entries_path(title_id: @title.id), method: :post, class: "btn btn-primary" %>
+      <% end %>
     </div>
   </div>
 </div>

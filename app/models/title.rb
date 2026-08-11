@@ -1,4 +1,6 @@
 class Title < ApplicationRecord
+  has_many :watchlist_entries, dependent: :destroy
+
   enum :kind, { movie: 0, tv_series: 1 }
 
   validates :name, presence: true
