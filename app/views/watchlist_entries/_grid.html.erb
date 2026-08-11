@@ -1,0 +1,23 @@
+<% if watchlist_entries.empty? %>
+  <%= render "empty_state" %>
+<% else %>
+  <div class="row row-cols-2 row-cols-md-4 g-3">
+    <% watchlist_entries.each do |entry| %>
+      <div class="col">
+        <%= link_to title_path(entry.title), class: "text-decoration-none text-body" do %>
+          <div class="card h-100">
+            <% if entry.title.poster_path %>
+              <%= image_tag "https://image.tmdb.org/t/p/w342#{entry.title.poster_path}", class: "card-img-top", alt: entry.title.name %>
+            <% else %>
+              <div class="card-img-top bg-secondary-subtle" style="aspect-ratio: 2 / 3;"></div>
+            <% end %>
+            <div class="card-body p-2">
+              <p class="card-text small mb-1"><%= entry.title.name %></p>
+              <span class="badge bg-secondary-subtle text-body-secondary"><%= entry.status.humanize %></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,6 @@
+<div class="btn-group btn-group-sm mb-3" role="group">
+  <%= link_to "Tous", base_path, class: "btn btn-outline-secondary #{'active' unless params[:status].present?}" %>
+  <% WatchlistEntry.statuses.each_key do |status| %>
+    <%= link_to status.humanize, "#{base_path}?status=#{status}", class: "btn btn-outline-secondary #{'active' if params[:status] == status}" %>
+  <% end %>
+</div>

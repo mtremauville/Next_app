@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   resources :titles, only: [ :index, :show ] do
     post :import, on: :collection
   end
-  resources :watchlist_entries, only: [ :index, :create, :update, :destroy ]
+  resources :watchlist_entries, only: [ :index, :create, :update, :destroy ] do
+    collection do
+      get :movies
+      get :series
+    end
+  end
   resources :episodes, only: [] do
     post :toggle_watched, on: :member
   end

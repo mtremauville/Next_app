@@ -1,0 +1,6 @@
+<div class="container py-4">
+  <h1 class="mb-4">Ma watchlist — Séries</h1>
+  <%= render "status_filter", base_path: series_watchlist_entries_path %>
+  <%= render "grid", watchlist_entries: @watchlist_entries %>
+  <%= paginate @watchlist_entries %>
+</div>

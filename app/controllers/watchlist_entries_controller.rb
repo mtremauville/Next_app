@@ -1,8 +1,21 @@
 class WatchlistEntriesController < ApplicationController
   before_action :set_watchlist_entry, only: [ :update, :destroy ]
 
+  PER_PAGE = 12
+
   def index
-    @watchlist_entries = current_user.watchlist_entries.includes(:title).order(created_at: :desc)
+    @watchlist_entries = filter_by_status(current_user.watchlist_entries.includes(:title).order(created_at: :desc))
+                            .page(params[:page]).per(PER_PAGE)
+  end
+
+  def movies
+    @watchlist_entries = filter_by_status(current_user.watchlist_entries.joins(:title).merge(Title.movie).includes(:title).order(created_at: :desc))
+                            .page(params[:page]).per(PER_PAGE)
+  end
+
+  def series
+    @watchlist_entries = filter_by_status(current_user.watchlist_entries.joins(:title).merge(Title.tv_series).includes(:title).order(created_at: :desc))
+                            .page(params[:page]).per(PER_PAGE)
   end
 
   def create
@@ -24,5 +37,9 @@ class WatchlistEntriesController < ApplicationController
 
   def set_watchlist_entry
     @watchlist_entry = current_user.watchlist_entries.find(params[:id])
+  end
+
+  def filter_by_status(scope)
+    WatchlistEntry.statuses.key?(params[:status]) ? scope.where(status: params[:status]) : scope
   end
 end
