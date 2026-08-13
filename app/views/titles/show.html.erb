@@ -1,5 +1,5 @@
 <div class="container py-4">
-  <%= link_to "← Retour", request.referer || titles_path, class: "btn btn-sm btn-outline-secondary mb-3" %>
+  <%= link_to "← Retour", @back_url || titles_path, class: "btn btn-sm btn-outline-secondary mb-3" %>
 
   <div class="row g-4">
     <div class="col-4 col-md-3">
@@ -21,9 +21,9 @@
       <p><%= @title.overview %></p>
 
       <% if @watchlist_entry %>
-        <%= button_to "Retirer de ma watchlist", watchlist_entry_path(@watchlist_entry), method: :delete, class: "btn btn-outline-danger" %>
+        <%= button_to "Retirer de ma watchlist", watchlist_entry_path(@watchlist_entry, back: @back_url), method: :delete, class: "btn btn-outline-danger" %>
       <% else %>
-        <%= button_to "Ajouter à ma watchlist", watchlist_entries_path(title_id: @title.id), method: :post, class: "btn btn-primary" %>
+        <%= button_to "Ajouter à ma watchlist", watchlist_entries_path(title_id: @title.id, back: @back_url), method: :post, class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>
@@ -60,7 +60,7 @@
                 </button>
                 <% watched = @watched_episode_ids.include?(episode.id) %>
                 <%= button_to watched ? "Vu ✓" : "Marquer vu",
-                              toggle_watched_episode_path(episode), method: :post,
+                              toggle_watched_episode_path(episode, back: @back_url), method: :post,
                               class: "btn btn-sm text-nowrap #{watched ? 'btn-success' : 'btn-outline-secondary'}" %>
               </div>
               <div class="collapse mt-2" id="episode-overview-<%= episode.id %>">

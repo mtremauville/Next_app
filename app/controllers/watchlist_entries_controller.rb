@@ -20,7 +20,7 @@ class WatchlistEntriesController < ApplicationController
 
   def create
     current_user.watchlist_entries.create(title_id: params[:title_id])
-    redirect_back fallback_location: titles_path
+    redirect_to title_path(params[:title_id], back: params[:back])
   end
 
   def update
@@ -29,8 +29,14 @@ class WatchlistEntriesController < ApplicationController
   end
 
   def destroy
+    title_id = @watchlist_entry.title_id
     @watchlist_entry.destroy
-    redirect_back fallback_location: watchlist_entries_path
+
+    if params[:back].present?
+      redirect_to title_path(title_id, back: params[:back])
+    else
+      redirect_back fallback_location: watchlist_entries_path
+    end
   end
 
   private

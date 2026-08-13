@@ -12,6 +12,6 @@ class EpisodesController < ApplicationController
     title = episode.season.title
     current_user.watchlist_entries.find_by(title: title)&.refresh_status_from_progress!
 
-    redirect_to title_path(title)
+    redirect_to title_path(title, back: params[:back])
   end
 end

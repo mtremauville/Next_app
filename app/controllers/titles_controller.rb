@@ -8,6 +8,7 @@ class TitlesController < ApplicationController
     @title = Title.find(params[:id])
     sync_seasons if @title.tv_series? && (@title.seasons.empty? || @title.episodes.where(overview: nil).exists?)
 
+    @back_url = safe_back_path(params[:back]) || safe_back_path(request.referer)
     @watchlist_entry = current_user.watchlist_entries.find_by(title: @title)
 
     if @title.tv_series?
@@ -35,6 +36,17 @@ class TitlesController < ApplicationController
   end
 
   private
+
+  def safe_back_path(url)
+    return nil if url.blank?
+
+    uri = URI.parse(url)
+    return nil if uri.host.present? && uri.host != request.host
+
+    [ uri.path, uri.query ].compact.join("?").presence
+  rescue URI::InvalidURIError
+    nil
+  end
 
   def sync_seasons
     client = TmdbClient.new
