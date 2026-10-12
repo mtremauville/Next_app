@@ -17,4 +17,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: bundle exec rubocop
+      - run: RAILS_ENV=test bin/vite build
       - run: bin/rails test
