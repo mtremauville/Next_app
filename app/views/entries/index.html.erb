@@ -1,27 +1,48 @@
-<h1>Ma liste</h1>
-
 <% if @entries.empty? %>
   <p>Aucun titre pour l'instant. <%= link_to "[ Ajouter le premier ]", new_entry_path %></p>
 <% else %>
-  <div class="nerv-grid">
-    <% @entries.each do |entry| %>
-      <article class="nerv-panel">
-        <%= poster_tag(entry) %>
-        <h2><%= entry.title %><% if entry.year.present? %> <small>(<%= entry.year %>)</small><% end %></h2>
-        <p class="status-<%= entry.status %>">
-          <span class="nerv-led"></span><%= status_label(entry.status) %>
-        </p>
-        <% if entry.platform.present? %><p>Plateforme : <%= entry.platform %></p><% end %>
-        <% if entry.playlist %><p>Playlist : <%= entry.playlist.name %></p><% end %>
-        <% if entry.rating %><p>Note : <%= entry.rating %>/5</p><% end %>
-        <div class="nerv-actions">
-          <%= link_to "[ Modifier ]", edit_entry_path(entry) %>
-          <%= render "shared/confirm_delete",
-                title: "Supprimer le titre ?",
-                message: "« #{entry.title} » sera supprimé de ta liste.",
-                path: entry_path(entry) %>
-        </div>
-      </article>
-    <% end %>
+  <div data-controller="filter">
+    <div class="nerv-filters">
+      <select data-filter-target="status" data-action="change->filter#apply" aria-label="Filtrer par statut">
+        <option value="">Tous les statuts</option>
+        <% status_options.each do |label, value| %>
+          <option value="<%= value %>"><%= label %></option>
+        <% end %>
+      </select>
+      <select data-filter-target="playlist" data-action="change->filter#apply" aria-label="Filtrer par playlist">
+        <option value="">Toutes les playlists</option>
+        <% current_user.playlists.order(:name).each do |playlist| %>
+          <option value="<%= playlist.id %>"><%= playlist.name %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <p data-filter-target="empty" hidden>Aucun titre ne correspond à ces filtres.</p>
+
+    <div class="nerv-grid">
+      <% @entries.each do |entry| %>
+        <article class="nerv-panel" data-filter-target="card"
+                 data-status="<%= entry.status %>" data-playlist-id="<%= entry.playlist_id %>">
+          <%= poster_tag(entry) %>
+          <h2><%= entry.title %><% if entry.year.present? %> <small>(<%= entry.year %>)</small><% end %></h2>
+          <p class="status-<%= entry.status %>">
+            <span class="nerv-led"></span><%= status_label(entry.status) %>
+          </p>
+          <% if entry.platform.present? %><p>Plateforme : <%= entry.platform %></p><% end %>
+          <% if entry.playlist %><p>Playlist : <%= entry.playlist.name %></p><% end %>
+          <% if entry.rating %><p>Note : <%= entry.rating %>/5</p><% end %>
+          <div class="nerv-actions">
+            <% unless entry.watched? %>
+              <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-link-button" %>
+            <% end %>
+            <%= link_to "[ Modifier ]", edit_entry_path(entry) %>
+            <%= render "shared/confirm_delete",
+                  title: "Supprimer le titre ?",
+                  message: "« #{entry.title} » sera supprimé de ta liste.",
+                  path: entry_path(entry) %>
+          </div>
+        </article>
+      <% end %>
+    </div>
   </div>
 <% end %>

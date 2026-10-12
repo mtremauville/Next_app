@@ -2,13 +2,11 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.9",
     "vite": "^8.3.1",
     "vite-plugin-ruby": "^5.2.4"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@hotwired/turbo-rails": "^8.0.23",
-    "vue": "^3.5.43"
+    "@hotwired/turbo-rails": "^8.0.23"
   }
 }

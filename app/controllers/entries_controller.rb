@@ -1,12 +1,12 @@
 class EntriesController < ApplicationController
-  before_action :set_entry, only: %i[edit update destroy]
-
+  before_action :set_entry, only: %i[edit update destroy watch]
   def index
     @entries = policy_scope(Entry).includes(:playlist).order(created_at: :desc)
   end
 
   def new
-    @entry = current_user.entries.build
+    playlist = current_user.playlists.find_by(id: params[:playlist_id])
+    @entry = current_user.entries.build(playlist: playlist)
     authorize @entry
   end
 
@@ -15,7 +15,7 @@ class EntriesController < ApplicationController
     authorize @entry
 
     if @entry.save
-      redirect_to entries_path, notice: "Titre ajouté."
+      redirect_to(@entry.playlist ? playlists_path : entries_path, notice: "Titre ajouté.")
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,6 +34,11 @@ class EntriesController < ApplicationController
   def destroy
     @entry.destroy
     redirect_to entries_path, notice: "Titre supprimé.", status: :see_other
+  end
+
+  def watch
+    @entry.update!(status: :watched)
+    redirect_back_or_to entries_path, status: :see_other
   end
 
   private

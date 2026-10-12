@@ -56,4 +56,39 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_nil entries(:severance).reload.playlist_id
   end
+
+  test "new preselects one of my playlists" do
+    get new_entry_path(playlist_id: playlists(:sunday_movies).id)
+    assert_response :success
+    assert_select "select[name='entry[playlist_id]'] option[selected][value='#{playlists(:sunday_movies).id}']"
+  end
+
+  test "new ignores another user's playlist" do
+    get new_entry_path(playlist_id: playlists(:other_user_list).id)
+    assert_response :success
+    assert_select "select[name='entry[playlist_id]'] option[selected][value]:not([value=''])", count: 0
+  end
+
+  test "create in a playlist redirects to playlists" do
+    post entries_path, params: { entry: { title: "Dune", status: "to_watch",
+                                          playlist_id: playlists(:sunday_movies).id } }
+    assert_redirected_to playlists_path
+  end
+
+  test "watch marks my entry as watched" do
+    patch watch_entry_path(entries(:severance))
+    assert entries(:severance).reload.watched?
+  end
+
+  test "cannot mark another user's entry as watched" do
+    patch watch_entry_path(entries(:other_entry))
+    assert_redirected_to root_path
+    assert_not entries(:other_entry).reload.watched?
+  end
+
+  test "index renders the filters" do
+    get entries_path
+    assert_select "[data-controller='filter']"
+    assert_select "article[data-status]"
+  end
 end
