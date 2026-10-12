@@ -1,6 +1,5 @@
 class EntriesController < ApplicationController
-  before_action :set_entry, only: %i[edit update destroy]
-
+  before_action :set_entry, only: %i[edit update destroy watch]
   def index
     @entries = policy_scope(Entry).includes(:playlist).order(created_at: :desc)
   end
@@ -35,6 +34,11 @@ class EntriesController < ApplicationController
   def destroy
     @entry.destroy
     redirect_to entries_path, notice: "Titre supprimé.", status: :see_other
+  end
+
+  def watch
+    @entry.update!(status: :watched)
+    redirect_back_or_to entries_path, status: :see_other
   end
 
   private

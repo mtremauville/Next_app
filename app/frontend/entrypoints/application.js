@@ -30,7 +30,9 @@ import "@hotwired/turbo-rails"
 import { Application } from "@hotwired/stimulus"
 import ConfirmModalController from "../controllers/confirm_modal_controller"
 import TmdbSearchController from "../controllers/tmdb_search_controller"
+import FilterController from "../controllers/filter_controller"
 
 const application = Application.start()
 application.register("confirm-modal", ConfirmModalController)
 application.register("tmdb-search", TmdbSearchController)
+application.register("filter", FilterController)
