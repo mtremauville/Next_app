@@ -21,4 +21,9 @@ module EntriesHelper
     image_tag "#{POSTER_BASE}#{entry.poster_path}", alt: "Affiche de #{entry.title}",
               class: "nerv-poster", loading: "lazy"
   end
+
+  def format_duration(minutes)
+    hours, mins = minutes.to_i.divmod(60)
+    hours.zero? ? "#{mins} min" : "#{hours} h #{mins.to_s.rjust(2, '0')}"
+  end
 end

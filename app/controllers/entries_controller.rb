@@ -13,7 +13,7 @@ class EntriesController < ApplicationController
   def create
     @entry = current_user.entries.build(entry_params)
     authorize @entry
-
+    enrich_from_tmdb(@entry)
     if @entry.save
       redirect_to(@entry.playlist ? playlists_path : entries_path, notice: "Titre ajouté.")
     else
@@ -51,5 +51,15 @@ class EntriesController < ApplicationController
   def entry_params
     params.expect(entry: %i[title status rating platform playlist_id
                             tmdb_id media_type poster_path year overview])
+  end
+
+  def enrich_from_tmdb(entry)
+    return if entry.tmdb_id.blank?
+
+    details = Tmdb::Details.new.call(entry.tmdb_id, entry.media_type)
+    return unless details
+
+    entry.runtime_minutes = details.runtime_minutes
+    entry.genres = details.genres
   end
 end
