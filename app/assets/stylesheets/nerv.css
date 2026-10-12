@@ -100,8 +100,18 @@ input[type="text"], select {
 .status-watching { color: var(--amber); }
 .status-watched { color: var(--green); }
 
-.nerv-actions { display: flex; gap: 0.75rem; margin-top: 1rem; align-items: center; }
-
+/* .nerv-actions { display: flex; gap: 0.75rem; margin-top: 1rem; align-items: center; } */
+.nerv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+.nerv-actions a,
+.nerv-actions button {
+  white-space: nowrap;
+}
 
 .nerv-modal {
   background: transparent;
