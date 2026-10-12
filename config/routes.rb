@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   post "guest_login", to: "guest_sessions#create", as: :guest_login
+  resources :entries, except: :show do
+    member { patch :watch }
+  end
   resources :entries, except: :show
   resources :playlists, except: :show
   get "tmdb/search", to: "tmdb_searches#index", as: :tmdb_search

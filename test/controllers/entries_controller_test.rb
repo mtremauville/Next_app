@@ -74,4 +74,21 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
                                           playlist_id: playlists(:sunday_movies).id } }
     assert_redirected_to playlists_path
   end
+
+  test "watch marks my entry as watched" do
+    patch watch_entry_path(entries(:severance))
+    assert entries(:severance).reload.watched?
+  end
+
+  test "cannot mark another user's entry as watched" do
+    patch watch_entry_path(entries(:other_entry))
+    assert_redirected_to root_path
+    assert_not entries(:other_entry).reload.watched?
+  end
+
+  test "index renders the filters" do
+    get entries_path
+    assert_select "[data-controller='filter']"
+    assert_select "article[data-status]"
+  end
 end
