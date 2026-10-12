@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   end
   resources :entries, except: :show
   resources :playlists, except: :show
+  get "dashboard", to: "dashboard#show"
   get "tmdb/search", to: "tmdb_searches#index", as: :tmdb_search
   root "pages#home"
 end

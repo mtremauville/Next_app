@@ -1,6 +1,7 @@
 class Entry < ApplicationRecord
   belongs_to :user
   belongs_to :playlist, optional: true
+  before_save :set_watched_at, if: :status_changed?
 
   enum :status, { to_watch: 0, watching: 1, watched: 2 }
 
@@ -17,5 +18,9 @@ class Entry < ApplicationRecord
     return if playlist.nil? || playlist.user_id == user_id
 
     errors.add(:playlist, "must belong to the same user")
+  end
+
+  def set_watched_at
+    self.watched_at = watched? ? Time.current : nil
   end
 end
