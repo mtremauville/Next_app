@@ -43,6 +43,7 @@
         <nav>
           <%= link_to "[ Ma liste ]", entries_path %>
           <%= link_to "[ Playlists ]", playlists_path %>
+          <%= link_to "[ Statistiques ]", dashboard_path %>
           <%= link_to "[ Nouveau titre ]", new_entry_path %>
           <%= button_to "[ Déconnexion ]", destroy_user_session_path, method: :delete, class: "nerv-link-button" %>
         </nav>

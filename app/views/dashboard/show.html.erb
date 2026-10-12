@@ -1,0 +1,45 @@
+<h1>Statistiques</h1>
+
+<% if @stats.total.zero? %>
+  <p>Ajoute quelques titres pour voir tes statistiques.</p>
+<% else %>
+  <div class="nerv-grid">
+    <div class="nerv-panel">
+      <h2>Titres vus</h2>
+      <p class="nerv-kpi"><%= @stats.watched_count %></p>
+    </div>
+    <div class="nerv-panel">
+      <h2>Total</h2>
+      <p class="nerv-kpi"><%= @stats.total %></p>
+    </div>
+    <div class="nerv-panel">
+      <h2>Note moyenne</h2>
+      <p class="nerv-kpi"><%= @stats.average_rating ? "#{@stats.average_rating}/5" : "-" %></p>
+    </div>
+  </div>
+
+  <section class="nerv-panel nerv-section">
+    <h2>Par statut</h2>
+    <% max = [ @stats.by_status.values.max, 1 ].max %>
+    <% @stats.by_status.each do |status, count| %>
+      <div class="nerv-bar-row">
+        <span class="nerv-bar-label status-<%= status %>"><span class="nerv-led"></span><%= status_label(status) %></span>
+        <span class="nerv-bar"><span class="nerv-bar-fill status-<%= status %>" style="width: <%= (count * 100.0 / max).round %>%"></span></span>
+        <span class="nerv-bar-value"><%= count %></span>
+      </div>
+    <% end %>
+  </section>
+
+  <section class="nerv-panel nerv-section">
+    <h2>Vus par mois</h2>
+    <% months = @stats.by_month %>
+    <% max = [ months.map(&:last).max, 1 ].max %>
+    <% months.each do |month, count| %>
+      <div class="nerv-bar-row">
+        <span class="nerv-bar-label"><%= month %></span>
+        <span class="nerv-bar"><span class="nerv-bar-fill status-watched" style="width: <%= (count * 100.0 / max).round %>%"></span></span>
+        <span class="nerv-bar-value"><%= count %></span>
+      </div>
+    <% end %>
+  </section>
+<% end %>
