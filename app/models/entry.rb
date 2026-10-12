@@ -12,6 +12,9 @@ class Entry < ApplicationRecord
   validates :media_type, inclusion: { in: %w[movie tv] }, allow_blank: true
   validates :poster_path, format: { with: %r{\A/[\w\-.]+\z} }, allow_blank: true
 
+  def genre_list
+    genres.to_s.split(",").map(&:strip).reject(&:blank?)
+  end
   private
 
   def playlist_belongs_to_same_user
