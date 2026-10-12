@@ -31,5 +31,14 @@ module Stats
     def average_rating
       @entries.where.not(rating: nil).average(:rating)&.round(1)
     end
+
+    def watched_minutes
+      @entries.watched.sum(:runtime_minutes)
+    end
+
+    def by_genre(limit = 6)
+      @entries.watched.where.not(genres: [ nil, "" ]).flat_map(&:genre_list)
+              .tally.sort_by { |_, count| -count }.first(limit)
+    end
   end
 end

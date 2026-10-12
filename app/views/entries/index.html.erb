@@ -15,6 +15,12 @@
           <option value="<%= playlist.id %>"><%= playlist.name %></option>
         <% end %>
       </select>
+      <select data-filter-target="genre" data-action="change->filter#apply" aria-label="Filtrer par genre">
+        <option value="">Tous les genres</option>
+        <% @entries.flat_map(&:genre_list).uniq.sort.each do |genre| %>
+          <option value="<%= genre %>"><%= genre %></option>
+        <% end %>
+      </select>
     </div>
 
     <p data-filter-target="empty" hidden>Aucun titre ne correspond à ces filtres.</p>
@@ -22,13 +28,15 @@
     <div class="nerv-grid">
       <% @entries.each do |entry| %>
         <article class="nerv-panel" data-filter-target="card"
-                 data-status="<%= entry.status %>" data-playlist-id="<%= entry.playlist_id %>">
+                 data-status="<%= entry.status %>" data-playlist-id="<%= entry.playlist_id %>"
+                 data-genres="<%= entry.genre_list.join('|') %>">
           <%= poster_tag(entry) %>
           <h2><%= entry.title %><% if entry.year.present? %> <small>(<%= entry.year %>)</small><% end %></h2>
           <p class="status-<%= entry.status %>">
             <span class="nerv-led"></span><%= status_label(entry.status) %>
           </p>
           <% if entry.platform.present? %><p>Plateforme : <%= entry.platform %></p><% end %>
+          <% if entry.genre_list.any? %><p><%= entry.genre_list.join(" · ") %></p><% end %>
           <% if entry.playlist %><p>Playlist : <%= entry.playlist.name %></p><% end %>
           <% if entry.rating %><p>Note : <%= entry.rating %>/5</p><% end %>
           <div class="nerv-actions">
