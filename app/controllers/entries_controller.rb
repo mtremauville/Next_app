@@ -6,7 +6,8 @@ class EntriesController < ApplicationController
   end
 
   def new
-    @entry = current_user.entries.build
+    playlist = current_user.playlists.find_by(id: params[:playlist_id])
+    @entry = current_user.entries.build(playlist: playlist)
     authorize @entry
   end
 
@@ -15,7 +16,7 @@ class EntriesController < ApplicationController
     authorize @entry
 
     if @entry.save
-      redirect_to entries_path, notice: "Titre ajouté."
+      redirect_to(@entry.playlist ? playlists_path : entries_path, notice: "Titre ajouté.")
     else
       render :new, status: :unprocessable_entity
     end

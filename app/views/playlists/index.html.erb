@@ -20,6 +20,7 @@
           </ul>
         <% end %>
         <div class="nerv-actions">
+          <%= link_to "[ Ajouter un titre ]", new_entry_path(playlist_id: playlist.id) %>
           <%= link_to "[ Renommer ]", edit_playlist_path(playlist) %>
           <%= render "shared/confirm_delete",
                 title: "Supprimer la playlist ?",
