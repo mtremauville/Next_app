@@ -2,8 +2,6 @@ require "net/http"
 require "json"
 
 module Tmdb
-  class Error < StandardError; end
-
   class Client
     BASE_URL = "https://api.themoviedb.org/3".freeze
     CACHE_TTL = 6.hours

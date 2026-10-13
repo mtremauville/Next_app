@@ -1,0 +1,59 @@
+<p><%= link_to "[ ← Catalogue ]", catalog_path %></p>
+
+<article class="nerv-detail">
+  <div class="nerv-detail-poster">
+    <% if @title.poster_path.present? %>
+      <%= image_tag tmdb_image_url(@title.poster_path, "w500"), alt: "Affiche de #{@title.title}" %>
+    <% else %>
+      <div class="nerv-poster-fallback" aria-hidden="true"><%= @title.title.to_s.first.to_s.upcase %></div>
+    <% end %>
+  </div>
+
+  <div class="nerv-detail-main">
+    <h1><%= @title.title %><% if @title.year.present? %> <small>(<%= @title.year %>)</small><% end %></h1>
+    <% if @title.tagline %><p class="nerv-tagline">// <%= @title.tagline %></p><% end %>
+
+    <ul class="nerv-tags">
+      <% if @title.runtime_minutes %><li><%= format_duration(@title.runtime_minutes) %></li><% end %>
+      <% @title.genres.each do |genre| %><li><%= genre %></li><% end %>
+      <% if @title.rating %><li>TMDB <%= @title.rating %>/10</li><% end %>
+    </ul>
+
+    <h2>Synopsis</h2>
+    <p><%= @title.overview || "Synopsis indisponible." %></p>
+
+    <%= render "shared/playlist_picker", entry: @entry, playlists: @playlists,
+          media_type: "movie", tmdb_id: @title.tmdb_id %>
+  </div>
+</article>
+
+<% if @title.crew.any? %>
+  <section class="nerv-panel nerv-section">
+    <h2>Équipe technique</h2>
+    <dl class="nerv-crew">
+      <% @title.crew.each do |label, names| %>
+        <dt><%= label %></dt>
+        <dd><%= names.join(", ") %></dd>
+      <% end %>
+    </dl>
+  </section>
+<% end %>
+
+<% if @title.cast.any? %>
+  <section class="nerv-section">
+    <h2>Casting</h2>
+    <ul class="nerv-cast">
+      <% @title.cast.each do |person| %>
+        <li class="nerv-cast-item nerv-panel">
+          <% if person.photo_path.present? %>
+            <%= image_tag tmdb_image_url(person.photo_path, "w185"), alt: "", loading: "lazy" %>
+          <% else %>
+            <div class="nerv-poster-fallback" aria-hidden="true"><%= person.name.to_s.first.to_s.upcase %></div>
+          <% end %>
+          <span class="nerv-cast-name"><%= person.name %></span>
+          <% if person.role %><span class="nerv-cast-role"><%= person.role %></span><% end %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

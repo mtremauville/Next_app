@@ -395,3 +395,24 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 .nerv-gallery-year { color: var(--muted); font-size: 0.8rem; }
 
 .nerv-pagination { display: flex; gap: 1rem; align-items: center; justify-content: center; margin-top: 1.5rem; }
+.nerv-detail { display: grid; grid-template-columns: 260px 1fr; gap: 1.5rem; align-items: start; margin-bottom: 1.5rem; }
+@media (max-width: 720px) { .nerv-detail { grid-template-columns: 1fr; } }
+.nerv-detail-poster img,
+.nerv-detail-poster .nerv-poster-fallback { display: block; width: 100%; max-width: 260px; aspect-ratio: 2 / 3; object-fit: cover; }
+.nerv-detail-main h1 { margin: 0 0 0.5rem; }
+.nerv-detail-main h2 { font-size: 1rem; }
+.nerv-detail-main p { line-height: 1.5; }
+
+.nerv-picker { margin-top: 1.5rem; }
+.nerv-picker h2 { margin-top: 0; }
+
+.nerv-crew { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.5rem; margin: 0; }
+.nerv-crew dt { color: var(--muted); }
+.nerv-crew dd { margin: 0; }
+
+.nerv-cast { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; }
+.nerv-cast-item { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.5rem; }
+.nerv-cast-item img,
+.nerv-cast-item .nerv-poster-fallback { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; }
+.nerv-cast-name { font-size: 0.85rem; }
+.nerv-cast-role { font-size: 0.75rem; color: var(--muted); }
