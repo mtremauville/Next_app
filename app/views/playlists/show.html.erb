@@ -1,0 +1,27 @@
+<p><%= link_to "[ ← Playlists ]", playlists_path %></p>
+
+<h1><%= @playlist.name %></h1>
+<p class="nerv-hint"><%= pluralize(@count, "titre") %></p>
+
+<div class="nerv-actions">
+  <%= link_to "[ Ajouter un titre ]", new_entry_path(playlist_id: @playlist.id) %>
+  <%= link_to "[ Renommer ]", edit_playlist_path(@playlist) %>
+</div>
+
+<% if @groups.empty? %>
+  <section class="nerv-panel nerv-section">
+    <p>Cette playlist est vide.</p>
+    <p class="nerv-hint">
+      Ajoute un titre depuis le <%= link_to "[ Catalogue ]", catalog_path %> ou avec le bouton ci-dessus.
+    </p>
+  </section>
+<% else %>
+  <% @groups.each do |label, entries| %>
+    <section class="nerv-section">
+      <h2><%= label %> <small>(<%= entries.size %>)</small></h2>
+      <div class="nerv-gallery">
+        <%= render partial: "playlists/entry", collection: entries, as: :entry %>
+      </div>
+    </section>
+  <% end %>
+<% end %>
