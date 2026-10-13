@@ -75,7 +75,7 @@ a { color: var(--cyan); text-decoration: none; }
 button:hover, input[type="submit"]:hover { background: rgba(255, 153, 0, 0.15); }
 
 label { display: block; color: var(--muted); margin: 1rem 0 0.25rem; }
-input[type="text"], select {
+input[type="text"], input[type="email"], input[type="password"], select {
   width: 100%;
   background: var(--void);
   color: var(--text);
@@ -160,3 +160,35 @@ input[type="text"], select {
 .nerv-bar-value { text-align: right; }
 @keyframes nerv-grow { from { transform: scaleX(0); } }
 @media (prefers-reduced-motion: reduce) { .nerv-bar-fill { animation: none; } }
+
+
+.nerv-auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  max-width: 880px;
+  margin: 3rem auto 0;
+}
+@media (max-width: 720px) {
+  .nerv-auth { grid-template-columns: 1fr; margin-top: 1.5rem; }
+}
+
+.nerv-hero h1 { font-size: 3rem; margin: 0 0 0.5rem; }
+.nerv-tagline { color: var(--cyan); margin: 0 0 1rem; }
+.nerv-hint { color: var(--muted); font-size: 0.85rem; }
+
+.nerv-primary {
+  background: var(--orange);
+  color: var(--void);
+  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+}
+.nerv-primary:hover { background: #ffb340; }
+
+.nerv-check { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+.nerv-check label { margin: 0; }
+
+.nerv-auth-links a { display: block; margin-top: 0.75rem; }
+
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
