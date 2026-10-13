@@ -39,4 +39,25 @@ class CatalogControllerTest < ActionDispatch::IntegrationTest
     get catalog_path
     assert_redirected_to new_user_session_path
   end
+
+  test "each card has an add button and the page has one playlist modal" do
+    sign_in users(:one)
+    Tmdb::Catalog.stub :new, fake_catalog do
+      get catalog_path
+    end
+
+    assert_select "button.nerv-add-button[data-tmdb-id='27205'][data-media-type='movie'][data-title='Inception']"
+    assert_select "dialog[data-add-to-playlist-target='dialog']", count: 1
+    assert_select "select#playlist_id option", text: "Films du dimanche"
+    assert_select "select#playlist_id option[value='new']"
+  end
+
+  test "the modal never lists another user's playlists" do
+    sign_in users(:one)
+    Tmdb::Catalog.stub :new, fake_catalog do
+      get catalog_path
+    end
+
+    assert_select "select#playlist_id option", text: "Liste de l'autre", count: 0
+  end
 end

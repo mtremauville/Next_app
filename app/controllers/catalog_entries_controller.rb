@@ -2,21 +2,21 @@ class CatalogEntriesController < ApplicationController
   skip_after_action :verify_policy_scoped
 
   def create
-    playlist = Playlist.find_by(id: params[:playlist_id])
+    playlist = target_playlist
     return choose_a_playlist unless playlist
 
-    authorize playlist, :update?
+    authorize playlist, playlist.new_record? ? :create? : :update?
     entry = find_or_build_entry
     authorize entry, :assign_playlist?
-    entry.playlist = playlist
 
-    if entry.save
-      redirect_to title_path, notice: "« #{entry.title} » est dans la playlist « #{playlist.name} ».", status: :see_other
+    if save_in_playlist(entry, playlist)
+      redirect_back_or_to title_path, notice: "« #{entry.title} » est dans la playlist « #{playlist.name} ».", status: :see_other
     else
-      redirect_to title_path, alert: entry.errors.full_messages.to_sentence, status: :see_other
+      messages = (playlist.errors.full_messages + entry.errors.full_messages).uniq
+      redirect_back_or_to title_path, alert: messages.to_sentence, status: :see_other
     end
   rescue Tmdb::Error
-    redirect_to title_path, alert: "TMDB est indisponible, réessaie dans un instant.", status: :see_other
+    redirect_back_or_to title_path, alert: "TMDB est indisponible, réessaie dans un instant.", status: :see_other
   end
 
   def destroy
@@ -24,14 +24,32 @@ class CatalogEntriesController < ApplicationController
     authorize entry, :assign_playlist?
     entry.update!(playlist: nil)
 
-    redirect_to title_path, notice: "Retiré de la playlist, il reste dans ta liste.", status: :see_other
+    redirect_back_or_to title_path, notice: "Retiré de la playlist, il reste dans ta liste.", status: :see_other
   end
 
   private
 
+  def target_playlist
+    new_name = params[:new_playlist_name].to_s.strip
+    return current_user.playlists.build(name: new_name) if new_name.present?
+
+    Playlist.find_by(id: params[:playlist_id])
+  end
+
+  def save_in_playlist(entry, playlist)
+    Entry.transaction do
+      playlist.save! if playlist.new_record?
+      entry.playlist = playlist
+      entry.save!
+    end
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
+
   def choose_a_playlist
     skip_authorization
-    redirect_to title_path, alert: "Choisis une playlist.", status: :see_other
+    redirect_back_or_to title_path, alert: "Choisis une playlist.", status: :see_other
   end
 
   def find_or_build_entry

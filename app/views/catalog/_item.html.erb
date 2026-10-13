@@ -1,9 +1,19 @@
-<%= link_to catalog_item_path(item), class: "nerv-gallery-item nerv-panel" do %>
-  <% if item.poster_path.present? %>
-    <%= image_tag tmdb_image_url(item.poster_path), alt: "Affiche de #{item.title}", loading: "lazy" %>
-  <% else %>
-    <div class="nerv-poster-fallback" aria-hidden="true"><%= item.title.to_s.first.to_s.upcase %></div>
+<div class="nerv-gallery-card">
+  <%= link_to catalog_item_path(item), class: "nerv-gallery-item nerv-panel" do %>
+    <% if item.poster_path.present? %>
+      <%= image_tag tmdb_image_url(item.poster_path), alt: "Affiche de #{item.title}", loading: "lazy" %>
+    <% else %>
+      <div class="nerv-poster-fallback" aria-hidden="true"><%= item.title.to_s.first.to_s.upcase %></div>
+    <% end %>
+    <span class="nerv-gallery-title"><%= item.title %></span>
+    <span class="nerv-gallery-year"><%= item.year %></span>
   <% end %>
-  <span class="nerv-gallery-title"><%= item.title %></span>
-  <span class="nerv-gallery-year"><%= item.year %></span>
-<% end %>
+
+  <button type="button" class="nerv-add-button"
+          data-action="add-to-playlist#open"
+          data-media-type="<%= item.media_type %>"
+          data-tmdb-id="<%= item.tmdb_id %>"
+          data-title="<%= item.title %>"
+          aria-label="Ajouter « <%= item.title %> » à une playlist"
+          title="Ajouter à une playlist">+</button>
+</div>
