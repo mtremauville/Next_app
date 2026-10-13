@@ -32,11 +32,15 @@
          data-genres="<%= entry.genre_list.join('|') %>">
 
           <header class="nerv-card-header">
-            <h2 title="<%= entry.title %>"><%= entry.title %><% if entry.year.present? %> <small>(<%= entry.year %>)</small><% end %></h2>
+            <h2 title="<%= entry.title %>">
+              <%= link_to entry_target_path(entry) do %><%= entry.title %><% if entry.year.present? %> <small>(<%= entry.year %>)</small><% end %><% end %>
+            </h2>
           </header>
 
           <div class="nerv-card-content">
-            <div class="nerv-card-poster"><%= poster_tag(entry) %></div>
+            <div class="nerv-card-poster">
+              <%= link_to poster_tag(entry), entry_target_path(entry), tabindex: -1, "aria-hidden": true %>
+            </div>
 
             <div class="nerv-card-details">
               <p class="nerv-card-meta status-<%= entry.status %>">

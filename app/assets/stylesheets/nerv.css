@@ -500,3 +500,9 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 .nerv-gallery-status { font-size: 0.8rem; }
 .nerv-panel h2 a { color: inherit; }
 .nerv-panel h2 a:hover { color: var(--cyan); }
+.nerv-card-header h2 a { color: inherit; }
+.nerv-card-header h2 a:hover,
+.nerv-mini-text a:hover { color: var(--cyan); }
+.nerv-mini-text a { color: inherit; }
+.nerv-card-poster a,
+.nerv-mini-poster a { display: block; }

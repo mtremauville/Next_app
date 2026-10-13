@@ -103,4 +103,25 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "article.nerv-card > .nerv-card-content"
     assert_select "article.nerv-card > footer.nerv-card-footer"
   end
+  test "titles link to their movie or series page" do
+    users(:one).entries.create!(title: "Dune", tmdb_id: 438631, media_type: "movie")
+    users(:one).entries.create!(title: "Andor", tmdb_id: 83867, media_type: "tv")
+
+    get entries_path
+
+    assert_select "article.nerv-card header a[href=?]", movie_path(438631)
+    assert_select "article.nerv-card header a[href=?]", series_path(83867)
+  end
+
+  test "a title without a TMDB id links to its edit form" do
+    get entries_path
+    assert_select "article.nerv-card header a[href=?]", edit_entry_path(entries(:inception))
+  end
+  test "home titles link to their detail page" do
+    users(:one).entries.create!(title: "Andor", tmdb_id: 83867, media_type: "tv", status: :watching)
+    sign_in users(:one)
+    get root_url
+
+    assert_select ".nerv-mini-text a[href=?]", series_path(83867)
+  end
 end
