@@ -2,10 +2,9 @@ require "net/http"
 require "json"
 
 module Tmdb
-  class Error < StandardError; end
-
   class Client
     BASE_URL = "https://api.themoviedb.org/3".freeze
+    CACHE_TTL = 6.hours
 
     def initialize(token: self.class.default_token)
       @token = token
@@ -16,6 +15,13 @@ module Tmdb
     end
 
     def get(path, params = {})
+      key = [ "tmdb", path, params.sort_by { |name, _| name.to_s } ]
+      Rails.cache.fetch(key, expires_in: CACHE_TTL) { request(path, params) }
+    end
+
+    private
+
+    def request(path, params)
       raise Error, "TMDB token missing" if @token.blank?
 
       uri = URI("#{BASE_URL}#{path}")

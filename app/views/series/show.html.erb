@@ -1,0 +1,105 @@
+<p><%= link_to "[ ← Catalogue ]", catalog_path(type: "tv") %></p>
+
+<article class="nerv-detail">
+  <div class="nerv-detail-poster">
+    <% if @title.poster_path.present? %>
+      <%= image_tag tmdb_image_url(@title.poster_path, "w500"), alt: "Affiche de #{@title.title}" %>
+    <% else %>
+      <div class="nerv-poster-fallback" aria-hidden="true"><%= @title.title.to_s.first.to_s.upcase %></div>
+    <% end %>
+  </div>
+
+  <div class="nerv-detail-main">
+    <h1><%= @title.title %><% if @title.year.present? %> <small>(<%= @title.year %>)</small><% end %></h1>
+    <% if @title.tagline %><p class="nerv-tagline">// <%= @title.tagline %></p><% end %>
+    <% if @title.creators.any? %><p class="nerv-hint">Créée par <%= @title.creators.join(", ") %></p><% end %>
+
+    <ul class="nerv-tags">
+      <% if @title.seasons.any? %><li><%= pluralize(@title.seasons.size, "saison") %></li><% end %>
+      <% if @title.runtime_minutes %><li>≈ <%= format_duration(@title.runtime_minutes) %></li><% end %>
+      <% @title.genres.each do |genre| %><li><%= genre %></li><% end %>
+      <% if @title.rating %><li>TMDB <%= @title.rating %>/10</li><% end %>
+    </ul>
+
+    <h2>Synopsis</h2>
+    <p><%= @title.overview || "Synopsis indisponible." %></p>
+
+    <%= render "shared/playlist_picker", entry: @entry, playlists: @playlists,
+          media_type: "tv", tmdb_id: @title.tmdb_id %>
+  </div>
+</article>
+
+<section id="episodes" class="nerv-section">
+  <h2>Épisodes</h2>
+
+  <% if @title.seasons.empty? %>
+    <p class="nerv-hint">Aucune saison disponible.</p>
+  <% else %>
+    <nav class="nerv-tabs" aria-label="Saisons">
+      <% @title.seasons.each do |season| %>
+        <%= link_to "[ S#{season.number} ]", series_path(@title.tmdb_id, season: season.number, anchor: "episodes"),
+              class: ("is-active" if season.number == @season_number),
+              "aria-current": (season.number == @season_number ? "page" : nil),
+              title: "#{season.name} (#{season.episode_count} épisodes)" %>
+      <% end %>
+    </nav>
+
+    <% if @season_unavailable %>
+      <p class="nerv-flash nerv-flash--alert">Les épisodes de cette saison sont indisponibles pour le moment.</p>
+    <% elsif @season %>
+      <% if @season.overview %><p><%= @season.overview %></p><% end %>
+
+      <% if @season.episodes.empty? %>
+        <p class="nerv-hint">Aucun épisode renseigné pour cette saison.</p>
+      <% else %>
+        <ol class="nerv-episodes">
+          <% @season.episodes.each do |episode| %>
+            <li class="nerv-episode nerv-panel">
+              <% if episode.still_path.present? %>
+                <%= image_tag tmdb_image_url(episode.still_path, "w300"), alt: "", loading: "lazy", class: "nerv-episode-still" %>
+              <% end %>
+
+              <div class="nerv-episode-body">
+                <h3>
+                  <span class="nerv-episode-number">E<%= episode.number %></span>
+                  <%= episode.name %>
+                </h3>
+
+                <p class="nerv-hint">
+                  <%= [ format_air_date(episode.air_date), (format_duration(episode.runtime_minutes) if episode.runtime_minutes) ].compact.join(" · ") %>
+                </p>
+
+                <p><%= episode.overview || "Synopsis indisponible." %></p>
+
+                <% if episode.guests.any? || episode.crew.any? %>
+                  <details class="nerv-episode-credits">
+                    <summary>Invités et équipe</summary>
+
+                    <% if episode.crew.any? %>
+                      <dl class="nerv-crew">
+                        <% episode.crew.each do |label, names| %>
+                          <dt><%= label %></dt>
+                          <dd><%= names.join(", ") %></dd>
+                        <% end %>
+                      </dl>
+                    <% end %>
+
+                    <% if episode.guests.any? %>
+                      <ul class="nerv-guests">
+                        <% episode.guests.each do |guest| %>
+                          <li><strong><%= guest.name %></strong><% if guest.role %> <span class="nerv-cast-role"><%= guest.role %></span><% end %></li>
+                        <% end %>
+                      </ul>
+                    <% end %>
+                  </details>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ol>
+      <% end %>
+    <% end %>
+  <% end %>
+</section>
+
+<%= render "shared/credits", title: @title %>
