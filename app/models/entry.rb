@@ -50,5 +50,4 @@ class Entry < ApplicationRecord
   def set_watched_at
     self.watched_at = watched? ? Time.current : nil
   end
-
 end
