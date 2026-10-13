@@ -22,7 +22,12 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#show"
   get "tmdb/search", to: "tmdb_searches#index", as: :tmdb_search
   get "catalog", to: "catalog#index", as: :catalog
-  resources :movies, only: :show
-  resources :series, only: :show
+  resources :movies, only: :show, constraints: { id: /\d+/ }
+  resources :series, only: :show, constraints: { id: /\d+/ }
+
+  scope "catalog/:media_type/:tmdb_id", constraints: { media_type: /movie|tv/, tmdb_id: /\d+/ } do
+    post "playlist", to: "catalog_entries#create", as: :catalog_entry_playlist
+    delete "playlist", to: "catalog_entries#destroy", as: :catalog_entry_playlist_removal
+  end
   root "pages#home"
 end
