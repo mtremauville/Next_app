@@ -3,6 +3,7 @@ class CatalogController < ApplicationController
   skip_after_action :verify_policy_scoped
 
   def index
+    @playlists = current_user.playlists.order(:name)
     @media_type = Tmdb::Catalog::TYPES.include?(params[:type]) ? params[:type] : "movie"
     @query = params[:q].to_s.strip
     page = params[:page].to_i.clamp(1, 500)
