@@ -21,5 +21,8 @@ Rails.application.routes.draw do
   resources :playlists, except: :show
   get "dashboard", to: "dashboard#show"
   get "tmdb/search", to: "tmdb_searches#index", as: :tmdb_search
+  get "catalog", to: "catalog#index", as: :catalog
+  resources :movies, only: :show
+  resources :series, only: :show
   root "pages#home"
 end

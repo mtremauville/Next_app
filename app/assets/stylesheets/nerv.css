@@ -103,7 +103,7 @@ a { color: var(--cyan); text-decoration: none; }
 button:hover, input[type="submit"]:hover { background: rgba(255, 153, 0, 0.15); }
 
 label { display: block; color: var(--muted); margin: 1rem 0 0.25rem; }
-input[type="text"], input[type="email"], input[type="password"], select {
+input[type="text"], input[type="email"], input[type="password"], input[type="search"],select {
   width: 100%;
   background: var(--void);
   color: var(--text);
@@ -373,3 +373,25 @@ input[type="text"], input[type="email"], input[type="password"], select {
 .nerv-cta { display: inline-block; border: 1px solid var(--orange); color: var(--orange); padding: 0.5rem 1rem; }
 .nerv-cta:hover { background: rgba(255, 153, 0, 0.15); }
 .nerv-empty { text-align: left; }
+
+.nerv-tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.nerv-tabs a.is-active { color: var(--orange); border-bottom: 1px solid var(--orange); }
+
+.nerv-search { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+.nerv-search input[type="search"] { flex: 1; min-width: 200px; width: auto; }
+
+.nerv-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
+.nerv-gallery-item { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.5rem; color: var(--text); }
+.nerv-gallery-item:hover { border-color: var(--orange); }
+.nerv-gallery-item img,
+.nerv-gallery-item .nerv-poster-fallback { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; }
+.nerv-gallery-title {
+  font-size: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.nerv-gallery-year { color: var(--muted); font-size: 0.8rem; }
+
+.nerv-pagination { display: flex; gap: 1rem; align-items: center; justify-content: center; margin-top: 1.5rem; }
