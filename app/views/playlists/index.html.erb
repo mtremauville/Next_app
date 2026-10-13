@@ -7,24 +7,20 @@
 <% else %>
   <div class="nerv-grid">
     <% @playlists.each do |playlist| %>
-      <article class="nerv-panel">
+      <article class="nerv-panel nerv-playlist">
         <h2><%= link_to playlist.name, playlist_path(playlist) %></h2>
-        <p><%= pluralize(playlist.entries.size, "titre") %></p>
+        <p class="nerv-hint"><%= pluralize(playlist.entries.size, "titre") %></p>
 
         <% if playlist.entries.any? %>
-          <ul>
-            <% playlist.entries.first(5).each do |entry| %>
-              <li class="status-<%= entry.status %>">
-                <span class="nerv-led"></span><%= link_to entry.title, entry_target_path(entry) %>
-              </li>
+          <%= link_to playlist_path(playlist), class: "nerv-strip", tabindex: -1, aria: { hidden: true } do %>
+            <% playlist.entries.first(4).each do |entry| %>
+              <%= poster_tag(entry) %>
             <% end %>
-          </ul>
-          <% if playlist.entries.size > 5 %>
-            <p class="nerv-hint"><%= link_to "[ Voir les #{playlist.entries.size} titres ]", playlist_path(playlist) %></p>
           <% end %>
         <% end %>
 
         <div class="nerv-actions">
+          <%= link_to "[ Ouvrir ]", playlist_path(playlist) %>
           <%= link_to "[ Ajouter un titre ]", new_entry_path(playlist_id: playlist.id) %>
           <%= link_to "[ Renommer ]", edit_playlist_path(playlist) %>
           <%= render "shared/confirm_delete",
