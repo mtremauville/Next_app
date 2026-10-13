@@ -50,4 +50,44 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     get playlists_path
     assert_redirected_to new_user_session_path
   end
+
+  test "show lists the titles with links to their pages" do
+  playlist = playlists(:sunday_movies)
+  users(:one).entries.create!(title: "Dune", tmdb_id: 438631, media_type: "movie", playlist: playlist)
+  users(:one).entries.create!(title: "Andor", tmdb_id: 83867, media_type: "tv", playlist: playlist)
+
+  get playlist_path(playlist)
+
+  assert_response :success
+  assert_select "h1", "Films du dimanche"
+  assert_select "a[href=?]", movie_path(438631)
+  assert_select "a[href=?]", series_path(83867)
+  assert_select "h2", /Films/
+  assert_select "h2", /Séries/
+end
+
+  test "a title without a TMDB id links to its edit form" do
+    get playlist_path(playlists(:sunday_movies))
+
+    assert_select "a[href=?]", edit_entry_path(entries(:inception))
+    assert_select "h2", text: /Autres/
+  end
+
+  test "an empty playlist shows a message" do
+    get playlist_path(playlists(:empty_list))
+
+    assert_response :success
+    assert_select "p", text: "Cette playlist est vide."
+  end
+
+  test "cannot open another user's playlist" do
+    get playlist_path(playlists(:other_user_list))
+    assert_redirected_to root_path
+  end
+
+  test "show redirects to sign in when signed out" do
+    sign_out :user
+    get playlist_path(playlists(:sunday_movies))
+    assert_redirected_to new_user_session_path
+  end
 end

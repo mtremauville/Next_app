@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     member { patch :watch }
   end
   resources :entries, except: :show
-  resources :playlists, except: :show
+  resources :playlists
   get "dashboard", to: "dashboard#show"
   get "tmdb/search", to: "tmdb_searches#index", as: :tmdb_search
   get "catalog", to: "catalog#index", as: :catalog

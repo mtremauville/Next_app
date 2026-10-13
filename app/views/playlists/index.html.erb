@@ -8,17 +8,22 @@
   <div class="nerv-grid">
     <% @playlists.each do |playlist| %>
       <article class="nerv-panel">
-        <h2><%= playlist.name %></h2>
+        <h2><%= link_to playlist.name, playlist_path(playlist) %></h2>
         <p><%= pluralize(playlist.entries.size, "titre") %></p>
+
         <% if playlist.entries.any? %>
           <ul>
-            <% playlist.entries.each do |entry| %>
+            <% playlist.entries.first(5).each do |entry| %>
               <li class="status-<%= entry.status %>">
-                <span class="nerv-led"></span><%= entry.title %>
+                <span class="nerv-led"></span><%= link_to entry.title, entry_target_path(entry) %>
               </li>
             <% end %>
           </ul>
+          <% if playlist.entries.size > 5 %>
+            <p class="nerv-hint"><%= link_to "[ Voir les #{playlist.entries.size} titres ]", playlist_path(playlist) %></p>
+          <% end %>
         <% end %>
+
         <div class="nerv-actions">
           <%= link_to "[ Ajouter un titre ]", new_entry_path(playlist_id: playlist.id) %>
           <%= link_to "[ Renommer ]", edit_playlist_path(playlist) %>
