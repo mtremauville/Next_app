@@ -531,3 +531,19 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 .nerv-modal-title { color: var(--cyan); margin: 0 0 0.5rem; overflow-wrap: anywhere; }
 .nerv-modal select,
 .nerv-modal input[type="text"] { width: 100%; }
+
+
+.nerv-actions--page { margin: 0.5rem 0 1.5rem; }
+
+.nerv-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; margin: 0.75rem 0; }
+.nerv-strip .nerv-poster,
+.nerv-strip .nerv-poster-fallback {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  font-size: 1.2rem;
+}

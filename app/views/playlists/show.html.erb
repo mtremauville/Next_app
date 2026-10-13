@@ -1,14 +1,14 @@
 <p><%= link_to "[ ← Playlists ]", playlists_path %></p>
 
 <h1><%= @playlist.name %></h1>
-<p class="nerv-hint"><%= pluralize(@count, "titre") %></p>
+<p class="nerv-hint"><%= pluralize(@entries.size, "titre") %></p>
 
-<div class="nerv-actions">
+<div class="nerv-actions nerv-actions--page">
   <%= link_to "[ Ajouter un titre ]", new_entry_path(playlist_id: @playlist.id) %>
   <%= link_to "[ Renommer ]", edit_playlist_path(@playlist) %>
 </div>
 
-<% if @groups.empty? %>
+<% if @entries.empty? %>
   <section class="nerv-panel nerv-section">
     <p>Cette playlist est vide.</p>
     <p class="nerv-hint">
@@ -16,12 +16,26 @@
     </p>
   </section>
 <% else %>
-  <% @groups.each do |label, entries| %>
-    <section class="nerv-section">
-      <h2><%= label %> <small>(<%= entries.size %>)</small></h2>
-      <div class="nerv-gallery">
-        <%= render partial: "playlists/entry", collection: entries, as: :entry %>
-      </div>
-    </section>
-  <% end %>
+  <div data-controller="filter">
+    <div class="nerv-filters">
+      <select data-filter-target="status" data-action="change->filter#apply" aria-label="Filtrer par statut">
+        <option value="">Tous les statuts</option>
+        <% status_options.each do |label, value| %>
+          <option value="<%= value %>"><%= label %></option>
+        <% end %>
+      </select>
+      <select data-filter-target="genre" data-action="change->filter#apply" aria-label="Filtrer par genre">
+        <option value="">Tous les genres</option>
+        <% @entries.flat_map(&:genre_list).uniq.sort.each do |genre| %>
+          <option value="<%= genre %>"><%= genre %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <p data-filter-target="empty" hidden>Aucun titre ne correspond à ces filtres.</p>
+
+    <div class="nerv-grid nerv-grid--cards">
+      <%= render partial: "entries/card", collection: @entries, as: :entry, locals: { show_playlist: false } %>
+    </div>
+  </div>
 <% end %>
