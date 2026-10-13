@@ -416,3 +416,68 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 .nerv-cast-item .nerv-poster-fallback { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; }
 .nerv-cast-name { font-size: 0.85rem; }
 .nerv-cast-role { font-size: 0.75rem; color: var(--muted); }
+.nerv-toasts {
+  position: fixed;
+  top: 4.5rem;
+  right: 1rem;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: min(380px, calc(100% - 2rem));
+}
+
+.nerv-toast {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-left: 3px solid var(--green);
+  animation: nerv-toast-in 0.25s ease-out both;
+}
+.nerv-toast p { margin: 0; line-height: 1.4; }
+.nerv-toast .nerv-link-button { flex-shrink: 0; color: var(--muted); }
+.nerv-toast--alert { border-left-color: var(--amber); color: var(--amber); }
+.nerv-toast.is-leaving { opacity: 0; transform: translateX(1rem); transition: opacity 0.25s, transform 0.25s; }
+
+.nerv-toast-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  opacity: 0.6;
+  transform-origin: left;
+  animation: nerv-toast-timer linear both;
+}
+.nerv-toast:hover .nerv-toast-bar,
+.nerv-toast:focus-within .nerv-toast-bar { animation-play-state: paused; }
+
+@keyframes nerv-toast-in { from { opacity: 0; transform: translateX(1rem); } }
+@keyframes nerv-toast-timer { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .nerv-toast { animation: none; }
+  .nerv-toast.is-leaving { transition: none; }
+  .nerv-toast-bar { display: none; }
+}
+/* La modal est rendue dans le footer de la carte : on coupe l'héritage */
+.nerv-modal {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.nerv-modal .nerv-panel { min-width: 0; padding: 1.25rem; }
+.nerv-modal h2 { margin-top: 0; }
+.nerv-modal p { margin: 0 0 1rem; }
+
+.nerv-modal button {
+  height: auto;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  padding: 0.4rem 0.8rem;
+  display: inline-block;
+}
+.nerv-modal form { display: block; margin: 0; }
