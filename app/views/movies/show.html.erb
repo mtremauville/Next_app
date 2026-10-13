@@ -26,34 +26,4 @@
           media_type: "movie", tmdb_id: @title.tmdb_id %>
   </div>
 </article>
-
-<% if @title.crew.any? %>
-  <section class="nerv-panel nerv-section">
-    <h2>Équipe technique</h2>
-    <dl class="nerv-crew">
-      <% @title.crew.each do |label, names| %>
-        <dt><%= label %></dt>
-        <dd><%= names.join(", ") %></dd>
-      <% end %>
-    </dl>
-  </section>
-<% end %>
-
-<% if @title.cast.any? %>
-  <section class="nerv-section">
-    <h2>Casting</h2>
-    <ul class="nerv-cast">
-      <% @title.cast.each do |person| %>
-        <li class="nerv-cast-item nerv-panel">
-          <% if person.photo_path.present? %>
-            <%= image_tag tmdb_image_url(person.photo_path, "w185"), alt: "", loading: "lazy" %>
-          <% else %>
-            <div class="nerv-poster-fallback" aria-hidden="true"><%= person.name.to_s.first.to_s.upcase %></div>
-          <% end %>
-          <span class="nerv-cast-name"><%= person.name %></span>
-          <% if person.role %><span class="nerv-cast-role"><%= person.role %></span><% end %>
-        </li>
-      <% end %>
-    </ul>
-  </section>
-<% end %>
+<%= render "shared/credits", title: @title %>

@@ -11,8 +11,10 @@ module Tmdb
     CREW_ORDER = %w[Réalisation Scénario Musique Photographie].freeze
 
     Person = Struct.new(:name, :role, :photo_path, keyword_init: true)
+    Season = Struct.new(:number, :name, :episode_count, :year, keyword_init: true)
     Result = Struct.new(:tmdb_id, :media_type, :title, :tagline, :year, :poster_path, :overview,
-                        :genres, :runtime_minutes, :rating, :cast, :crew, keyword_init: true)
+                        :genres, :runtime_minutes, :rating, :cast, :crew, :creators, :seasons,
+                        keyword_init: true)
 
     def initialize(client: Client.new)
       @client = client
@@ -45,8 +47,24 @@ module Tmdb
         runtime_minutes: runtime_for(data, media_type),
         rating: rating.positive? ? rating.round(1) : nil,
         cast: cast_from(credits),
-        crew: crew_from(credits)
+        crew: crew_from(credits),
+        creators: Array(data["created_by"]).filter_map { |creator| creator["name"] },
+        seasons: seasons_from(data)
       )
+    end
+
+    def seasons_from(data)
+      Array(data["seasons"]).filter_map do |season|
+        number = season["season_number"].to_i
+        next unless number.positive?
+
+        Season.new(
+          number: number,
+          name: season["name"].presence || "Saison #{number}",
+          episode_count: season["episode_count"],
+          year: season["air_date"]&.slice(0, 4)
+        )
+      end
     end
 
     def runtime_for(data, media_type)

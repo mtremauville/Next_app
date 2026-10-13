@@ -68,4 +68,20 @@ class Tmdb::TitleDetailsTest < ActiveSupport::TestCase
   test "rejects a non numeric id" do
     assert_raises(ArgumentError) { Tmdb::TitleDetails.new(client: FakeClient.new({})).call("movie", "../x") }
   end
+    test "a TV show exposes its creators and numbered seasons without specials" do
+      payload = {
+        "id" => 95396, "name" => "Severance", "created_by" => [ { "name" => "Dan Erickson" } ],
+        "seasons" => [
+          { "season_number" => 0, "name" => "Épisodes spéciaux", "episode_count" => 2 },
+          { "season_number" => 1, "name" => "Saison 1", "episode_count" => 9, "air_date" => "2022-02-18" },
+          { "season_number" => 2, "name" => "", "episode_count" => 10 }
+        ]
+      }
+      title = Tmdb::TitleDetails.new(client: FakeClient.new(payload)).call("tv", 95396)
+
+      assert_equal [ "Dan Erickson" ], title.creators
+      assert_equal [ 1, 2 ], title.seasons.map(&:number)
+      assert_equal "Saison 2", title.seasons.last.name
+      assert_equal "2022", title.seasons.first.year
+    end
 end
