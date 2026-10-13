@@ -32,10 +32,38 @@ a { color: var(--cyan); text-decoration: none; }
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
 }
-.nerv-header nav { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.nerv-logo { text-decoration: none; }
+.nerv-header nav { display: flex; gap: 1rem; align-items: center; }
+.nerv-menu-button { display: none; }
+.nerv-header { position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--void);
+}
+@media (max-width: 720px) {
+  .nerv-header { padding: 0.75rem 1rem; }
+  .nerv-menu-button { display: inline-block; }
+  .nerv-header nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--panel);
+    border-bottom: 1px solid var(--orange);
+  }
+  .nerv-header nav.is-open { display: flex; }
+  .nerv-header nav a, .nerv-header nav button { padding: 0.35rem 0; }
+}
 .nerv-logo { font-size: 1.5rem; font-weight: 700; }
 
 .nerv-main { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
@@ -195,3 +223,6 @@ input[type="text"], input[type="email"], input[type="password"], select {
 
 .nerv-hero h1 { font-size: 2.2rem; margin: 0 0 0.5rem; line-height: 1.15; }
 .nerv-auth-form h2 { margin-top: 0; }
+@media (max-width: 720px) {
+  .nerv-filters select { width: 100%; }
+}
