@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_12_230232) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_13_180153) do
   create_table "entries", force: :cascade do |t|
     t.string "title", null: false
     t.integer "status", default: 0, null: false
@@ -28,8 +28,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_230232) do
     t.datetime "watched_at"
     t.integer "runtime_minutes"
     t.string "genres"
+    t.integer "episodes_total"
     t.index ["playlist_id"], name: "index_entries_on_playlist_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "episode_progresses", force: :cascade do |t|
+    t.integer "entry_id", null: false
+    t.integer "season_number", null: false
+    t.integer "episode_number", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "runtime_minutes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entry_id", "season_number", "episode_number"], name: "index_episode_progresses_on_episode", unique: true
+    t.index ["entry_id"], name: "index_episode_progresses_on_entry_id"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -54,5 +67,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_230232) do
 
   add_foreign_key "entries", "playlists"
   add_foreign_key "entries", "users"
+  add_foreign_key "episode_progresses", "entries"
   add_foreign_key "playlists", "users"
 end

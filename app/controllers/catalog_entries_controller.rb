@@ -57,18 +57,7 @@ class CatalogEntriesController < ApplicationController
   end
 
   def build_entry
-    details = Tmdb::TitleDetails.new.call(params[:media_type], params[:tmdb_id])
-
-    current_user.entries.build(
-      title: details.title,
-      media_type: details.media_type,
-      tmdb_id: details.tmdb_id,
-      year: details.year,
-      poster_path: details.poster_path,
-      overview: details.overview,
-      runtime_minutes: details.runtime_minutes,
-      genres: details.genres.join(",")
-    )
+    Tmdb::EntryBuilder.new.call(current_user, params[:media_type], params[:tmdb_id])
   end
 
   def title_path

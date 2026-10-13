@@ -1,7 +1,7 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: %i[edit update destroy watch]
   def index
-    @entries = policy_scope(Entry).includes(:playlist).order(created_at: :desc)
+    @entries = policy_scope(Entry).includes(:playlist, :episode_progresses).order(created_at: :desc)
   end
 
   def new

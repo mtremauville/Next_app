@@ -3,6 +3,7 @@ class EntryPolicy < ApplicationPolicy
   def destroy? = owner?
   def watch? = owner?
   def assign_playlist? = owner?
+  def track? = owner?
 
   class Scope < ApplicationPolicy::Scope
     def resolve

@@ -6,6 +6,7 @@ class SeriesController < ApplicationController
     @title = Tmdb::TitleDetails.new.call("tv", params[:id])
     @entry = current_user.entries.find_by(tmdb_id: @title.tmdb_id, media_type: "tv")
     @playlists = current_user.playlists.order(:name)
+    @progress = SeriesProgress.new(@entry, @title.seasons)
     @season_number = pick_season(@title.seasons)
     load_season if @season_number
   rescue Tmdb::Error
