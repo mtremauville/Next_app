@@ -226,3 +226,119 @@ input[type="text"], input[type="email"], input[type="password"], select {
 @media (max-width: 720px) {
   .nerv-filters select { width: 100%; }
 }
+
+
+.nerv-grid--cards { grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); }
+
+.nerv-card { display: flex; flex-direction: column; padding: 0; }
+
+.nerv-card-header,
+.nerv-card-content,
+.nerv-card-footer { padding: 0 1rem; }
+
+/* Header : 3.5rem fixes, titre sur 2 lignes maximum */
+.nerv-card-header {
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.nerv-card-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Body : 11rem fixes, affiche à gauche, détails à droite */
+.nerv-card-content {
+  height: 11rem;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.nerv-card-poster .nerv-poster {
+  display: block;
+  width: 100px;
+  height: 150px;
+  max-width: none;
+  margin: 0;
+  object-fit: cover;
+}
+.nerv-poster-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  color: var(--orange);
+  font-family: "Oswald", sans-serif;
+  font-size: 2.5rem;
+}
+.nerv-card-poster .nerv-poster-fallback { width: 100px; height: 150px; }
+
+.nerv-card-details { min-width: 0; height: 150px; overflow: hidden; }
+.nerv-card-meta { margin: 0 0 0.5rem; }
+.nerv-rating { color: var(--text); }
+.nerv-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.5rem; padding: 0; }
+.nerv-tags li { border: 1px solid var(--border); padding: 0.1rem 0.5rem; font-size: 0.8rem; color: var(--muted); }
+.nerv-genres {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Footer : 3rem fixes, actions sur une seule ligne */
+.nerv-card-footer {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+/* Conteneurs des actions : formulaires et wrapper de la modal */
+.nerv-card-footer form,
+.nerv-card-footer [data-controller="confirm-modal"] {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Liens et boutons : même police, même hauteur, même ligne */
+.nerv-card-footer a,
+.nerv-card-footer button {
+  font-family: inherit;
+  font-size: 0.8rem;
+  line-height: 1;
+  height: 1.5rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nerv-card-footer a,
+.nerv-card-footer .nerv-link-button { color: var(--muted); }
+.nerv-card-footer a:hover,
+.nerv-card-footer .nerv-link-button:hover { color: var(--cyan); }
+
+.nerv-card-footer .nerv-link-button { padding-left: 0; padding-right: 0; border: 0; }
+.nerv-card-footer .nerv-watch { padding-left: 0.5rem; padding-right: 0.5rem; }
+
+@media (max-width: 400px) {
+  .nerv-card-header,
+  .nerv-card-content,
+  .nerv-card-footer { padding: 0 0.75rem; }
+  .nerv-card-footer { gap: 0.4rem; }
+}
