@@ -72,4 +72,15 @@ class CatalogEntriesControllerTest < ActionDispatch::IntegrationTest
     post "/catalog/person/1/playlist"
     assert_response :not_found
   end
+
+  test "adding a series goes back to the series page" do
+    show = Tmdb::TitleDetails::Result.new(tmdb_id: 95396, media_type: "tv", title: "Severance", year: "2022",
+                                          genres: [], runtime_minutes: 450)
+    Tmdb::TitleDetails.stub :new, ->(*) { FakeDetails.new(show) } do
+      post catalog_entry_playlist_path(media_type: "tv", tmdb_id: 95396), params: { playlist_id: playlists(:sunday_movies).id }
+    end
+
+    assert_redirected_to series_path(95396)
+    assert_equal "tv", users(:one).entries.find_by!(tmdb_id: 95396).media_type
+  end
 end
