@@ -1,0 +1,9 @@
+<%= link_to catalog_item_path(item), class: "nerv-gallery-item nerv-panel" do %>
+  <% if item.poster_path.present? %>
+    <%= image_tag tmdb_image_url(item.poster_path), alt: "Affiche de #{item.title}", loading: "lazy" %>
+  <% else %>
+    <div class="nerv-poster-fallback" aria-hidden="true"><%= item.title.to_s.first.to_s.upcase %></div>
+  <% end %>
+  <span class="nerv-gallery-title"><%= item.title %></span>
+  <span class="nerv-gallery-year"><%= item.year %></span>
+<% end %>
