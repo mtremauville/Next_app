@@ -342,3 +342,34 @@ input[type="text"], input[type="email"], input[type="password"], select {
   .nerv-card-footer { padding: 0 0.75rem; }
   .nerv-card-footer { gap: 0.4rem; }
 }
+.nerv-grid--kpi { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 1rem; }
+
+.nerv-home-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 720px) { .nerv-home-columns { grid-template-columns: 1fr; } }
+
+.nerv-mini-list { list-style: none; margin: 0; padding: 0; }
+.nerv-mini {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.nerv-mini:last-child { border-bottom: none; }
+.nerv-mini form { margin: 0; }
+.nerv-mini-poster .nerv-poster { width: 48px; height: 72px; max-width: none; margin: 0; object-fit: cover; }
+.nerv-mini-poster .nerv-poster-fallback { width: 48px; height: 72px; font-size: 1.4rem; }
+.nerv-mini-text { min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+.nerv-mini-text strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nerv-mini-sub { font-size: 0.8rem; }
+.nerv-watch { font-size: 0.8rem; }
+
+.nerv-actions { margin-top: 1.5rem; }
+.nerv-cta { display: inline-block; border: 1px solid var(--orange); color: var(--orange); padding: 0.5rem 1rem; }
+.nerv-cta:hover { background: rgba(255, 153, 0, 0.15); }
+.nerv-empty { text-align: left; }

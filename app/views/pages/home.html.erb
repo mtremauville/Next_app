@@ -1,2 +1,53 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h1>Accueil</h1>
+
+<% if @stats.total.zero? %>
+  <section class="nerv-panel nerv-empty">
+    <h2>Bienvenue sur Next</h2>
+    <p>Ta liste est vide. Cherche un film ou une série, l'affiche et les genres se remplissent tout seuls.</p>
+    <%= link_to "[ Ajouter le premier titre ]", new_entry_path, class: "nerv-cta" %>
+  </section>
+<% else %>
+  <div class="nerv-grid nerv-grid--kpi">
+    <div class="nerv-panel">
+      <h2>Titres vus</h2>
+      <p class="nerv-kpi"><%= @stats.watched_count %></p>
+    </div>
+    <div class="nerv-panel">
+      <h2>Dans ta liste</h2>
+      <p class="nerv-kpi"><%= @stats.total %></p>
+    </div>
+    <div class="nerv-panel">
+      <h2>Temps estimé</h2>
+      <p class="nerv-kpi"><%= format_duration(@stats.watched_minutes) %></p>
+    </div>
+  </div>
+
+  <div class="nerv-home-columns">
+    <section class="nerv-panel nerv-section">
+      <h2>En cours</h2>
+      <% if @in_progress.any? %>
+        <ul class="nerv-mini-list">
+          <%= render partial: "pages/mini_entry", collection: @in_progress, as: :entry %>
+        </ul>
+      <% else %>
+        <p class="nerv-hint">Rien en cours. Lance un titre de la colonne de droite.</p>
+      <% end %>
+    </section>
+
+    <section class="nerv-panel nerv-section">
+      <h2>À voir ensuite</h2>
+      <% if @up_next.any? %>
+        <ul class="nerv-mini-list">
+          <%= render partial: "pages/mini_entry", collection: @up_next, as: :entry %>
+        </ul>
+      <% else %>
+        <p class="nerv-hint">Plus rien à voir : ajoute un nouveau titre.</p>
+      <% end %>
+    </section>
+  </div>
+
+  <div class="nerv-actions">
+    <%= link_to "[ Nouveau titre ]", new_entry_path, class: "nerv-cta" %>
+    <%= link_to "[ Voir toute ma liste ]", entries_path %>
+  </div>
+<% end %>
