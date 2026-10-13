@@ -174,7 +174,6 @@ input[type="text"], input[type="email"], input[type="password"], select {
   .nerv-auth { grid-template-columns: 1fr; margin-top: 1.5rem; }
 }
 
-.nerv-hero h1 { font-size: 3rem; margin: 0 0 0.5rem; }
 .nerv-tagline { color: var(--cyan); margin: 0 0 1rem; }
 .nerv-hint { color: var(--muted); font-size: 0.85rem; }
 
@@ -192,3 +191,7 @@ input[type="text"], input[type="email"], input[type="password"], select {
 .nerv-auth-links a { display: block; margin-top: 0.75rem; }
 
 :focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+
+.nerv-hero h1 { font-size: 2.2rem; margin: 0 0 0.5rem; line-height: 1.15; }
+.nerv-auth-form h2 { margin-top: 0; }
