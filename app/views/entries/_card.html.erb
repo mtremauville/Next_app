@@ -21,7 +21,9 @@
         <span class="nerv-led"></span><%= status_label(entry.status) %>
         <% if entry.rating %><span class="nerv-rating">· <%= entry.rating %>/5</span><% end %>
       </p>
-
+        <% if entry.tv? && entry.episodes_total.to_i.positive? %>
+          <p class="nerv-card-progress"><%= entry.episodes_watched %>/<%= entry.episodes_total %> épisodes</p>
+        <% end %>
       <% if entry.platform.present? || (show_playlist && entry.playlist) %>
         <ul class="nerv-tags">
           <% if entry.platform.present? %><li><%= entry.platform %></li><% end %>
@@ -36,7 +38,7 @@
   </div>
 
   <footer class="nerv-card-footer">
-    <% unless entry.watched? %>
+    <% unless entry.watched? || entry.tv? %>
       <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
     <% end %>
     <%= link_to "[ Modifier ]", edit_entry_path(entry) %>
@@ -46,3 +48,4 @@
           path: entry_path(entry) %>
   </footer>
 </article>
+

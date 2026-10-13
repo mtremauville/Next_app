@@ -13,7 +13,7 @@ class PlaylistsController < ApplicationController
     #   "Séries" => entries.select { |entry| entry.media_type == "tv" },
     #   "Autres" => entries.reject { |entry| %w[movie tv].include?(entry.media_type) }
     # }.reject { |_, list| list.empty? }
-    @entries = @playlist.entries.includes(:playlist).order(:title).to_a
+    @entries = @playlist.entries.includes(:playlist, :episode_progresses).order(:title).to_a
   end
   def new
     @playlist = current_user.playlists.build

@@ -108,4 +108,23 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
     get series_path(95396)
     assert_redirected_to new_user_session_path
   end
+  test "shows the state of the series, of the season and of each episode" do
+    entry = users(:one).entries.create!(title: "Severance", tmdb_id: 95396, media_type: "tv", episodes_total: 19)
+    entry.episode_progresses.create!(season_number: 1, episode_number: 1, status: :watched)
+
+    visit series_path(95396)
+
+    assert_select ".nerv-series-state", text: /En cours/
+    assert_select ".nerv-season-state", text: /En cours/
+    assert_select ".nerv-season-progress", text: /1\/9 épisodes · 11 %/
+    assert_select ".nerv-episode-state", text: /Vu/
+    assert_select "form[action=?]", series_season_progress_path(tmdb_id: 95396, season: 1)
+  end
+
+  test "a series that was never tracked is to watch" do
+    visit series_path(95396)
+
+    assert_select ".nerv-series-state", text: /À voir/
+    assert_select ".nerv-episode-state", text: /À voir/
+  end
 end

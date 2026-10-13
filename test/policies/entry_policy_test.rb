@@ -6,6 +6,9 @@ class EntryPolicyTest < ActiveSupport::TestCase
     assert policy.edit?
     assert policy.update?
     assert policy.destroy?
+    assert policy.watch?
+    assert policy.assign_playlist?
+    assert policy.track?
   end
 
   test "another user cannot" do
@@ -13,6 +16,9 @@ class EntryPolicyTest < ActiveSupport::TestCase
     assert_not policy.edit?
     assert_not policy.update?
     assert_not policy.destroy?
+    assert_not policy.watch?
+    assert_not policy.assign_playlist?
+    assert_not policy.track?
   end
 
   test "scope returns only own entries" do

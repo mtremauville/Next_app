@@ -12,5 +12,7 @@
     </span>
   </div>
 
-  <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
+  <% unless entry.tv? %>
+    <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
+  <% end %>
 </li>

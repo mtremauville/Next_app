@@ -41,4 +41,29 @@ class EntryTest < ActiveSupport::TestCase
     entry = Entry.new(title: "Dune", user: users(:one), poster_path: "https://evil.example/x.jpg")
     assert_not entry.valid?
   end
+  test "a series follows the progress of its episodes" do
+    entry = users(:one).entries.create!(title: "Severance", tmdb_id: 95396, media_type: "tv", episodes_total: 2)
+    entry.refresh_series_status!
+    assert entry.to_watch?
+
+    first = entry.episode_progresses.create!(season_number: 1, episode_number: 1, status: :watching)
+    entry.refresh_series_status!
+    assert entry.watching?
+
+    first.update!(status: :watched)
+    entry.episode_progresses.create!(season_number: 1, episode_number: 2, status: :watched)
+    entry.refresh_series_status!
+    assert entry.watched?
+    assert_not_nil entry.watched_at
+
+    first.update!(status: :to_watch)
+    entry.refresh_series_status!
+    assert entry.watching?
+    assert_nil entry.watched_at
+  end
+
+  test "a movie is not affected by refresh_series_status!" do
+    entries(:inception).refresh_series_status!
+    assert entries(:inception).watched?
+  end
 end

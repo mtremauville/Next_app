@@ -547,3 +547,17 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
   object-fit: cover;
   font-size: 1.2rem;
 }
+
+.nerv-series-progress { margin: 1rem 0; }
+.nerv-series-state,
+.nerv-season-state,
+.nerv-episode-state,
+.nerv-season-progress { margin: 0 0 0.4rem; }
+
+.nerv-season-head { margin-bottom: 1rem; }
+
+.nerv-episode-actions { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin: 0.5rem 0; }
+.nerv-episode-actions form { margin: 0; }
+
+.nerv-tabs .nerv-led { margin-right: 0.3rem; }
+.nerv-card-progress { margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--muted); }
