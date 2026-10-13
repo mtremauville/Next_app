@@ -1,0 +1,10 @@
+<li class="nerv-mini">
+  <div class="nerv-mini-poster"><%= poster_tag(entry) %></div>
+  <div class="nerv-mini-text">
+    <strong><%= entry.title %></strong>
+    <span class="nerv-mini-sub status-<%= entry.status %>">
+      <span class="nerv-led"></span><%= status_label(entry.status) %><% if entry.year.present? %> · <%= entry.year %><% end %>
+    </span>
+  </div>
+  <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
+</li>

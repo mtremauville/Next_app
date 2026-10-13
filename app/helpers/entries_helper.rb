@@ -16,10 +16,12 @@ module EntriesHelper
   POSTER_BASE = "https://image.tmdb.org/t/p/w185".freeze
 
   def poster_tag(entry)
-    return if entry.poster_path.blank?
-
-    image_tag "#{POSTER_BASE}#{entry.poster_path}", alt: "Affiche de #{entry.title}",
-              class: "nerv-poster", loading: "lazy"
+    if entry.poster_path.present?
+      image_tag "#{POSTER_BASE}#{entry.poster_path}", alt: "Affiche de #{entry.title}",
+                class: "nerv-poster", loading: "lazy"
+    else
+      tag.div(entry.title.to_s.first.to_s.upcase, class: "nerv-poster-fallback", "aria-hidden": "true")
+    end
   end
 
   def format_duration(minutes)
