@@ -6,8 +6,7 @@
   <% end %>
 
   <% if entry&.playlist %>
-    <p>Dans la playlist <strong><%= entry.playlist.name %></strong></p>
-    <%= button_to "[ Retirer de la playlist ]",
+<p>Dans la playlist <strong><%= link_to entry.playlist.name, playlist_path(entry.playlist) %></strong></p>    <%= button_to "[ Retirer de la playlist ]",
           catalog_entry_playlist_removal_path(media_type: media_type, tmdb_id: tmdb_id),
           method: :delete, class: "nerv-link-button" %>
   <% end %>

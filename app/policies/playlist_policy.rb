@@ -4,6 +4,7 @@ class PlaylistPolicy < ApplicationPolicy
   def edit? = owner?
   def update? = owner?
   def destroy? = owner?
+  def show? = owner?
 
   class Scope < Scope
     def resolve

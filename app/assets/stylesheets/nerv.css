@@ -497,3 +497,6 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 .nerv-episode-credits summary { cursor: pointer; color: var(--cyan); }
 .nerv-episode-credits[open] summary { margin-bottom: 0.5rem; }
 .nerv-guests { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; gap: 0.25rem; font-size: 0.85rem; }
+.nerv-gallery-status { font-size: 0.8rem; }
+.nerv-panel h2 a { color: inherit; }
+.nerv-panel h2 a:hover { color: var(--cyan); }

@@ -5,6 +5,16 @@ module EntriesHelper
     "watched" => "Vu"
   }.freeze
 
+  def entry_target_path(entry)
+    return edit_entry_path(entry) if entry.tmdb_id.blank?
+
+    case entry.media_type
+    when "tv" then series_path(entry.tmdb_id)
+    when "movie" then movie_path(entry.tmdb_id)
+    else edit_entry_path(entry)
+    end
+  end
+
   def status_label(status)
     STATUS_LABELS.fetch(status.to_s)
   end

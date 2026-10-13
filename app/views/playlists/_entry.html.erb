@@ -1,0 +1,12 @@
+<%= link_to entry_target_path(entry), class: "nerv-gallery-item nerv-panel" do %>
+  <% if entry.poster_path.present? %>
+    <%= image_tag tmdb_image_url(entry.poster_path), alt: "Affiche de #{entry.title}", loading: "lazy" %>
+  <% else %>
+    <div class="nerv-poster-fallback" aria-hidden="true"><%= entry.title.to_s.first.to_s.upcase %></div>
+  <% end %>
+  <span class="nerv-gallery-title"><%= entry.title %></span>
+  <span class="nerv-gallery-year"><%= entry.year %></span>
+  <span class="nerv-gallery-status status-<%= entry.status %>">
+    <span class="nerv-led"></span><%= status_label(entry.status) %>
+  </span>
+<% end %>
