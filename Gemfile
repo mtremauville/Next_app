@@ -60,3 +60,5 @@ gem "devise", "~> 5.0"
 gem "pundit", "~> 2.5"
 
 gem "vite_rails", "~> 3.11"
+
+gem "ruby_llm", "~> 2.1"

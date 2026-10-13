@@ -37,10 +37,12 @@
   </head>
 
   <body>
-    <header class="nerv-header">
-      <span class="nerv-logo">NEXT</span>
+    <header class="nerv-header" data-controller="nav" data-action="turbo:before-visit@document->nav#close">
+      <%= link_to "NEXT", (user_signed_in? ? entries_path : root_path), class: "nerv-logo" %>
       <% if user_signed_in? %>
-        <nav>
+        <button type="button" class="nerv-menu-button" data-nav-target="button"
+                data-action="nav#toggle" aria-expanded="false" aria-controls="main-nav">[ Menu ]</button>
+        <nav id="main-nav" data-nav-target="menu">
           <%= link_to "[ Ma liste ]", entries_path %>
           <%= link_to "[ Playlists ]", playlists_path %>
           <%= link_to "[ Statistiques ]", dashboard_path %>

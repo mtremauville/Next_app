@@ -32,10 +32,38 @@ a { color: var(--cyan); text-decoration: none; }
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
 }
-.nerv-header nav { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.nerv-logo { text-decoration: none; }
+.nerv-header nav { display: flex; gap: 1rem; align-items: center; }
+.nerv-menu-button { display: none; }
+.nerv-header { position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--void);
+}
+@media (max-width: 720px) {
+  .nerv-header { padding: 0.75rem 1rem; }
+  .nerv-menu-button { display: inline-block; }
+  .nerv-header nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--panel);
+    border-bottom: 1px solid var(--orange);
+  }
+  .nerv-header nav.is-open { display: flex; }
+  .nerv-header nav a, .nerv-header nav button { padding: 0.35rem 0; }
+}
 .nerv-logo { font-size: 1.5rem; font-weight: 700; }
 
 .nerv-main { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
@@ -75,7 +103,7 @@ a { color: var(--cyan); text-decoration: none; }
 button:hover, input[type="submit"]:hover { background: rgba(255, 153, 0, 0.15); }
 
 label { display: block; color: var(--muted); margin: 1rem 0 0.25rem; }
-input[type="text"], select {
+input[type="text"], input[type="email"], input[type="password"], select {
   width: 100%;
   background: var(--void);
   color: var(--text);
@@ -160,3 +188,41 @@ input[type="text"], select {
 .nerv-bar-value { text-align: right; }
 @keyframes nerv-grow { from { transform: scaleX(0); } }
 @media (prefers-reduced-motion: reduce) { .nerv-bar-fill { animation: none; } }
+
+
+.nerv-auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  max-width: 880px;
+  margin: 3rem auto 0;
+}
+@media (max-width: 720px) {
+  .nerv-auth { grid-template-columns: 1fr; margin-top: 1.5rem; }
+}
+
+.nerv-tagline { color: var(--cyan); margin: 0 0 1rem; }
+.nerv-hint { color: var(--muted); font-size: 0.85rem; }
+
+.nerv-primary {
+  background: var(--orange);
+  color: var(--void);
+  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+}
+.nerv-primary:hover { background: #ffb340; }
+
+.nerv-check { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; }
+.nerv-check label { margin: 0; }
+
+.nerv-auth-links a { display: block; margin-top: 0.75rem; }
+
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+
+.nerv-hero h1 { font-size: 2.2rem; margin: 0 0 0.5rem; line-height: 1.15; }
+.nerv-auth-form h2 { margin-top: 0; }
+@media (max-width: 720px) {
+  .nerv-filters select { width: 100%; }
+}
