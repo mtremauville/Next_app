@@ -19,4 +19,11 @@ class GuestSessionsControllerTest < ActionDispatch::IntegrationTest
     get new_user_session_url
     assert_response :success
   end
+  test "the welcome message is shown as a toast" do
+    post guest_login_url
+    follow_redirect!
+
+    assert_select ".nerv-toast[data-controller='toast'][role='status']", text: /Bienvenue/
+    assert_select ".nerv-toasts[data-turbo-temporary]"
+  end
 end
