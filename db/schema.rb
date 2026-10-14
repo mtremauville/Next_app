@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_180153) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_14_151502) do
   create_table "entries", force: :cascade do |t|
     t.string "title", null: false
     t.integer "status", default: 0, null: false
@@ -29,6 +29,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_180153) do
     t.integer "runtime_minutes"
     t.string "genres"
     t.integer "episodes_total"
+    t.integer "position_seconds"
     t.index ["playlist_id"], name: "index_entries_on_playlist_id"
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
@@ -41,6 +42,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_180153) do
     t.integer "runtime_minutes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position_seconds"
     t.index ["entry_id", "season_number", "episode_number"], name: "index_episode_progresses_on_episode", unique: true
     t.index ["entry_id"], name: "index_episode_progresses_on_entry_id"
   end

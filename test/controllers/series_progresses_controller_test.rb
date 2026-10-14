@@ -88,4 +88,56 @@ class SeriesProgressesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_user_session_path
   end
+    def position_path(number)
+    series_episode_position_path(tmdb_id: 95396, season: 1, episode: number)
+  end
+
+  def tracked_series
+    users(:one).entries.create!(title: "Severance", tmdb_id: 95396, media_type: "tv", episodes_total: 2)
+  end
+
+  test "saves a resume position and puts the episode in progress" do
+    assert_difference "EpisodeProgress.count", 1 do
+      patch_with position_path(1), { hours: "0", minutes: "42", seconds: "10" }
+    end
+
+    progress = users(:one).entries.find_by!(tmdb_id: 95396).episode_progresses.find_by!(episode_number: 1)
+    assert progress.watching?
+    assert_equal 2_530, progress.position_seconds
+    assert_redirected_to series_path(95396)
+  end
+
+  test "a position beyond the episode runtime is refused" do
+    assert_no_difference [ "Entry.count", "EpisodeProgress.count" ] do
+      patch_with position_path(1), { hours: "1", minutes: "0", seconds: "0" }
+    end
+
+    assert_match(/dépasse/, flash[:alert])
+  end
+
+  test "an invalid position is refused" do
+    assert_no_difference [ "Entry.count", "EpisodeProgress.count" ] do
+      patch_with position_path(1), { hours: "0", minutes: "75", seconds: "0" }
+    end
+
+    assert flash[:alert].present?
+  end
+
+  test "a watched episode refuses a position" do
+    tracked_series.episode_progresses.create!(season_number: 1, episode_number: 1, status: :watched)
+
+    patch_with position_path(1), { hours: "0", minutes: "10", seconds: "0" }
+
+    assert_match(/déjà vu/, flash[:alert])
+  end
+
+  test "clears the resume position of a tracked episode" do
+    progress = tracked_series.episode_progresses.create!(season_number: 1, episode_number: 1,
+                                                         status: :watching, position_seconds: 600)
+
+    delete series_episode_position_removal_path(tmdb_id: 95396, season: 1, episode: 1)
+
+    assert_nil progress.reload.position_seconds
+    assert_redirected_to series_path(95396)
+  end
 end

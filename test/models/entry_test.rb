@@ -66,4 +66,35 @@ class EntryTest < ActiveSupport::TestCase
     entries(:inception).refresh_series_status!
     assert entries(:inception).watched?
   end
+  test "a movie keeps a resume position while it is being watched" do
+    entry = users(:one).entries.create!(title: "Dune", tmdb_id: 438631, media_type: "movie", runtime_minutes: 155,
+                                        status: :watching, position_seconds: 3_600)
+    assert_equal 3_600, entry.reload.position_seconds
+
+    entry.update!(status: :watched)
+    assert_nil entry.reload.position_seconds
+  end
+
+  test "a position cannot exceed the runtime of a movie" do
+    entry = users(:one).entries.build(title: "Dune", media_type: "movie", runtime_minutes: 100,
+                                      status: :watching, position_seconds: 6_001)
+
+    assert_not entry.valid?
+    assert_match(/dépasse/, entry.errors.full_messages.to_sentence)
+  end
+
+  test "a position needs the watching status" do
+    entry = users(:one).entries.create!(title: "Dune", status: :to_watch, position_seconds: 100)
+    assert_nil entry.position_seconds
+  end
+
+  test "the resume point of a series is its latest episode with a position" do
+    entry = users(:one).entries.create!(title: "Severance", tmdb_id: 95396, media_type: "tv")
+    entry.episode_progresses.create!(season_number: 1, episode_number: 1, status: :watching,
+                                    position_seconds: 100, updated_at: 2.days.ago)
+    latest = entry.episode_progresses.create!(season_number: 1, episode_number: 2, status: :watching,
+                                              position_seconds: 200)
+
+    assert_equal latest, entry.reload.resume_point
+  end
 end

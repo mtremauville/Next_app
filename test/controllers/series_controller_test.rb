@@ -127,4 +127,22 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".nerv-series-state", text: /À voir/
     assert_select ".nerv-episode-state", text: /À voir/
   end
+    test "shows the resume position of an episode in progress" do
+    entry = users(:one).entries.create!(title: "Severance", tmdb_id: 95396, media_type: "tv", episodes_total: 19)
+    entry.episode_progresses.create!(season_number: 1, episode_number: 1, status: :watching, position_seconds: 1_500)
+
+    visit series_path(95396)
+
+    assert_select ".nerv-resume", text: /Reprendre à 25 min/
+    assert_select "form[action=?]", series_episode_position_path(tmdb_id: 95396, season: 1, episode: 1)
+  end
+
+  test "a watched episode has no position form" do
+    entry = users(:one).entries.create!(title: "Severance", tmdb_id: 95396, media_type: "tv", episodes_total: 19)
+    entry.episode_progresses.create!(season_number: 1, episode_number: 1, status: :watched)
+
+    visit series_path(95396)
+
+    assert_select "form[action=?]", series_episode_position_path(tmdb_id: 95396, season: 1, episode: 1), count: 0
+  end
 end

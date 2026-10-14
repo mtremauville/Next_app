@@ -10,6 +10,9 @@
     <span class="nerv-mini-sub status-<%= entry.status %>">
       <span class="nerv-led"></span><%= status_label(entry.status) %><% if entry.year.present? %> · <%= entry.year %><% end %>
     </span>
+    <% if (text = resume_text(entry)) %>
+      <span class="nerv-mini-sub nerv-mini-resume"><%= text %></span>
+    <% end %>
   </div>
 
   <% unless entry.tv? %>

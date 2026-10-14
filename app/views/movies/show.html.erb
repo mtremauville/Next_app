@@ -24,6 +24,13 @@
 
     <%= render "shared/playlist_picker", entry: @entry, playlists: @playlists,
           media_type: "movie", tmdb_id: @title.tmdb_id %>
+    <% unless @entry&.watched? %>
+      <%= render "shared/position_form",
+            path: movie_position_path(tmdb_id: @title.tmdb_id),
+            removal_path: movie_position_removal_path(tmdb_id: @title.tmdb_id),
+            seconds: @entry&.position_seconds,
+            runtime_minutes: @title.runtime_minutes %>
+    <% end %>
   </div>
 </article>
 <%= render "shared/credits", title: @title %>
