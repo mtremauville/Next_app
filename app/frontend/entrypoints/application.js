@@ -34,6 +34,7 @@ import FilterController from "../controllers/filter_controller"
 import NavController from "../controllers/nav_controller"
 import ToastController from "../controllers/toast_controller"
 import AddToPlaylistController from "../controllers/add_to_playlist_controller"
+import PrivacyNoticeController from "../controllers/privacy_notice_controller"
 
 const application = Application.start()
 application.register("confirm-modal", ConfirmModalController)
@@ -42,4 +43,4 @@ application.register("filter", FilterController)
 application.register("nav", NavController)
 application.register("toast", ToastController)
 application.register("add-to-playlist", AddToPlaylistController)
-
+application.register("privacy-notice", PrivacyNoticeController)

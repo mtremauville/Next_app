@@ -44,5 +44,7 @@ Rails.application.routes.draw do
     patch "position", to: "movie_positions#update", as: :movie_position
     delete "position", to: "movie_positions#destroy", as: :movie_position_removal
   end
+  get "conditions-generales", to: "legal#terms", as: :terms
+  get "confidentialite", to: "legal#privacy", as: :privacy
   root "pages#home"
 end
