@@ -2,14 +2,19 @@ class SeriesProgress
   def initialize(entry, seasons)
     @seasons = Array(seasons)
     known = @seasons.map(&:number)
-    rows = entry&.persisted? ? entry.episode_progresses.pluck(:season_number, :episode_number, :status) : []
+    rows = entry&.persisted? ? entry.episode_progresses.pluck(:season_number, :episode_number, :status, :position_seconds) : []
+    rows = rows.select { |season, _episode, _status, _position| known.include?(season) }
 
-    @statuses = rows.select { |season, _, _| known.include?(season) }
-                    .to_h { |season, episode, status| [ [ season, episode ], status ] }
+    @statuses = rows.to_h { |season, episode, status, _position| [ [ season, episode ], status ] }
+    @positions = rows.to_h { |season, episode, _status, position| [ [ season, episode ], position ] }.compact
   end
 
   def episode_status(season, episode)
     @statuses.fetch([ season.to_i, episode.to_i ], "to_watch")
+  end
+
+  def episode_position(season, episode)
+    @positions[[ season.to_i, episode.to_i ]]
   end
 
   def season_total(number)

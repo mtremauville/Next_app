@@ -117,7 +117,13 @@
                     <%= button_to "[ Remettre à voir ]", episode_path, method: :patch, params: { status: "to_watch" }, class: "nerv-link-button" %>
                   <% end %>
                 </div>
-
+                <% if status != "watched" %>
+                  <%= render "shared/position_form",
+                        path: series_episode_position_path(tmdb_id: @title.tmdb_id, season: @season_number, episode: episode.number),
+                        removal_path: series_episode_position_removal_path(tmdb_id: @title.tmdb_id, season: @season_number, episode: episode.number),
+                        seconds: @progress.episode_position(@season_number, episode.number),
+                        runtime_minutes: episode.runtime_minutes %>
+                <% end %>
                 <% if episode.guests.any? || episode.crew.any? %>
                   <details class="nerv-episode-credits">
                     <summary>Invités et équipe</summary>

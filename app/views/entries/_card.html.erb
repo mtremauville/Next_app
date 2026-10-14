@@ -24,6 +24,9 @@
         <% if entry.tv? && entry.episodes_total.to_i.positive? %>
           <p class="nerv-card-progress"><%= entry.episodes_watched %>/<%= entry.episodes_total %> épisodes</p>
         <% end %>
+        <% if (text = resume_text(entry)) %>
+          <p class="nerv-card-resume"><%= text %></p>
+        <% end %>
       <% if entry.platform.present? || (show_playlist && entry.playlist) %>
         <ul class="nerv-tags">
           <% if entry.platform.present? %><li><%= entry.platform %></li><% end %>
@@ -48,4 +51,3 @@
           path: entry_path(entry) %>
   </footer>
 </article>
-

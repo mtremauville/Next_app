@@ -33,4 +33,12 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get root_url
     assert_select "a", text: "[ Ajouter le premier titre ]"
   end
+  test "home shows where to resume" do
+    users(:one).entries.create!(title: "Dune", media_type: "movie", status: :watching, position_seconds: 2_520)
+    sign_in users(:one)
+
+    get root_url
+
+    assert_select ".nerv-mini-resume", text: "Reprendre à 42 min"
+  end
 end
