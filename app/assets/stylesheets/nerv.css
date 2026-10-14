@@ -579,3 +579,33 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 
 .nerv-card-resume { margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--amber); }
 .nerv-mini-resume { color: var(--amber); }
+
+.nerv-series-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 7rem minmax(80px, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.nerv-series-row:last-child { border-bottom: none; }
+.nerv-series-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nerv-series-title a { color: inherit; }
+.nerv-series-title a:hover { color: var(--cyan); }
+.nerv-series-count { font-size: 0.8rem; color: var(--muted); text-align: right; }
+
+.nerv-resume-list { list-style: none; margin: 0; padding: 0; }
+.nerv-resume-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.nerv-resume-row:last-child { border-bottom: none; }
+
+@media (max-width: 720px) {
+  .nerv-series-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .nerv-series-row .nerv-bar { grid-column: 1 / -1; }
+}

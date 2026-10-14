@@ -9,6 +9,10 @@
       <p class="nerv-kpi"><%= @stats.watched_count %></p>
     </div>
     <div class="nerv-panel">
+      <h2>Épisodes vus</h2>
+      <p class="nerv-kpi"><%= @stats.episodes_watched %></p>
+    </div>
+    <div class="nerv-panel">
       <h2>Total</h2>
       <p class="nerv-kpi"><%= @stats.total %></p>
     </div>
@@ -19,8 +23,48 @@
     <div class="nerv-panel">
       <h2>Temps estimé</h2>
       <p class="nerv-kpi"><%= format_duration(@stats.watched_minutes) %></p>
+      <p class="nerv-hint">Films vus et épisodes vus</p>
     </div>
   </div>
+
+  <% resume = @stats.resume_items %>
+  <% if resume.any? %>
+    <section class="nerv-panel nerv-section">
+      <h2>À reprendre</h2>
+      <ul class="nerv-resume-list">
+        <% resume.each do |item| %>
+          <li class="nerv-resume-row">
+            <span><%= link_to resume_item_label(item), resume_item_path(item) %></span>
+            <span class="nerv-hint">
+              à <%= format_position(item.position_seconds) %><% if item.remaining_seconds.to_i.positive? %> · il reste <%= format_position(item.remaining_seconds) %><% end %>
+            </span>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <% rows = @stats.series_rows %>
+  <% if rows.any? %>
+    <% counts = @stats.series_counts %>
+    <section class="nerv-panel nerv-section">
+      <h2>Séries</h2>
+      <p class="nerv-hint">
+        En cours : <%= counts["watching"] %> · À voir : <%= counts["to_watch"] %> · Terminées : <%= counts["watched"] %>
+      </p>
+
+      <% rows.each do |row| %>
+        <div class="nerv-series-row">
+          <span class="nerv-series-title status-<%= row.entry.status %>">
+            <span class="nerv-led"></span><%= link_to row.entry.title, entry_target_path(row.entry), title: series_state_label(row.entry.status) %>
+          </span>
+          <span class="nerv-series-count"><%= series_progress_text(row) %></span>
+          <%= render "shared/progress_bar", percent: row.percent, state: row.entry.status,
+                label: "Progression de #{row.entry.title}" %>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
 
   <section class="nerv-panel nerv-section">
     <h2>Par statut</h2>
@@ -46,6 +90,7 @@
       </div>
     <% end %>
   </section>
+
   <% genres = @stats.by_genre %>
   <% if genres.any? %>
     <section class="nerv-panel nerv-section">
