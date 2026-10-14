@@ -32,3 +32,28 @@
     <%= render "devise/shared/links" %>
   </div>
 </section>
+<div data-controller="privacy-notice">
+  <dialog class="nerv-modal nerv-modal--wide" aria-labelledby="privacy-notice-title"
+          data-privacy-notice-target="dialog" data-action="close->privacy-notice#remember">
+    <div class="nerv-panel">
+      <h2 id="privacy-notice-title">Ta vie privée</h2>
+
+      <div class="nerv-modal-body">
+        <p>Next ne garde que ce qui sert au service :</p>
+        <ul>
+          <li>ton email et ton mot de passe (chiffré), si tu crées un compte ;</li>
+          <li>les titres, notes et playlists que tu saisis ;</li>
+          <li>des journaux techniques du serveur (adresse IP, date).</li>
+        </ul>
+        <p>Seuls des cookies indispensables sont utilisés (connexion). Aucune publicité, aucun suivi, aucune mesure d'audience.</p>
+        <p>Les affiches sont chargées depuis TMDB et les polices depuis Google : ces services voient ton adresse IP.</p>
+        <p>Le compte de démonstration est partagé : n'y saisis rien de personnel.</p>
+      </div>
+
+      <div class="nerv-actions">
+        <button type="button" class="nerv-primary" data-action="privacy-notice#close">[ J'ai compris ]</button>
+        <%= link_to "[ Politique de confidentialité ]", privacy_path %>
+      </div>
+    </div>
+  </dialog>
+</div>

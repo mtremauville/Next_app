@@ -14,6 +14,9 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--void);
   color: var(--text);
   font-family: "JetBrains Mono", monospace;
@@ -66,8 +69,7 @@ a { color: var(--cyan); text-decoration: none; }
 }
 .nerv-logo { font-size: 1.5rem; font-weight: 700; }
 
-.nerv-main { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
-
+.nerv-main { width: 100%; max-width: 960px; margin: 0 auto; padding: 1.5rem; flex: 1; }
 .nerv-panel {
   position: relative;
   background: var(--panel);
@@ -609,3 +611,22 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
   .nerv-series-row { grid-template-columns: minmax(0, 1fr) auto; }
   .nerv-series-row .nerv-bar { grid-column: 1 / -1; }
 }
+
+.nerv-footer { margin-top: 2rem; padding: 1.25rem 1.5rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); }
+.nerv-footer-inner { max-width: 960px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 1.5rem; }
+.nerv-footer p { margin: 0; }
+.nerv-footer nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+.nerv-footer a { color: var(--muted); text-decoration: underline; }
+.nerv-footer a:hover { color: var(--cyan); }
+.nerv-footer-credit { flex-basis: 100%; }
+
+.nerv-legal { max-width: 720px; margin: 0 auto; line-height: 1.6; }
+.nerv-legal h2 { margin-top: 2rem; font-size: 1.1rem; }
+.nerv-legal ul { padding-left: 1.25rem; }
+.nerv-legal-updated { color: var(--muted); font-size: 0.85rem; }
+
+.nerv-modal--wide { max-width: 560px; }
+.nerv-modal-body { max-height: 55vh; overflow-y: auto; padding-right: 0.5rem; }
+.nerv-modal-body p,
+.nerv-modal-body ul { margin: 0 0 0.75rem; }
+.nerv-modal-body ul { padding-left: 1.25rem; }
