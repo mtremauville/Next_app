@@ -124,4 +124,12 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_select ".nerv-mini-text a[href=?]", series_path(83867)
   end
+  test "cards show where to resume a movie" do
+    users(:one).entries.create!(title: "Dune", tmdb_id: 438631, media_type: "movie",
+                                status: :watching, position_seconds: 2_520)
+
+    get entries_path
+
+    assert_select ".nerv-card-resume", text: "Reprendre à 42 min"
+  end
 end

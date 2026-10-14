@@ -38,4 +38,23 @@ module EntriesHelper
     hours, mins = minutes.to_i.divmod(60)
     hours.zero? ? "#{mins} min" : "#{hours} h #{mins.to_s.rjust(2, '0')}"
   end
+  def format_position(seconds)
+    hours, rest = seconds.to_i.divmod(3600)
+    minutes, secs = rest.divmod(60)
+
+    parts = []
+    parts << "#{hours} h" if hours.positive?
+    parts << "#{hours.positive? ? minutes.to_s.rjust(2, '0') : minutes} min" if hours.positive? || minutes.positive?
+    parts << "#{secs} s" if secs.positive?
+    parts.join(" ")
+  end
+
+  def resume_text(entry)
+    if entry.tv?
+      point = entry.resume_point
+      "Reprendre S#{point.season_number}E#{point.episode_number} à #{format_position(point.position_seconds)}" if point
+    elsif entry.position_seconds
+      "Reprendre à #{format_position(entry.position_seconds)}"
+    end
+  end
 end

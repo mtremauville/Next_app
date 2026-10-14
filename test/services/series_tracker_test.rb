@@ -73,4 +73,42 @@ class SeriesTrackerTest < ActiveSupport::TestCase
 
     assert_equal 2, entry.reload.episodes_total
   end
+    test "saving a position puts the episode in progress and creates the entry" do
+    assert_difference "Entry.count", 1 do
+      tracker.save_position(1, 1, 1_200)
+    end
+
+    progress = series_entry.episode_progresses.find_by!(season_number: 1, episode_number: 1)
+    assert progress.watching?
+    assert_equal 1_200, progress.position_seconds
+    assert series_entry.watching?
+  end
+
+  test "a position beyond the episode runtime is rejected and creates nothing" do
+    assert_no_difference [ "Entry.count", "EpisodeProgress.count" ] do
+      assert_raises(ActiveRecord::RecordInvalid) { tracker.save_position(1, 1, 3_001) }
+    end
+  end
+
+  test "a watched episode refuses a new position" do
+    tracker.mark_episode(1, 1, "watched")
+
+    assert_raises(SeriesTracker::AlreadyWatched) { tracker.save_position(1, 1, 600) }
+  end
+
+  test "marking an episode as watched forgets its position" do
+    tracker.save_position(1, 1, 600)
+    tracker.mark_episode(1, 1, "watched")
+
+    assert_nil series_entry.episode_progresses.find_by!(episode_number: 1).position_seconds
+  end
+
+  test "clearing a position keeps the episode in progress" do
+    tracker.save_position(1, 1, 600)
+    tracker.clear_position(1, 1)
+
+    progress = series_entry.episode_progresses.find_by!(episode_number: 1)
+    assert_nil progress.position_seconds
+    assert progress.watching?
+  end
 end

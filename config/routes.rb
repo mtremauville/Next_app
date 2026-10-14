@@ -30,10 +30,19 @@ Rails.application.routes.draw do
     delete "playlist", to: "catalog_entries#destroy", as: :catalog_entry_playlist_removal
   end
   scope "series/:tmdb_id", constraints: { tmdb_id: /\d+/ } do
-  patch "seasons/:season/episodes/:episode", to: "series_progresses#episode",
-        as: :series_episode_progress, constraints: { season: /\d+/, episode: /\d+/ }
-  patch "seasons/:season", to: "series_progresses#season",
-        as: :series_season_progress, constraints: { season: /\d+/ }
-end
+    patch "seasons/:season/episodes/:episode", to: "series_progresses#episode",
+          as: :series_episode_progress, constraints: { season: /\d+/, episode: /\d+/ }
+    patch "seasons/:season/episodes/:episode/position", to: "series_progresses#position",
+          as: :series_episode_position, constraints: { season: /\d+/, episode: /\d+/ }
+    delete "seasons/:season/episodes/:episode/position", to: "series_progresses#clear_position",
+          as: :series_episode_position_removal, constraints: { season: /\d+/, episode: /\d+/ }
+    patch "seasons/:season", to: "series_progresses#season",
+          as: :series_season_progress, constraints: { season: /\d+/ }
+  end
+
+  scope "movies/:tmdb_id", constraints: { tmdb_id: /\d+/ } do
+    patch "position", to: "movie_positions#update", as: :movie_position
+    delete "position", to: "movie_positions#destroy", as: :movie_position_removal
+  end
   root "pages#home"
 end
