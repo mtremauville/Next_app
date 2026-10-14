@@ -8,9 +8,9 @@ export default class extends Controller {
   }
 
   apply() {
-    const status = this.statusTarget.value
-    const playlist = this.playlistTarget.value
-    const genre = this.genreTarget.value
+    const status = this.hasStatusTarget ? this.statusTarget.value : ""
+    const playlist = this.hasPlaylistTarget ? this.playlistTarget.value : ""
+    const genre = this.hasGenreTarget ? this.genreTarget.value : ""
     let visible = 0
 
     this.cardTargets.forEach((card) => {
@@ -22,6 +22,6 @@ export default class extends Controller {
       if (match) visible += 1
     })
 
-    this.emptyTarget.hidden = visible > 0
+    if (this.hasEmptyTarget) this.emptyTarget.hidden = visible > 0
   }
 }

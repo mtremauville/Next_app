@@ -26,49 +26,7 @@
     <p data-filter-target="empty" hidden>Aucun titre ne correspond à ces filtres.</p>
 
     <div class="nerv-grid nerv-grid--cards">
-      <% @entries.each do |entry| %>
-        <article class="nerv-panel nerv-card" data-filter-target="card"
-         data-status="<%= entry.status %>" data-playlist-id="<%= entry.playlist_id %>"
-         data-genres="<%= entry.genre_list.join('|') %>">
-
-          <header class="nerv-card-header">
-            <h2 title="<%= entry.title %>"><%= entry.title %><% if entry.year.present? %> <small>(<%= entry.year %>)</small><% end %></h2>
-          </header>
-
-          <div class="nerv-card-content">
-            <div class="nerv-card-poster"><%= poster_tag(entry) %></div>
-
-            <div class="nerv-card-details">
-              <p class="nerv-card-meta status-<%= entry.status %>">
-                <span class="nerv-led"></span><%= status_label(entry.status) %>
-                <% if entry.rating %><span class="nerv-rating">· <%= entry.rating %>/5</span><% end %>
-              </p>
-
-              <% if entry.platform.present? || entry.playlist %>
-                <ul class="nerv-tags">
-                  <% if entry.platform.present? %><li><%= entry.platform %></li><% end %>
-                  <% if entry.playlist %><li><%= entry.playlist.name %></li><% end %>
-                </ul>
-              <% end %>
-
-              <% if entry.genre_list.any? %>
-                <p class="nerv-genres"><%= entry.genre_list.join(" · ") %></p>
-              <% end %>
-            </div>
-          </div>
-
-          <footer class="nerv-card-footer">
-            <% unless entry.watched? %>
-              <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
-            <% end %>
-            <%= link_to "[ Modifier ]", edit_entry_path(entry) %>
-            <%= render "shared/confirm_delete",
-                  title: "Supprimer le titre ?",
-                  message: "« #{entry.title} » sera supprimé de ta liste.",
-                  path: entry_path(entry) %>
-          </footer>
-        </article>
-      <% end %>
+      <%= render partial: "entries/card", collection: @entries, as: :entry %>
     </div>
   </div>
 <% end %>

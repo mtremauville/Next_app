@@ -17,10 +17,14 @@ class CatalogEntriesControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
-  def add_to(playlist)
+  def add_with(params, headers = {})
     Tmdb::TitleDetails.stub :new, ->(*) { FakeDetails.new(dune) } do
-      post catalog_entry_playlist_path(media_type: "movie", tmdb_id: 438631), params: { playlist_id: playlist.id }
+      post catalog_entry_playlist_path(media_type: "movie", tmdb_id: 438631), params: params, headers: headers
     end
+  end
+
+  def add_to(playlist)
+    add_with(playlist_id: playlist.id)
   end
 
   test "creates the entry from TMDB and puts it in the playlist" do
@@ -77,10 +81,45 @@ class CatalogEntriesControllerTest < ActionDispatch::IntegrationTest
     show = Tmdb::TitleDetails::Result.new(tmdb_id: 95396, media_type: "tv", title: "Severance", year: "2022",
                                           genres: [], runtime_minutes: 450)
     Tmdb::TitleDetails.stub :new, ->(*) { FakeDetails.new(show) } do
-      post catalog_entry_playlist_path(media_type: "tv", tmdb_id: 95396), params: { playlist_id: playlists(:sunday_movies).id }
+      post catalog_entry_playlist_path(media_type: "tv", tmdb_id: 95396),
+           params: { playlist_id: playlists(:sunday_movies).id }
     end
 
     assert_redirected_to series_path(95396)
     assert_equal "tv", users(:one).entries.find_by!(tmdb_id: 95396).media_type
+  end
+
+  test "creates a new playlist and puts the title in it" do
+    assert_difference [ "Playlist.count", "Entry.count" ], 1 do
+      add_with(new_playlist_name: "En famille")
+    end
+
+    entry = users(:one).entries.find_by!(tmdb_id: 438631)
+    assert_equal "En famille", entry.playlist.name
+    assert_equal users(:one), entry.playlist.user
+  end
+
+  test "a duplicate playlist name creates nothing" do
+    assert_no_difference [ "Playlist.count", "Entry.count" ] do
+      add_with(new_playlist_name: "Films du dimanche")
+    end
+
+    assert_redirected_to movie_path(438631)
+    assert flash[:alert].present?
+  end
+
+  test "a blank new playlist name asks to choose a playlist" do
+    assert_no_difference [ "Playlist.count", "Entry.count" ] do
+      add_with(playlist_id: "new", new_playlist_name: "   ")
+    end
+
+    assert_equal "Choisis une playlist.", flash[:alert]
+  end
+
+  test "goes back to the page the request came from" do
+    add_with({ playlist_id: playlists(:sunday_movies).id },
+             { "HTTP_REFERER" => catalog_url(type: "movie") })
+
+    assert_redirected_to catalog_url(type: "movie")
   end
 end

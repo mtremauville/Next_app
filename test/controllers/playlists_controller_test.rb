@@ -12,6 +12,14 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2", text: "Liste de l'autre", count: 0
   end
 
+  test "index shows compact playlist cards with a poster strip, not the title lists" do
+    get playlists_path
+
+    assert_select "article.nerv-playlist", minimum: 1
+    assert_select "article.nerv-playlist .nerv-strip"
+    assert_select "article.nerv-playlist li", count: 0
+  end
+
   test "create adds a playlist for the current user" do
     assert_difference -> { users(:one).playlists.count }, 1 do
       post playlists_path, params: { playlist: { name: "Séries" } }
@@ -51,26 +59,32 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "show lists the titles with links to their pages" do
-  playlist = playlists(:sunday_movies)
-  users(:one).entries.create!(title: "Dune", tmdb_id: 438631, media_type: "movie", playlist: playlist)
-  users(:one).entries.create!(title: "Andor", tmdb_id: 83867, media_type: "tv", playlist: playlist)
+  test "show lists the titles as the same cards as the entries list" do
+    playlist = playlists(:sunday_movies)
+    users(:one).entries.create!(title: "Dune", tmdb_id: 438631, media_type: "movie", playlist: playlist)
+    users(:one).entries.create!(title: "Andor", tmdb_id: 83867, media_type: "tv", playlist: playlist)
 
-  get playlist_path(playlist)
+    get playlist_path(playlist)
 
-  assert_response :success
-  assert_select "h1", "Films du dimanche"
-  assert_select "a[href=?]", movie_path(438631)
-  assert_select "a[href=?]", series_path(83867)
-  assert_select "h2", /Films/
-  assert_select "h2", /Séries/
-end
+    assert_response :success
+    assert_select "h1", "Films du dimanche"
+    assert_select "article.nerv-card", 3
+    assert_select "article.nerv-card header a[href=?]", movie_path(438631)
+    assert_select "article.nerv-card header a[href=?]", series_path(83867)
+    assert_select "[data-controller='filter']"
+    assert_select "select[data-filter-target='playlist']", count: 0
+  end
 
   test "a title without a TMDB id links to its edit form" do
     get playlist_path(playlists(:sunday_movies))
 
-    assert_select "a[href=?]", edit_entry_path(entries(:inception))
-    assert_select "h2", text: /Autres/
+    assert_select "article.nerv-card header a[href=?]", edit_entry_path(entries(:inception))
+  end
+
+  test "cards on a playlist page do not repeat the playlist name" do
+    get playlist_path(playlists(:sunday_movies))
+
+    assert_select ".nerv-tags li", text: "Films du dimanche", count: 0
   end
 
   test "an empty playlist shows a message" do

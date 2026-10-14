@@ -18,8 +18,37 @@
 <% else %>
   <h2><%= @query.length >= 2 ? "Résultats" : "Populaires" %></h2>
 
-  <div class="nerv-gallery">
-    <%= render partial: "catalog/item", collection: @result.items, as: :item %>
+  <div data-controller="add-to-playlist">
+    <div class="nerv-gallery">
+      <%= render partial: "catalog/item", collection: @result.items, as: :item %>
+    </div>
+
+    <dialog class="nerv-modal" data-add-to-playlist-target="dialog"
+            data-action="click->add-to-playlist#closeOnBackdrop">
+      <div class="nerv-panel">
+        <h2>Ajouter à une playlist</h2>
+        <p class="nerv-modal-title" data-add-to-playlist-target="title"></p>
+
+        <%= form_with url: catalog_path, method: :post, data: { add_to_playlist_target: "form" } do %>
+          <%= label_tag :playlist_id, "Playlist" %>
+          <%= select_tag :playlist_id,
+                options_from_collection_for_select(@playlists, :id, :name) +
+                tag.option("+ Nouvelle playlist…", value: "new"),
+                data: { add_to_playlist_target: "select", action: "change->add-to-playlist#toggle" } %>
+
+          <div data-add-to-playlist-target="newField" hidden>
+            <%= label_tag :new_playlist_name, "Nom de la nouvelle playlist" %>
+            <%= text_field_tag :new_playlist_name, nil, maxlength: 60, autocomplete: "off", disabled: true,
+                  data: { add_to_playlist_target: "newName" } %>
+          </div>
+
+          <div class="nerv-actions">
+            <%= submit_tag "[ Ajouter ]", name: nil %>
+            <button type="button" data-action="add-to-playlist#close">[ Annuler ]</button>
+          </div>
+        <% end %>
+      </div>
+    </dialog>
   </div>
 
   <nav class="nerv-pagination" aria-label="Pagination">

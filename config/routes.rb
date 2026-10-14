@@ -29,5 +29,11 @@ Rails.application.routes.draw do
     post "playlist", to: "catalog_entries#create", as: :catalog_entry_playlist
     delete "playlist", to: "catalog_entries#destroy", as: :catalog_entry_playlist_removal
   end
+  scope "series/:tmdb_id", constraints: { tmdb_id: /\d+/ } do
+  patch "seasons/:season/episodes/:episode", to: "series_progresses#episode",
+        as: :series_episode_progress, constraints: { season: /\d+/, episode: /\d+/ }
+  patch "seasons/:season", to: "series_progresses#season",
+        as: :series_season_progress, constraints: { season: /\d+/ }
+end
   root "pages#home"
 end

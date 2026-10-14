@@ -500,3 +500,64 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 .nerv-gallery-status { font-size: 0.8rem; }
 .nerv-panel h2 a { color: inherit; }
 .nerv-panel h2 a:hover { color: var(--cyan); }
+.nerv-card-header h2 a { color: inherit; }
+.nerv-card-header h2 a:hover,
+.nerv-mini-text a:hover { color: var(--cyan); }
+.nerv-mini-text a { color: inherit; }
+.nerv-card-poster a,
+.nerv-mini-poster a { display: block; }
+
+.nerv-gallery-card { position: relative; }
+.nerv-gallery-card > .nerv-gallery-item { height: 100%; }
+
+.nerv-add-button {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.8);
+}
+.nerv-add-button:hover,
+.nerv-add-button:focus-visible { background: var(--orange); color: var(--void); }
+
+.nerv-modal-title { color: var(--cyan); margin: 0 0 0.5rem; overflow-wrap: anywhere; }
+.nerv-modal select,
+.nerv-modal input[type="text"] { width: 100%; }
+
+
+.nerv-actions--page { margin: 0.5rem 0 1.5rem; }
+
+.nerv-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem; margin: 0.75rem 0; }
+.nerv-strip .nerv-poster,
+.nerv-strip .nerv-poster-fallback {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  font-size: 1.2rem;
+}
+
+.nerv-series-progress { margin: 1rem 0; }
+.nerv-series-state,
+.nerv-season-state,
+.nerv-episode-state,
+.nerv-season-progress { margin: 0 0 0.4rem; }
+
+.nerv-season-head { margin-bottom: 1rem; }
+
+.nerv-episode-actions { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; margin: 0.5rem 0; }
+.nerv-episode-actions form { margin: 0; }
+
+.nerv-tabs .nerv-led { margin-right: 0.3rem; }
+.nerv-card-progress { margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--muted); }

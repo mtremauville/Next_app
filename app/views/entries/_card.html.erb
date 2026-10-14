@@ -1,0 +1,51 @@
+<% show_playlist = local_assigns.fetch(:show_playlist, true) %>
+<article class="nerv-panel nerv-card" data-filter-target="card"
+         data-status="<%= entry.status %>" data-playlist-id="<%= entry.playlist_id %>"
+         data-genres="<%= entry.genre_list.join('|') %>">
+
+  <header class="nerv-card-header">
+    <h2 title="<%= entry.title %>">
+      <%= link_to entry_target_path(entry) do %><%= entry.title %><% if entry.year.present? %> <small>(<%= entry.year %>)</small><% end %><% end %>
+    </h2>
+  </header>
+
+  <div class="nerv-card-content">
+    <div class="nerv-card-poster">
+      <%= link_to entry_target_path(entry), tabindex: -1, aria: { hidden: true } do %>
+        <%= poster_tag(entry) %>
+      <% end %>
+    </div>
+
+    <div class="nerv-card-details">
+      <p class="nerv-card-meta status-<%= entry.status %>">
+        <span class="nerv-led"></span><%= status_label(entry.status) %>
+        <% if entry.rating %><span class="nerv-rating">· <%= entry.rating %>/5</span><% end %>
+      </p>
+        <% if entry.tv? && entry.episodes_total.to_i.positive? %>
+          <p class="nerv-card-progress"><%= entry.episodes_watched %>/<%= entry.episodes_total %> épisodes</p>
+        <% end %>
+      <% if entry.platform.present? || (show_playlist && entry.playlist) %>
+        <ul class="nerv-tags">
+          <% if entry.platform.present? %><li><%= entry.platform %></li><% end %>
+          <% if show_playlist && entry.playlist %><li><%= entry.playlist.name %></li><% end %>
+        </ul>
+      <% end %>
+
+      <% if entry.genre_list.any? %>
+        <p class="nerv-genres"><%= entry.genre_list.join(" · ") %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <footer class="nerv-card-footer">
+    <% unless entry.watched? || entry.tv? %>
+      <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
+    <% end %>
+    <%= link_to "[ Modifier ]", edit_entry_path(entry) %>
+    <%= render "shared/confirm_delete",
+          title: "Supprimer le titre ?",
+          message: "« #{entry.title} » sera supprimé de ta liste.",
+          path: entry_path(entry) %>
+  </footer>
+</article>
+
