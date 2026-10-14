@@ -8,4 +8,11 @@ class SessionsPageTest < ActionDispatch::IntegrationTest
     assert_select "input[type=email]"
     assert_select "input[type=password]"
   end
+  test "the sign-in page carries the privacy notice" do
+    get new_user_session_path
+
+    assert_select "[data-controller='privacy-notice'] dialog"
+    assert_select "dialog a[href=?]", privacy_path
+    assert_select "dialog button", text: "[ J'ai compris ]"
+  end
 end
