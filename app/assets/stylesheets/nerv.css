@@ -184,7 +184,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 
 .nerv-section { margin-top: 1rem; }
 .nerv-kpi { font-family: "Oswald", sans-serif; font-size: 2.5rem; margin: 0; color: var(--orange); }
-.nerv-bar-row { display: grid; grid-template-columns: 110px 1fr 40px; gap: 0.75rem; align-items: center; margin: 0.5rem 0; }
+.nerv-bar-row { display: grid; grid-template-columns: 150px 1fr 40px; gap: 0.75rem; align-items: center; margin: 0.5rem 0; }
 .nerv-bar { display: block; height: 10px; border: 1px solid var(--border); }
 .nerv-bar-fill { display: block; height: 100%; background: currentColor; transform-origin: left; animation: nerv-grow 0.8s ease-out both; }
 .nerv-bar-value { text-align: right; }

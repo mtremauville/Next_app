@@ -21,12 +21,15 @@
         <span class="nerv-led"></span><%= status_label(entry.status) %>
         <% if entry.rating %><span class="nerv-rating">· <%= entry.rating %>/5</span><% end %>
       </p>
-        <% if entry.tv? && entry.episodes_total.to_i.positive? %>
-          <p class="nerv-card-progress"><%= entry.episodes_watched %>/<%= entry.episodes_total %> épisodes</p>
-        <% end %>
-        <% if (text = resume_text(entry)) %>
-          <p class="nerv-card-resume"><%= text %></p>
-        <% end %>
+
+      <% if entry.tv? && entry.episodes_total.to_i.positive? %>
+        <p class="nerv-card-progress"><%= t("entries.card.episodes", watched: entry.episodes_watched, total: entry.episodes_total) %></p>
+      <% end %>
+
+      <% if (text = resume_text(entry)) %>
+        <p class="nerv-card-resume"><%= text %></p>
+      <% end %>
+
       <% if entry.platform.present? || (show_playlist && entry.playlist) %>
         <ul class="nerv-tags">
           <% if entry.platform.present? %><li><%= entry.platform %></li><% end %>
@@ -42,12 +45,12 @@
 
   <footer class="nerv-card-footer">
     <% unless entry.watched? || entry.tv? %>
-      <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
+      <%= button_to "[ #{t("actions.mark_watched")} ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
     <% end %>
-    <%= link_to "[ Modifier ]", edit_entry_path(entry) %>
+    <%= link_to "[ #{t("actions.edit")} ]", edit_entry_path(entry) %>
     <%= render "shared/confirm_delete",
-          title: "Supprimer le titre ?",
-          message: "« #{entry.title} » sera supprimé de ta liste.",
+          title: t("entries.delete.title"),
+          message: t("entries.delete.message", title: entry.title),
           path: entry_path(entry) %>
   </footer>
 </article>

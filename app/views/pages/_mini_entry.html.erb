@@ -16,6 +16,6 @@
   </div>
 
   <% unless entry.tv? %>
-    <%= button_to "[ Marquer vu ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
+    <%= button_to "[ #{t("actions.mark_watched")} ]", watch_entry_path(entry), method: :patch, class: "nerv-watch" %>
   <% end %>
 </li>

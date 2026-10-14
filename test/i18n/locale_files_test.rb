@@ -9,7 +9,10 @@ class LocaleFilesTest < ActiveSupport::TestCase
   end
 
   def keys_for(locale)
-    flatten(YAML.load_file(Rails.root.join("config/locales/#{locale}.yml")).fetch(locale.to_s))
+    files = Dir[Rails.root.join("config/locales/*.yml")].reject { |file| File.basename(file).start_with?("devise.") }
+    tree = files.filter_map { |file| YAML.load_file(file)[locale.to_s] }.reduce({}) { |merged, part| merged.deep_merge(part) }
+
+    flatten(tree)
   end
 
   test "French and English define the same keys" do

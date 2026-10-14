@@ -1,5 +1,5 @@
 <%= form_with model: entry, class: "nerv-panel", data: { controller: "tmdb-search" } do |f| %>
-<% if entry.errors.any? %>
+  <% if entry.errors.any? %>
     <div class="nerv-errors">
       <% entry.errors.full_messages.each do |message| %>
         <p><%= message %></p>
@@ -7,31 +7,34 @@
     </div>
   <% end %>
 
-  <%= f.label :title, "Titre" %>
+  <%= f.label :title, t("entries.form.title") %>
   <div class="nerv-autocomplete">
     <%= f.text_field :title, autocomplete: "off",
           data: { tmdb_search_target: "input", action: "input->tmdb-search#search" } %>
     <ul class="nerv-suggestions" data-tmdb-search-target="results"></ul>
   </div>
+
   <%= f.hidden_field :tmdb_id, data: { tmdb_search_target: "tmdbId" } %>
   <%= f.hidden_field :media_type, data: { tmdb_search_target: "mediaType" } %>
   <%= f.hidden_field :poster_path, data: { tmdb_search_target: "posterPath" } %>
   <%= f.hidden_field :year, data: { tmdb_search_target: "year" } %>
   <%= f.hidden_field :overview, data: { tmdb_search_target: "overview" } %>
 
-  <%= f.label :status, "Statut" %>
+  <%= f.label :status, t("entries.form.status") %>
   <%= f.select :status, status_options %>
 
-  <%= f.label :platform, "Plateforme" %>
+  <%= f.label :platform, t("entries.form.platform") %>
   <%= f.text_field :platform %>
 
-  <%= f.label :rating, "Note (1 à 5)" %>
+  <%= f.label :rating, t("entries.form.rating") %>
   <%= f.select :rating, (1..5).to_a, include_blank: true %>
-  <%= f.label :playlist_id, "Playlist" %>
+
+  <%= f.label :playlist_id, t("entries.form.playlist") %>
   <%= f.collection_select :playlist_id, current_user.playlists.order(:name), :id, :name,
-      include_blank: "Aucune" %>
+        include_blank: t("entries.form.no_playlist") %>
+
   <div class="nerv-actions">
-    <%= f.submit "[ Enregistrer ]" %>
-    <%= link_to "[ Annuler ]", entries_path %>
+    <%= f.submit "[ #{t("actions.save")} ]" %>
+    <%= link_to "[ #{t("actions.cancel")} ]", entries_path %>
   </div>
 <% end %>
