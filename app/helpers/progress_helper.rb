@@ -1,9 +1,6 @@
 module ProgressHelper
-  STATE_LABELS = { "watched" => "Vu", "watching" => "En cours", "to_watch" => "À voir" }.freeze
-  SERIES_LABELS = { "watched" => "Série terminée", "watching" => "En cours", "to_watch" => "À voir" }.freeze
-
-  def state_label(state) = STATE_LABELS.fetch(state.to_s)
-  def series_state_label(state) = SERIES_LABELS.fetch(state.to_s)
+  def state_label(state) = t("statuses.#{state}")
+  def series_state_label(state) = t("series_states.#{state}")
   def resume_item_label(item)
     return item.entry.title unless item.episode
 

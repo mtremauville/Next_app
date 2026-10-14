@@ -1,10 +1,4 @@
 module EntriesHelper
-  STATUS_LABELS = {
-    "to_watch" => "À voir",
-    "watching" => "En cours",
-    "watched" => "Vu"
-  }.freeze
-
   def entry_target_path(entry)
     return edit_entry_path(entry) if entry.tmdb_id.blank?
 
@@ -16,7 +10,7 @@ module EntriesHelper
   end
 
   def status_label(status)
-    STATUS_LABELS.fetch(status.to_s)
+    t("statuses.#{status}")
   end
 
   def status_options

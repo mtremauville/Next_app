@@ -10,13 +10,14 @@ class CatalogEntriesController < ApplicationController
     authorize entry, :assign_playlist?
 
     if save_in_playlist(entry, playlist)
-      redirect_back_or_to title_path, notice: "« #{entry.title} » est dans la playlist « #{playlist.name} ».", status: :see_other
+      redirect_back_or_to title_path, status: :see_other,
+                          notice: t("flash.catalog.added", title: entry.title, playlist: playlist.name)
     else
       messages = (playlist.errors.full_messages + entry.errors.full_messages).uniq
       redirect_back_or_to title_path, alert: messages.to_sentence, status: :see_other
     end
   rescue Tmdb::Error
-    redirect_back_or_to title_path, alert: "TMDB est indisponible, réessaie dans un instant.", status: :see_other
+    redirect_back_or_to title_path, alert: t("flash.catalog.tmdb_down"), status: :see_other
   end
 
   def destroy
@@ -24,7 +25,7 @@ class CatalogEntriesController < ApplicationController
     authorize entry, :assign_playlist?
     entry.update!(playlist: nil)
 
-    redirect_back_or_to title_path, notice: "Retiré de la playlist, il reste dans ta liste.", status: :see_other
+    redirect_back_or_to title_path, notice: t("flash.catalog.removed"), status: :see_other
   end
 
   private
@@ -49,7 +50,7 @@ class CatalogEntriesController < ApplicationController
 
   def choose_a_playlist
     skip_authorization
-    redirect_back_or_to title_path, alert: "Choisis une playlist.", status: :see_other
+    redirect_back_or_to title_path, alert: t("flash.catalog.choose_playlist"), status: :see_other
   end
 
   def find_or_build_entry

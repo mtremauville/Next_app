@@ -12,7 +12,7 @@ class EntryTest < ActiveSupport::TestCase
   test "requires a title" do
     entry = Entry.new(user: users(:one))
     assert_not entry.valid?
-    assert_includes entry.errors[:title], "can't be blank"
+    assert_includes entry.errors[:title], I18n.t("errors.messages.blank")
   end
 
   test "rejects a rating outside 1..5" do

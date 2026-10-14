@@ -20,6 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def forbidden
-    redirect_back_or_to root_path, alert: "Action non autorisée.", status: :see_other
+    redirect_back_or_to root_path, alert: t("flash.forbidden"), status: :see_other
   end
 end

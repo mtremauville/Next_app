@@ -8,7 +8,7 @@ class PlaylistTest < ActiveSupport::TestCase
   test "requires a name" do
     playlist = Playlist.new(user: users(:one))
     assert_not playlist.valid?
-    assert_includes playlist.errors[:name], "can't be blank"
+    assert_includes playlist.errors[:name], I18n.t("errors.messages.blank")
   end
 
   test "name is unique per user" do

@@ -2,24 +2,29 @@ class ResumePosition
   class Invalid < StandardError; end
 
   def self.parse(hours, minutes, seconds)
-    total = (read(hours, 0..99, "heures") * 3600) +
-            (read(minutes, 0..59, "minutes") * 60) +
-            read(seconds, 0..59, "secondes")
-    raise Invalid, "Saisis une position supérieure à 0." unless total.positive?
+    total = (read(hours, 0..99, :hours) * 3600) +
+            (read(minutes, 0..59, :minutes) * 60) +
+            read(seconds, 0..59, :seconds)
+    raise Invalid, I18n.t("resume_position.positive") unless total.positive?
 
     total
   end
 
-  def self.read(value, range, label)
+  def self.read(value, range, unit)
     text = value.to_s.strip
     return 0 if text.empty?
 
     number = Integer(text, 10)
-    raise Invalid, "Les #{label} doivent être comprises entre #{range.first} et #{range.last}." unless range.cover?(number)
+    return number if range.cover?(number)
 
-    number
+    raise Invalid, I18n.t("resume_position.range", label: unit_label(unit), min: range.first, max: range.last)
   rescue ArgumentError
-    raise Invalid, "Les #{label} doivent être un nombre entier."
+    raise Invalid, I18n.t("resume_position.integer", label: unit_label(unit))
   end
-  private_class_method :read
+
+  def self.unit_label(unit)
+    I18n.t("resume_position.units.#{unit}")
+  end
+
+  private_class_method :read, :unit_label
 end
