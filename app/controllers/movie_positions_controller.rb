@@ -1,6 +1,6 @@
 class MoviePositionsController < ApplicationController
   rescue_from Tmdb::Error do
-    back alert: "TMDB est indisponible, réessaie dans un instant."
+    back alert: t("flash.catalog.tmdb_down")
   end
 
   rescue_from ResumePosition::Invalid do |error|
@@ -15,14 +15,12 @@ class MoviePositionsController < ApplicationController
     entry = find_or_build_entry
     authorize entry, :track?
 
-    if entry.watched?
-      return back(alert: "Ce film est déjà vu : change son statut depuis [ Modifier ] pour enregistrer une position.")
-    end
+    return back(alert: t("flash.progress.movie_already_watched")) if entry.watched?
 
     seconds = ResumePosition.parse(params[:hours], params[:minutes], params[:seconds])
     entry.update!(status: :watching, position_seconds: seconds)
 
-    back notice: "Position enregistrée : #{helpers.format_position(seconds)}."
+    back notice: t("flash.progress.position_saved", position: helpers.format_position(seconds))
   end
 
   def destroy
@@ -30,7 +28,7 @@ class MoviePositionsController < ApplicationController
     authorize entry, :track?
 
     entry.update!(position_seconds: nil)
-    back notice: "Position effacée."
+    back notice: t("flash.progress.position_cleared")
   end
 
   private

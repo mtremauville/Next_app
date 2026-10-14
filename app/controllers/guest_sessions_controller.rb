@@ -5,6 +5,6 @@ class GuestSessionsController < ApplicationController
 
   def create
     sign_in(:user, User.guest)
-    redirect_to root_path, notice: "Bienvenue dans la démo !"
+    redirect_to root_path, notice: t("flash.guest_welcome")
   end
 end

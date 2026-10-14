@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
     <title><%= content_for(:title) || "Next App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -39,38 +39,37 @@
   <body>
     <header class="nerv-header" data-controller="nav" data-action="turbo:before-visit@document->nav#close">
       <%#= link_to "NEXT", (user_signed_in? ? entries_path : root_path), class: "nerv-logo" %>
-<% flash_messages = { "notice" => notice, "alert" => alert }.compact_blank %>
-<% if flash_messages.any? %>
-  <div class="nerv-toasts" data-turbo-temporary>
-    <% flash_messages.each do |kind, message| %>
-      <% is_alert = kind == "alert" %>
-      <div class="nerv-panel nerv-toast <%= "nerv-toast--alert" if is_alert %>"
-           role="<%= is_alert ? "alert" : "status" %>"
-           data-controller="toast" data-toast-delay-value="<%= is_alert ? 8000 : 4000 %>"
-           data-action="mouseenter->toast#pause mouseleave->toast#resume focusin->toast#pause focusout->toast#resume">
-        <p><%= message %></p>
-        <button type="button" class="nerv-link-button" data-action="toast#dismiss" aria-label="Fermer">[ × ]</button>
-        <span class="nerv-toast-bar" style="animation-duration: <%= is_alert ? 8 : 4 %>s"></span>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+      <% flash_messages = { "notice" => notice, "alert" => alert }.compact_blank %>
+      <% if flash_messages.any? %>
+        <div class="nerv-toasts" data-turbo-temporary>
+          <% flash_messages.each do |kind, message| %>
+            <% is_alert = kind == "alert" %>
+            <div class="nerv-panel nerv-toast <%= "nerv-toast--alert" if is_alert %>"
+                role="<%= is_alert ? "alert" : "status" %>"
+                data-controller="toast" data-toast-delay-value="<%= is_alert ? 8000 : 4000 %>"
+                data-action="mouseenter->toast#pause mouseleave->toast#resume focusin->toast#pause focusout->toast#resume">
+              <p><%= message %></p>
+              <button type="button" class="nerv-link-button" data-action="toast#dismiss" aria-label="Fermer">[ × ]</button>
+              <span class="nerv-toast-bar" style="animation-duration: <%= is_alert ? 8 : 4 %>s"></span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
       <%= link_to "NEXT", root_path, class: "nerv-logo" %>
       <% if user_signed_in? %>
         <button type="button" class="nerv-menu-button" data-nav-target="button"
                 data-action="nav#toggle" aria-expanded="false" aria-controls="main-nav">[ Menu ]</button>
         <nav id="main-nav" data-nav-target="menu">
-          <%= link_to "[ Accueil ]", root_path %>
-          <%= link_to "[ Catalogue ]", catalog_path %>
-          <%= link_to "[ Ma liste ]", entries_path %>
-          <%= link_to "[ Playlists ]", playlists_path %>
-          <%= link_to "[ Statistiques ]", dashboard_path %>
-          <%= link_to "[ Nouveau titre ]", new_entry_path %>
-          <%= button_to "[ Déconnexion ]", destroy_user_session_path, method: :delete, class: "nerv-link-button" %>
+      <%= link_to "[ #{t("nav.home")} ]", root_path %>
+      <%= link_to "[ #{t("nav.list")} ]", entries_path %>
+      <%= link_to "[ #{t("nav.playlists")} ]", playlists_path %>
+      <%= link_to "[ #{t("nav.catalog")} ]", catalog_path %>
+      <%= link_to "[ #{t("nav.stats")} ]", dashboard_path %>
+      <%= link_to "[ #{t("nav.new_title")} ]", new_entry_path %>
+      <%= button_to "[ #{t("nav.sign_out")} ]", destroy_user_session_path, method: :delete, class: "nerv-link-button" %>
         </nav>
       <% end %>
     </header>
-
     <main class="nerv-main">
       <%= yield %>
     </main>

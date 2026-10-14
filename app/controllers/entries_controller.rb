@@ -15,7 +15,7 @@ class EntriesController < ApplicationController
     authorize @entry
     enrich_from_tmdb(@entry)
     if @entry.save
-      redirect_to(@entry.playlist ? playlists_path : entries_path, notice: "Titre ajouté.")
+      redirect_to(@entry.playlist ? playlists_path : entries_path, notice: t("flash.entries.created"))
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
 
   def update
     if @entry.update(entry_params)
-      redirect_to entries_path, notice: "Titre mis à jour."
+      redirect_to entries_path, notice: t("flash.entries.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class EntriesController < ApplicationController
 
   def destroy
     @entry.destroy
-    redirect_to entries_path, notice: "Titre supprimé.", status: :see_other
+    redirect_to entries_path, notice: t("flash.entries.destroyed"), status: :see_other
   end
 
   def watch

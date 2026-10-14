@@ -1,14 +1,14 @@
 class SeriesProgressesController < ApplicationController
   rescue_from Tmdb::Error do
-    back alert: "TMDB est indisponible, réessaie dans un instant."
+    back alert: t("flash.catalog.tmdb_down")
   end
 
   rescue_from SeriesTracker::UnknownEpisode do
-    back alert: "Épisode introuvable."
+    back alert: t("flash.progress.unknown_episode")
   end
 
   rescue_from SeriesTracker::AlreadyWatched do
-    back alert: "Cet épisode est déjà vu : remets-le à voir pour enregistrer une position."
+    back alert: t("flash.progress.episode_already_watched")
   end
 
   rescue_from ResumePosition::Invalid do |error|
@@ -34,7 +34,7 @@ class SeriesProgressesController < ApplicationController
     seconds = ResumePosition.parse(params[:hours], params[:minutes], params[:seconds])
     tracker.save_position(params[:season], params[:episode], seconds)
 
-    back notice: "Position enregistrée : #{helpers.format_position(seconds)}."
+    back notice: t("flash.progress.position_saved", position: helpers.format_position(seconds))
   end
 
   def clear_position
@@ -42,7 +42,7 @@ class SeriesProgressesController < ApplicationController
     authorize tracker.entry, :track?
 
     tracker.clear_position(params[:season], params[:episode])
-    back notice: "Position effacée."
+    back notice: t("flash.progress.position_cleared")
   end
 
   private
@@ -52,7 +52,7 @@ class SeriesProgressesController < ApplicationController
     authorize tracker.entry, :track?
 
     status = params[:status].to_s
-    return back(alert: "Statut inconnu.") unless EpisodeProgress.statuses.key?(status)
+    return back(alert: t("flash.progress.unknown_status")) unless EpisodeProgress.statuses.key?(status)
 
     yield tracker, status
     back

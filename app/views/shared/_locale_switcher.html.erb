@@ -1,0 +1,9 @@
+<nav class="nerv-locale" aria-label="<%= t("locale.label") %>">
+  <% I18n.available_locales.each do |locale| %>
+    <%= button_to t("locale.short.#{locale}"), change_locale_path,
+          method: :patch, params: { locale: locale },
+          class: "nerv-locale-button", lang: locale,
+          form: { data: { turbo: "false" } },
+          aria: { pressed: (locale == I18n.locale), label: t("locale.names.#{locale}") } %>
+  <% end %>
+</nav>

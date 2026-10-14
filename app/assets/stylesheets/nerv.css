@@ -630,3 +630,9 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
 .nerv-modal-body p,
 .nerv-modal-body ul { margin: 0 0 0.75rem; }
 .nerv-modal-body ul { padding-left: 1.25rem; }
+
+.nerv-locale { display: inline-flex; gap: 0.25rem; align-items: center; }
+.nerv-locale form { margin: 0; }
+.nerv-locale-button { padding: 0.2rem 0.5rem; font-size: 0.8rem; color: var(--muted); border-color: var(--border); }
+.nerv-locale-button[aria-pressed="true"] { color: var(--void); background: var(--orange); border-color: var(--orange); }
+.nerv-hero .nerv-locale { margin-top: 1rem; }

@@ -25,7 +25,7 @@ class PlaylistsController < ApplicationController
     authorize @playlist
 
     if @playlist.save
-      redirect_to playlists_path, notice: "Playlist créée."
+      redirect_to playlists_path, notice: t("flash.playlists.created")
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class PlaylistsController < ApplicationController
 
   def update
     if @playlist.update(playlist_params)
-      redirect_to playlists_path, notice: "Playlist renommée."
+      redirect_to playlists_path, notice: t("flash.playlists.renamed")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,7 +43,7 @@ class PlaylistsController < ApplicationController
 
   def destroy
     @playlist.destroy
-    redirect_to playlists_path, notice: "Playlist supprimée.", status: :see_other
+    redirect_to playlists_path, notice: t("flash.playlists.destroyed"), status: :see_other
   end
 
   private

@@ -7,6 +7,6 @@ class MoviesController < ApplicationController
     @entry = current_user.entries.find_by(tmdb_id: @title.tmdb_id, media_type: "movie")
     @playlists = current_user.playlists.order(:name)
   rescue Tmdb::Error
-    redirect_to catalog_path, alert: "Ce film est indisponible pour le moment."
+    redirect_to catalog_path, alert: t("flash.catalog.movie_unavailable")
   end
 end
