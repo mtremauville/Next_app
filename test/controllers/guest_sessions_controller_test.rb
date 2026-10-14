@@ -26,4 +26,11 @@ class GuestSessionsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".nerv-toast[data-controller='toast'][role='status']", text: /Bienvenue/
     assert_select ".nerv-toasts[data-turbo-temporary]"
   end
+  test "a message is shown once, as a toast only" do
+    get entries_path
+    follow_redirect!
+
+    assert_select ".nerv-toast", count: 1
+    assert_select ".nerv-flash", count: 0
+  end
 end
