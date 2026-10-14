@@ -1,29 +1,29 @@
 <% if @entries.empty? %>
-  <p>Aucun titre pour l'instant. <%= link_to "[ Ajouter le premier ]", new_entry_path %></p>
+  <p><%= t("entries.index.empty") %> <%= link_to "[ #{t("entries.index.add_first")} ]", new_entry_path %></p>
 <% else %>
   <div data-controller="filter">
     <div class="nerv-filters">
-      <select data-filter-target="status" data-action="change->filter#apply" aria-label="Filtrer par statut">
-        <option value="">Tous les statuts</option>
+      <select data-filter-target="status" data-action="change->filter#apply" aria-label="<%= t("entries.filters.status") %>">
+        <option value=""><%= t("entries.filters.all_statuses") %></option>
         <% status_options.each do |label, value| %>
           <option value="<%= value %>"><%= label %></option>
         <% end %>
       </select>
-      <select data-filter-target="playlist" data-action="change->filter#apply" aria-label="Filtrer par playlist">
-        <option value="">Toutes les playlists</option>
+      <select data-filter-target="playlist" data-action="change->filter#apply" aria-label="<%= t("entries.filters.playlist") %>">
+        <option value=""><%= t("entries.filters.all_playlists") %></option>
         <% current_user.playlists.order(:name).each do |playlist| %>
           <option value="<%= playlist.id %>"><%= playlist.name %></option>
         <% end %>
       </select>
-      <select data-filter-target="genre" data-action="change->filter#apply" aria-label="Filtrer par genre">
-        <option value="">Tous les genres</option>
+      <select data-filter-target="genre" data-action="change->filter#apply" aria-label="<%= t("entries.filters.genre") %>">
+        <option value=""><%= t("entries.filters.all_genres") %></option>
         <% @entries.flat_map(&:genre_list).uniq.sort.each do |genre| %>
           <option value="<%= genre %>"><%= genre %></option>
         <% end %>
       </select>
     </div>
 
-    <p data-filter-target="empty" hidden>Aucun titre ne correspond à ces filtres.</p>
+    <p data-filter-target="empty" hidden><%= t("entries.filters.none") %></p>
 
     <div class="nerv-grid nerv-grid--cards">
       <%= render partial: "entries/card", collection: @entries, as: :entry %>

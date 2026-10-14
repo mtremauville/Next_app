@@ -1,42 +1,42 @@
-<h1>Statistiques</h1>
+<h1><%= t("dashboard.title") %></h1>
 
 <% if @stats.total.zero? %>
-  <p>Ajoute quelques titres pour voir tes statistiques.</p>
+  <p><%= t("dashboard.empty") %></p>
 <% else %>
   <div class="nerv-grid">
     <div class="nerv-panel">
-      <h2>Titres vus</h2>
+      <h2><%= t("dashboard.watched") %></h2>
       <p class="nerv-kpi"><%= @stats.watched_count %></p>
     </div>
     <div class="nerv-panel">
-      <h2>Épisodes vus</h2>
+      <h2><%= t("dashboard.episodes") %></h2>
       <p class="nerv-kpi"><%= @stats.episodes_watched %></p>
     </div>
     <div class="nerv-panel">
-      <h2>Total</h2>
+      <h2><%= t("dashboard.total") %></h2>
       <p class="nerv-kpi"><%= @stats.total %></p>
     </div>
     <div class="nerv-panel">
-      <h2>Note moyenne</h2>
+      <h2><%= t("dashboard.rating") %></h2>
       <p class="nerv-kpi"><%= @stats.average_rating ? "#{@stats.average_rating}/5" : "-" %></p>
     </div>
     <div class="nerv-panel">
-      <h2>Temps estimé</h2>
+      <h2><%= t("dashboard.time") %></h2>
       <p class="nerv-kpi"><%= format_duration(@stats.watched_minutes) %></p>
-      <p class="nerv-hint">Films vus et épisodes vus</p>
+      <p class="nerv-hint"><%= t("dashboard.time_hint") %></p>
     </div>
   </div>
 
   <% resume = @stats.resume_items %>
   <% if resume.any? %>
     <section class="nerv-panel nerv-section">
-      <h2>À reprendre</h2>
+      <h2><%= t("dashboard.resume") %></h2>
       <ul class="nerv-resume-list">
         <% resume.each do |item| %>
           <li class="nerv-resume-row">
             <span><%= link_to resume_item_label(item), resume_item_path(item) %></span>
             <span class="nerv-hint">
-              à <%= format_position(item.position_seconds) %><% if item.remaining_seconds.to_i.positive? %> · il reste <%= format_position(item.remaining_seconds) %><% end %>
+              <%= t("dashboard.resume_at", position: format_position(item.position_seconds)) %><% if item.remaining_seconds.to_i.positive? %> · <%= t("dashboard.resume_left", remaining: format_position(item.remaining_seconds)) %><% end %>
             </span>
           </li>
         <% end %>
@@ -48,9 +48,9 @@
   <% if rows.any? %>
     <% counts = @stats.series_counts %>
     <section class="nerv-panel nerv-section">
-      <h2>Séries</h2>
+      <h2><%= t("dashboard.series") %></h2>
       <p class="nerv-hint">
-        En cours : <%= counts["watching"] %> · À voir : <%= counts["to_watch"] %> · Terminées : <%= counts["watched"] %>
+        <%= t("dashboard.series_counts", watching: counts["watching"], to_watch: counts["to_watch"], watched: counts["watched"]) %>
       </p>
 
       <% rows.each do |row| %>
@@ -60,14 +60,14 @@
           </span>
           <span class="nerv-series-count"><%= series_progress_text(row) %></span>
           <%= render "shared/progress_bar", percent: row.percent, state: row.entry.status,
-                label: "Progression de #{row.entry.title}" %>
+                label: t("dashboard.series_progress", title: row.entry.title) %>
         </div>
       <% end %>
     </section>
   <% end %>
 
   <section class="nerv-panel nerv-section">
-    <h2>Par statut</h2>
+    <h2><%= t("dashboard.by_status") %></h2>
     <% max = [ @stats.by_status.values.max, 1 ].max %>
     <% @stats.by_status.each do |status, count| %>
       <div class="nerv-bar-row">
@@ -79,12 +79,12 @@
   </section>
 
   <section class="nerv-panel nerv-section">
-    <h2>Vus par mois</h2>
+    <h2><%= t("dashboard.by_month") %></h2>
     <% months = @stats.by_month %>
     <% max = [ months.map(&:last).max, 1 ].max %>
     <% months.each do |month, count| %>
       <div class="nerv-bar-row">
-        <span class="nerv-bar-label"><%= month %></span>
+        <span class="nerv-bar-label"><%= l(Date.strptime(month, "%Y-%m"), format: :month_year) %></span>
         <span class="nerv-bar"><span class="nerv-bar-fill status-watched" style="width: <%= (count * 100.0 / max).round %>%"></span></span>
         <span class="nerv-bar-value"><%= count %></span>
       </div>
@@ -94,7 +94,7 @@
   <% genres = @stats.by_genre %>
   <% if genres.any? %>
     <section class="nerv-panel nerv-section">
-      <h2>Genres les plus vus</h2>
+      <h2><%= t("dashboard.genres") %></h2>
       <% max = genres.first.last %>
       <% genres.each do |genre, count| %>
         <div class="nerv-bar-row">

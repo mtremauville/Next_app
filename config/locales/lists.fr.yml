@@ -1,0 +1,110 @@
+fr:
+  date:
+    formats:
+      month_year: "%B %Y"
+
+  activerecord:
+    attributes:
+      entry:
+        title: "Titre"
+        status: "Statut"
+        rating: "Note"
+        platform: "Plateforme"
+        playlist: "Playlist"
+      playlist:
+        name: "Nom"
+
+  actions:
+    delete: "Supprimer"
+    confirm: "Confirmer"
+    cancel: "Annuler"
+    save: "Enregistrer"
+    edit: "Modifier"
+    rename: "Renommer"
+    open: "Ouvrir"
+    add_title: "Ajouter un titre"
+    mark_watched: "Marquer vu"
+
+  home:
+    title: "Accueil"
+    empty_title: "Bienvenue sur Next"
+    empty_text: "Ta liste est vide. Cherche un film ou une série, l'affiche et les genres se remplissent tout seuls."
+    add_first: "Ajouter le premier titre"
+    watched: "Titres vus"
+    in_list: "Dans ta liste"
+    time: "Temps estimé"
+    in_progress: "En cours"
+    nothing_in_progress: "Rien en cours. Lance un titre de la colonne de droite."
+    up_next: "À voir ensuite"
+    nothing_up_next: "Plus rien à voir : ajoute un nouveau titre."
+    see_all: "Voir toute ma liste"
+
+  entries:
+    poster_alt: "Affiche de %{title}"
+    index:
+      empty: "Aucun titre pour l'instant."
+      add_first: "Ajouter le premier"
+    filters:
+      status: "Filtrer par statut"
+      all_statuses: "Tous les statuts"
+      playlist: "Filtrer par playlist"
+      all_playlists: "Toutes les playlists"
+      genre: "Filtrer par genre"
+      all_genres: "Tous les genres"
+      none: "Aucun titre ne correspond à ces filtres."
+    card:
+      episodes: "%{watched}/%{total} épisodes"
+    resume:
+      movie: "Reprendre à %{position}"
+      series: "Reprendre S%{season}E%{episode} à %{position}"
+    delete:
+      title: "Supprimer le titre ?"
+      message: "« %{title} » sera supprimé de ta liste."
+    form:
+      new_title: "Nouveau titre"
+      edit_title: "Modifier le titre"
+      title: "Titre"
+      status: "Statut"
+      platform: "Plateforme"
+      rating: "Note (1 à 5)"
+      playlist: "Playlist"
+      no_playlist: "Aucune"
+
+  playlists:
+    titles:
+      zero: "Aucun titre"
+      one: "%{count} titre"
+      other: "%{count} titres"
+    index:
+      title: "Playlists"
+      new: "Nouvelle playlist"
+      empty: "Aucune playlist pour l'instant. Crée-en une pour organiser tes titres."
+    show:
+      empty: "Cette playlist est vide."
+      empty_hint_html: "Ajoute un titre depuis le %{catalog} ou avec le bouton ci-dessus."
+    form:
+      new_title: "Nouvelle playlist"
+      edit_title: "Renommer la playlist"
+      name: "Nom"
+    delete:
+      title: "Supprimer la playlist ?"
+      message: "« %{name} » sera supprimée. Les titres seront conservés."
+
+  dashboard:
+    title: "Statistiques"
+    empty: "Ajoute quelques titres pour voir tes statistiques."
+    watched: "Titres vus"
+    episodes: "Épisodes vus"
+    total: "Total"
+    rating: "Note moyenne"
+    time: "Temps estimé"
+    time_hint: "Films vus et épisodes vus"
+    resume: "À reprendre"
+    resume_at: "à %{position}"
+    resume_left: "il reste %{remaining}"
+    series: "Séries"
+    series_counts: "En cours : %{watching} · À voir : %{to_watch} · Terminées : %{watched}"
+    series_progress: "Progression de %{title}"
+    by_status: "Par statut"
+    by_month: "Vus par mois"
+    genres: "Genres les plus vus"

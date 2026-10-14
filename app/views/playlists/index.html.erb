@@ -1,15 +1,15 @@
-<h1>Playlists</h1>
+<h1><%= t("playlists.index.title") %></h1>
 
-<p><%= link_to "[ Nouvelle playlist ]", new_playlist_path %></p>
+<p><%= link_to "[ #{t("playlists.index.new")} ]", new_playlist_path %></p>
 
 <% if @playlists.empty? %>
-  <p>Aucune playlist pour l'instant. Crée-en une pour organiser tes titres.</p>
+  <p><%= t("playlists.index.empty") %></p>
 <% else %>
   <div class="nerv-grid">
     <% @playlists.each do |playlist| %>
       <article class="nerv-panel nerv-playlist">
         <h2><%= link_to playlist.name, playlist_path(playlist) %></h2>
-        <p class="nerv-hint"><%= pluralize(playlist.entries.size, "titre") %></p>
+        <p class="nerv-hint"><%= t("playlists.titles", count: playlist.entries.size) %></p>
 
         <% if playlist.entries.any? %>
           <%= link_to playlist_path(playlist), class: "nerv-strip", tabindex: -1, aria: { hidden: true } do %>
@@ -20,12 +20,12 @@
         <% end %>
 
         <div class="nerv-actions">
-          <%= link_to "[ Ouvrir ]", playlist_path(playlist) %>
-          <%= link_to "[ Ajouter un titre ]", new_entry_path(playlist_id: playlist.id) %>
-          <%= link_to "[ Renommer ]", edit_playlist_path(playlist) %>
+          <%= link_to "[ #{t("actions.open")} ]", playlist_path(playlist) %>
+          <%= link_to "[ #{t("actions.add_title")} ]", new_entry_path(playlist_id: playlist.id) %>
+          <%= link_to "[ #{t("actions.rename")} ]", edit_playlist_path(playlist) %>
           <%= render "shared/confirm_delete",
-                title: "Supprimer la playlist ?",
-                message: "« #{playlist.name} » sera supprimée. Les titres seront conservés.",
+                title: t("playlists.delete.title"),
+                message: t("playlists.delete.message", name: playlist.name),
                 path: playlist_path(playlist) %>
         </div>
       </article>
