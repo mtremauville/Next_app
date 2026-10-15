@@ -42,7 +42,7 @@ class SeriesControllerTest < ActionDispatch::IntegrationTest
     episode = Tmdb::SeasonDetails::Episode.new(
       number: 1, name: "Bonne nouvelle", air_date: "2022-02-18", runtime_minutes: 57,
       overview: "Mark commence un nouveau poste", guests: [ Tmdb::TitleDetails::Person.new(name: "Invité", role: "Rôle") ],
-      crew: { "Réalisation" => [ "Ben Stiller" ] }
+      crew: { "director" => [ "Ben Stiller" ] }
     )
     Tmdb::SeasonDetails::Result.new(season_number: 1, name: "Saison 1", episodes: [ episode ])
   end

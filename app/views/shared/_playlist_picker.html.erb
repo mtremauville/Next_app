@@ -1,12 +1,13 @@
 <section class="nerv-panel nerv-picker">
-  <h2>Playlist</h2>
+  <h2><%= t("playlist_picker.title") %></h2>
 
   <% if entry %>
-    <p class="nerv-hint">Dans ta liste : <%= status_label(entry.status) %></p>
+    <p class="nerv-hint"><%= t("playlist_picker.in_list", status: status_label(entry.status)) %></p>
   <% end %>
 
   <% if entry&.playlist %>
-<p>Dans la playlist <strong><%= link_to entry.playlist.name, playlist_path(entry.playlist) %></strong></p>    <%= button_to "[ Retirer de la playlist ]",
+    <p><%= t("playlist_picker.in_playlist_html", name: tag.strong(link_to(entry.playlist.name, playlist_path(entry.playlist)))) %></p>
+    <%= button_to "[ #{t("playlist_picker.remove")} ]",
           catalog_entry_playlist_removal_path(media_type: media_type, tmdb_id: tmdb_id),
           method: :delete, class: "nerv-link-button" %>
   <% end %>
@@ -14,13 +15,13 @@
   <% if playlists.any? %>
     <% in_playlist = entry&.playlist.present? %>
     <%= form_with url: catalog_entry_playlist_path(media_type: media_type, tmdb_id: tmdb_id), method: :post do %>
-      <%= label_tag :playlist_id, in_playlist ? "Déplacer vers" : "Ajouter à une playlist" %>
+      <%= label_tag :playlist_id, in_playlist ? t("playlist_picker.move_to") : t("playlist_picker.add_to") %>
       <%= select_tag :playlist_id, options_from_collection_for_select(playlists, :id, :name, entry&.playlist_id) %>
       <div class="nerv-actions">
-        <%= submit_tag(in_playlist ? "[ Déplacer ]" : "[ Ajouter ]", name: nil) %>
+        <%= submit_tag("[ #{in_playlist ? t("playlist_picker.move") : t("playlist_picker.add")} ]", name: nil) %>
       </div>
     <% end %>
   <% else %>
-    <p class="nerv-hint">Aucune playlist pour l'instant. <%= link_to "[ Créer une playlist ]", new_playlist_path %></p>
+    <p class="nerv-hint"><%= t("playlist_picker.none") %> <%= link_to "[ #{t("playlist_picker.create")} ]", new_playlist_path %></p>
   <% end %>
 </section>

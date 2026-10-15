@@ -2,11 +2,11 @@ module Tmdb
   class SeasonDetails
     GUEST_LIMIT = 8
     CREW_JOBS = {
-      "Director" => "Réalisation",
-      "Writer" => "Scénario",
-      "Screenplay" => "Scénario"
+      "Director" => "director",
+      "Writer" => "writer",
+      "Screenplay" => "writer"
     }.freeze
-    CREW_ORDER = %w[Réalisation Scénario].freeze
+    CREW_ORDER = %w[director writer].freeze
 
     Episode = Struct.new(:number, :name, :air_date, :runtime_minutes, :overview, :still_path,
                          :guests, :crew, keyword_init: true)
@@ -21,7 +21,7 @@ module Tmdb
       season = Integer(season_number.to_s, 10)
       raise ArgumentError, "season must be positive" unless season.positive?
 
-      data = @client.get("/tv/#{id}/season/#{season}", language: "fr-FR")
+      data = @client.get("/tv/#{id}/season/#{season}")
 
       Result.new(
         season_number: season,
@@ -55,14 +55,14 @@ module Tmdb
     def crew_from(episode)
       grouped = {}
       Array(episode["crew"]).each do |member|
-        label = CREW_JOBS[member["job"]]
-        next unless label
+        key = CREW_JOBS[member["job"]]
+        next unless key
 
-        names = (grouped[label] ||= [])
+        names = (grouped[key] ||= [])
         names << member["name"] unless names.include?(member["name"])
       end
 
-      CREW_ORDER.filter_map { |label| [ label, grouped[label] ] if grouped.key?(label) }.to_h
+      CREW_ORDER.filter_map { |key| [ key, grouped[key] ] if grouped.key?(key) }.to_h
     end
   end
 end

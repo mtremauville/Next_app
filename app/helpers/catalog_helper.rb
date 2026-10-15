@@ -8,8 +8,12 @@ module CatalogHelper
   end
 
   def format_air_date(value)
-    Date.iso8601(value).strftime("%d/%m/%Y")
+    l(Date.iso8601(value), format: :air_date)
   rescue ArgumentError, TypeError
     nil
+  end
+
+  def crew_label(key)
+    t("crew.#{key}")
   end
 end

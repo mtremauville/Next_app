@@ -1,9 +1,9 @@
-<p><%= link_to "[ ← Catalogue ]", catalog_path(type: "tv") %></p>
+<p><%= link_to "[ ← #{t("nav.catalog")} ]", catalog_path(type: "tv") %></p>
 
 <article class="nerv-detail">
   <div class="nerv-detail-poster">
     <% if @title.poster_path.present? %>
-      <%= image_tag tmdb_image_url(@title.poster_path, "w500"), alt: "Affiche de #{@title.title}" %>
+      <%= image_tag tmdb_image_url(@title.poster_path, "w500"), alt: t("entries.poster_alt", title: @title.title) %>
     <% else %>
       <div class="nerv-poster-fallback" aria-hidden="true"><%= @title.title.to_s.first.to_s.upcase %></div>
     <% end %>
@@ -12,25 +12,25 @@
   <div class="nerv-detail-main">
     <h1><%= @title.title %><% if @title.year.present? %> <small>(<%= @title.year %>)</small><% end %></h1>
     <% if @title.tagline %><p class="nerv-tagline">// <%= @title.tagline %></p><% end %>
-    <% if @title.creators.any? %><p class="nerv-hint">Créée par <%= @title.creators.join(", ") %></p><% end %>
+    <% if @title.creators.any? %><p class="nerv-hint"><%= t("series.created_by", names: @title.creators.join(", ")) %></p><% end %>
 
     <ul class="nerv-tags">
-      <% if @title.seasons.any? %><li><%= pluralize(@title.seasons.size, "saison") %></li><% end %>
+      <% if @title.seasons.any? %><li><%= t("series.seasons", count: @title.seasons.size) %></li><% end %>
       <% if @title.runtime_minutes %><li>≈ <%= format_duration(@title.runtime_minutes) %></li><% end %>
       <% @title.genres.each do |genre| %><li><%= genre %></li><% end %>
-      <% if @title.rating %><li>TMDB <%= @title.rating %>/10</li><% end %>
+      <% if @title.rating %><li><%= t("title_page.tmdb_rating", rating: @title.rating) %></li><% end %>
     </ul>
 
     <section class="nerv-series-progress">
       <p class="nerv-series-state status-<%= @progress.state %>">
         <span class="nerv-led"></span><%= series_state_label(@progress.state) %>
-        <span class="nerv-hint">· <%= @progress.watched_count %>/<%= @progress.total %> épisodes · <%= @progress.percent %> %</span>
+        <span class="nerv-hint">· <%= t("series.progress", watched: @progress.watched_count, total: @progress.total, percent: @progress.percent) %></span>
       </p>
-      <%= render "shared/progress_bar", percent: @progress.percent, state: @progress.state, label: "Progression de la série" %>
+      <%= render "shared/progress_bar", percent: @progress.percent, state: @progress.state, label: t("series.series_progress_label") %>
     </section>
 
-    <h2>Synopsis</h2>
-    <p><%= @title.overview || "Synopsis indisponible." %></p>
+    <h2><%= t("title_page.synopsis") %></h2>
+    <p><%= @title.overview || t("title_page.no_synopsis") %></p>
 
     <%= render "shared/playlist_picker", entry: @entry, playlists: @playlists,
           media_type: "tv", tmdb_id: @title.tmdb_id %>
@@ -38,40 +38,43 @@
 </article>
 
 <section id="episodes" class="nerv-section">
-  <h2>Épisodes</h2>
+  <h2><%= t("series.episodes") %></h2>
 
   <% if @title.seasons.empty? %>
-    <p class="nerv-hint">Aucune saison disponible.</p>
+    <p class="nerv-hint"><%= t("series.no_seasons") %></p>
   <% else %>
-    <nav class="nerv-tabs" aria-label="Saisons">
+    <nav class="nerv-tabs" aria-label="<%= t("series.seasons_label") %>">
       <% @title.seasons.each do |season| %>
         <% state = @progress.season_state(season.number) %>
         <%= link_to series_path(@title.tmdb_id, season: season.number, anchor: "episodes"),
               class: ("is-active" if season.number == @season_number),
               "aria-current": (season.number == @season_number ? "page" : nil),
-              title: "#{season.name} : #{state_label(state)}" do %><span class="nerv-led status-<%= state %>"></span>[ S<%= season.number %> ]<% end %>
+              title: t("series.season_title", name: season.name, state: state_label(state)) do %><span class="nerv-led status-<%= state %>"></span>[ S<%= season.number %> ]<% end %>
       <% end %>
     </nav>
 
     <% if @season_unavailable %>
-      <p class="nerv-flash nerv-flash--alert">Les épisodes de cette saison sont indisponibles pour le moment.</p>
+      <p class="nerv-flash nerv-flash--alert"><%= t("series.season_unavailable") %></p>
     <% elsif @season %>
       <% season_state = @progress.season_state(@season_number) %>
 
       <div class="nerv-panel nerv-season-head">
         <p class="nerv-season-state status-<%= season_state %>">
-          <span class="nerv-led"></span><strong>Saison <%= @season_number %></strong> : <%= state_label(season_state) %>
+          <span class="nerv-led"></span><%= t("series.season_state_html", number: @season_number, state: state_label(season_state)) %>
         </p>
         <p class="nerv-season-progress nerv-hint">
-          <%= @progress.season_watched(@season_number) %>/<%= @progress.season_total(@season_number) %> épisodes · <%= @progress.season_percent(@season_number) %> %
+          <%= t("series.progress", watched: @progress.season_watched(@season_number),
+                                   total: @progress.season_total(@season_number),
+                                   percent: @progress.season_percent(@season_number)) %>
         </p>
-        <%= render "shared/progress_bar", percent: @progress.season_percent(@season_number), state: season_state, label: "Progression de la saison" %>
+        <%= render "shared/progress_bar", percent: @progress.season_percent(@season_number), state: season_state,
+              label: t("series.season_progress_label") %>
 
         <div class="nerv-episode-actions">
-          <%= button_to "[ Tout marquer vu ]",
+          <%= button_to "[ #{t("series.mark_season_watched")} ]",
                 series_season_progress_path(tmdb_id: @title.tmdb_id, season: @season_number),
                 method: :patch, params: { status: "watched" }, class: "nerv-link-button" %>
-          <%= button_to "[ Tout remettre à voir ]",
+          <%= button_to "[ #{t("series.reset_season")} ]",
                 series_season_progress_path(tmdb_id: @title.tmdb_id, season: @season_number),
                 method: :patch, params: { status: "to_watch" }, class: "nerv-link-button" %>
         </div>
@@ -80,7 +83,7 @@
       <% if @season.overview %><p><%= @season.overview %></p><% end %>
 
       <% if @season.episodes.empty? %>
-        <p class="nerv-hint">Aucun épisode renseigné pour cette saison.</p>
+        <p class="nerv-hint"><%= t("series.no_episodes") %></p>
       <% else %>
         <ol class="nerv-episodes">
           <% @season.episodes.each do |episode| %>
@@ -104,19 +107,20 @@
                   <%= [ format_air_date(episode.air_date), (format_duration(episode.runtime_minutes) if episode.runtime_minutes) ].compact.join(" · ") %>
                 </p>
 
-                <p><%= episode.overview || "Synopsis indisponible." %></p>
+                <p><%= episode.overview || t("title_page.no_synopsis") %></p>
 
                 <div class="nerv-episode-actions">
                   <% episode_path = series_episode_progress_path(tmdb_id: @title.tmdb_id, season: @season_number, episode: episode.number) %>
                   <% if status != "watched" %>
-                    <%= button_to "[ Marquer vu ]", episode_path, method: :patch, params: { status: "watched" }, class: "nerv-link-button" %>
+                    <%= button_to "[ #{t("actions.mark_watched")} ]", episode_path, method: :patch, params: { status: "watched" }, class: "nerv-link-button" %>
                   <% end %>
                   <% if status == "to_watch" %>
-                    <%= button_to "[ En cours ]", episode_path, method: :patch, params: { status: "watching" }, class: "nerv-link-button" %>
+                    <%= button_to "[ #{t("series.in_progress")} ]", episode_path, method: :patch, params: { status: "watching" }, class: "nerv-link-button" %>
                   <% else %>
-                    <%= button_to "[ Remettre à voir ]", episode_path, method: :patch, params: { status: "to_watch" }, class: "nerv-link-button" %>
+                    <%= button_to "[ #{t("series.reset_episode")} ]", episode_path, method: :patch, params: { status: "to_watch" }, class: "nerv-link-button" %>
                   <% end %>
                 </div>
+
                 <% if status != "watched" %>
                   <%= render "shared/position_form",
                         path: series_episode_position_path(tmdb_id: @title.tmdb_id, season: @season_number, episode: episode.number),
@@ -124,14 +128,15 @@
                         seconds: @progress.episode_position(@season_number, episode.number),
                         runtime_minutes: episode.runtime_minutes %>
                 <% end %>
+
                 <% if episode.guests.any? || episode.crew.any? %>
                   <details class="nerv-episode-credits">
-                    <summary>Invités et équipe</summary>
+                    <summary><%= t("series.guests_and_crew") %></summary>
 
                     <% if episode.crew.any? %>
                       <dl class="nerv-crew">
-                        <% episode.crew.each do |label, names| %>
-                          <dt><%= label %></dt>
+                        <% episode.crew.each do |key, names| %>
+                          <dt><%= crew_label(key) %></dt>
                           <dd><%= names.join(", ") %></dd>
                         <% end %>
                       </dl>
