@@ -89,7 +89,7 @@ module Tmdb
 
         Season.new(
           number: number,
-          name: season["name"].presence || "Saison #{number}",
+          name: season["name"].presence || I18n.t("series.fallback_season", number: number),
           episode_count: season["episode_count"],
           year: season["air_date"]&.slice(0, 4)
         )

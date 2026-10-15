@@ -1,38 +1,12 @@
+<% vars = { name: legal_publisher[:name], contact: legal_publisher[:contact], host: legal_publisher[:host],
+            privacy: link_to(t("legal.terms.privacy_link"), privacy_path) } %>
 <article class="nerv-legal">
-  <p><%= link_to "[ ← Retour ]", root_path %></p>
-  <h1>Conditions générales d'utilisation</h1>
-  <p class="nerv-legal-updated">Dernière mise à jour : <%= legal_updated_on %></p>
+  <p><%= link_to "[ ← #{t("legal.back")} ]", root_path %></p>
+  <h1><%= t("legal.terms.title") %></h1>
+  <p class="nerv-legal-updated"><%= t("legal.updated", date: legal_updated_on) %></p>
 
-  <h2>1. Objet</h2>
-  <p>Next est une application web de suivi de films et de séries : statuts, notes, playlists, progression et statistiques. C'est un projet personnel réalisé pour un portfolio, proposé gratuitement.</p>
-
-  <h2>2. Éditeur et hébergeur</h2>
-  <p>Éditeur : <%= legal_publisher[:name] %>, joignable à <%= legal_publisher[:contact] %>.</p>
-  <p>Hébergeur : <%= legal_publisher[:host] %>.</p>
-
-  <h2>3. Accès et compte</h2>
-  <ul>
-    <li>Tu peux essayer Next sans compte avec le compte de démonstration, ou créer un compte avec une adresse email et un mot de passe.</li>
-    <li>Le compte de démonstration est partagé entre tous les visiteurs : n'y saisis aucune donnée personnelle. Son contenu peut être modifié ou réinitialisé à tout moment.</li>
-    <li>Tu es responsable de la confidentialité de ton mot de passe.</li>
-    <li>Next n'est pas destiné aux enfants de moins de 15 ans.</li>
-  </ul>
-
-  <h2>4. Usage acceptable</h2>
-  <p>Tu t'engages à ne pas perturber le service, à ne pas tenter d'accéder aux données d'un autre utilisateur et à ne pas utiliser Next de façon automatisée et abusive.</p>
-
-  <h2>5. Données et images de films et de séries</h2>
-  <p>Les fiches, les affiches et les photos proviennent de TMDB. Elles appartiennent à leurs titulaires. Next utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.</p>
-
-  <h2>6. Propriété intellectuelle</h2>
-  <p>Le code et le design de Next appartiennent à l'éditeur. Tes notes, tes playlists et ta progression restent les tiens.</p>
-
-  <h2>7. Responsabilité</h2>
-  <p>Next est fourni en l'état, sans garantie de disponibilité ni d'exactitude des informations venant de TMDB. Le service peut être interrompu ou modifié à tout moment. L'éditeur ne peut être tenu responsable d'une perte de données ou d'une indisponibilité.</p>
-
-  <h2>8. Données personnelles</h2>
-  <p>Le traitement de tes données est décrit dans la <%= link_to "politique de confidentialité", privacy_path %>.</p>
-
-  <h2>9. Modification et droit applicable</h2>
-  <p>Ces conditions peuvent évoluer ; la date de mise à jour figure en haut de la page. Elles sont soumises au droit français.</p>
+  <% (1..9).each do |number| %>
+    <h2><%= t("legal.terms.s#{number}_title") %></h2>
+    <%= t("legal.terms.s#{number}_body_html", **vars) %>
+  <% end %>
 </article>

@@ -65,4 +65,9 @@ class Tmdb::SeasonDetailsTest < ActiveSupport::TestCase
     assert_raises(ArgumentError) { service.call(95396, "abc") }
     assert_raises(ArgumentError) { service.call(95396, 0) }
   end
+  test "the fallback episode name follows the language" do
+    season = I18n.with_locale(:en) { Tmdb::SeasonDetails.new(client: FakeClient.new(payload)).call(95396, 1) }
+
+    assert_equal "Episode 2", season.episodes.last.name
+  end
 end

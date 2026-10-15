@@ -25,7 +25,7 @@ module Tmdb
 
       Result.new(
         season_number: season,
-        name: data["name"].presence || "Saison #{season}",
+        name: data["name"].presence || I18n.t("series.fallback_season", number: season),
         overview: data["overview"].presence,
         episodes: Array(data["episodes"]).map { |episode| build_episode(episode) }
       )
@@ -36,7 +36,7 @@ module Tmdb
     def build_episode(episode)
       Episode.new(
         number: episode["episode_number"],
-        name: episode["name"].presence || "Épisode #{episode['episode_number']}",
+        name: episode["name"].presence || I18n.t("series.fallback_episode", number: episode["episode_number"]),
         air_date: episode["air_date"].presence,
         runtime_minutes: episode["runtime"].presence,
         overview: episode["overview"].presence,
