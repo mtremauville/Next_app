@@ -6,7 +6,7 @@ class User < ApplicationRecord
   GUEST_EMAIL = "guest@next.tremic.fr".freeze
   def guest? = email == GUEST_EMAIL
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :rememberable, :validatable
 
   def self.guest
     find_by!(email: GUEST_EMAIL)

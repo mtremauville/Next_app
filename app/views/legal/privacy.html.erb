@@ -1,52 +1,13 @@
+<% vars = { name: legal_publisher[:name], contact: legal_publisher[:contact], host: legal_publisher[:host],
+            retention: legal_log_retention,
+            cnil: link_to("CNIL", "https://www.cnil.fr", target: "_blank", rel: "noopener") } %>
 <article class="nerv-legal">
-  <p><%= link_to "[ ← Retour ]", root_path %></p>
-  <h1>Politique de confidentialité</h1>
-  <p class="nerv-legal-updated">Dernière mise à jour : <%= legal_updated_on %></p>
+  <p><%= link_to "[ ← #{t("legal.back")} ]", root_path %></p>
+  <h1><%= t("legal.privacy.title") %></h1>
+  <p class="nerv-legal-updated"><%= t("legal.updated", date: legal_updated_on) %></p>
 
-  <h2>1. Responsable du traitement</h2>
-  <p><%= legal_publisher[:name] %>, joignable à <%= legal_publisher[:contact] %>.</p>
-
-  <h2>2. Données collectées</h2>
-  <ul>
-    <li><strong>Compte</strong> : adresse email et mot de passe (stocké sous forme chiffrée, jamais en clair).</li>
-    <li><strong>Contenu que tu saisis</strong> : titres, statuts, notes, plateformes, playlists, progression des épisodes et positions de reprise.</li>
-    <li><strong>Données techniques</strong> : adresse IP, date et page demandée, enregistrées dans les journaux du serveur.</li>
-  </ul>
-
-  <h2>3. Finalités et bases légales</h2>
-  <ul>
-    <li>Fournir le service que tu utilises (exécution du service) : compte, listes, statistiques.</li>
-    <li>Assurer la sécurité et le bon fonctionnement du serveur (intérêt légitime) : journaux techniques.</li>
-  </ul>
-  <p>Tes données ne sont ni vendues, ni utilisées pour de la publicité ou du profilage.</p>
-
-  <h2>4. Cookies et stockage local</h2>
-  <p>Next n'utilise que des cookies strictement nécessaires, qui ne demandent pas de consentement :</p>
-  <ul>
-    <li><code>locale</code> : mémorise la langue que tu as choisie, pendant un an.</li>
-    <li><code>_next_app_session</code> : maintient ta connexion, supprimé à la fermeture du navigateur.</li>
-    <li><code>remember_user_token</code> : seulement si tu coches « Se souvenir de moi », pour environ deux semaines.</li>
-  </ul>
-  <p>Aucun cookie publicitaire, de mesure d'audience ou de suivi n'est utilisé. Ton navigateur garde aussi une entrée locale indiquant que tu as lu l'information sur la vie privée ; elle ne contient rien d'autre.</p>
-
-  <h2>5. Services tiers</h2>
-  <ul>
-    <li><strong>TMDB</strong> : Next interroge TMDB depuis son serveur pour les fiches. Les affiches sont chargées directement par ton navigateur depuis <code>image.tmdb.org</code> : TMDB reçoit alors ton adresse IP.</li>
-    <li><strong>Google Fonts</strong> : les polices sont chargées depuis les serveurs de Google, qui reçoivent ton adresse IP.</li>
-    <li><strong>Hébergeur</strong> : <%= legal_publisher[:host] %>.</li>
-  </ul>
-
-  <h2>6. Durée de conservation</h2>
-  <ul>
-    <li>Compte et contenu : tant que ton compte existe, puis supprimés à ta demande.</li>
-<li>Journaux techniques du serveur web : <%= legal_publisher[:log_retention] %>. Les journaux de l'application sont limités en taille et renouvelés au fil des déploiements.</li>  </ul>
-
-  <h2>7. Compte de démonstration</h2>
-  <p>Le compte de démonstration est partagé : ne saisis aucune donnée personnelle. Son contenu peut être effacé à tout moment.</p>
-
-  <h2>8. Tes droits</h2>
-  <p>Tu peux demander l'accès, la rectification, l'effacement, la limitation ou la portabilité de tes données, et t'opposer à leur traitement, en écrivant à <%= legal_publisher[:contact] %>. Si tu estimes que tes droits ne sont pas respectés, tu peux saisir la <%= link_to "CNIL", "https://www.cnil.fr", target: "_blank", rel: "noopener" %>.</p>
-
-  <h2>9. Modifications</h2>
-  <p>Cette politique peut évoluer ; la date de mise à jour figure en haut de la page.</p>
+  <% (1..9).each do |number| %>
+    <h2><%= t("legal.privacy.s#{number}_title") %></h2>
+    <%= t("legal.privacy.s#{number}_body_html", **vars) %>
+  <% end %>
 </article>

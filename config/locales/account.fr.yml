@@ -1,0 +1,26 @@
+fr:
+  nav:
+    account: "Mon compte"
+
+  series:
+    fallback_season: "Saison %{number}"
+    fallback_episode: "Épisode %{number}"
+
+  account:
+    sign_up_title: "Créer un compte"
+    sign_up_submit: "Créer mon compte"
+    edit_title: "Mon compte"
+    password_hint: "(%{count} caractères minimum)"
+    password_confirmation: "Confirmation du mot de passe"
+    new_password: "Nouveau mot de passe"
+    keep_password: "(laisse vide pour garder l'actuel)"
+    current_password: "Mot de passe actuel"
+    current_password_hint: "(nécessaire pour confirmer les changements)"
+    update: "Mettre à jour"
+    back: "Retour"
+    cancel_title: "Supprimer mon compte"
+    cancel_text: "Tes titres, tes playlists et ta progression seront supprimés définitivement."
+    cancel_button: "Supprimer mon compte"
+    cancel_confirm: "Supprimer définitivement ton compte et toutes tes données ?"
+    errors_title: "Le formulaire contient des erreurs :"
+    

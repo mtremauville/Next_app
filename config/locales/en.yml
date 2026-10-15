@@ -49,7 +49,6 @@ en:
     remember_me: "Remember me"
     submit: "Sign in"
     sign_up: "Create an account"
-    forgot_password: "Forgot your password?"
 
   privacy_notice:
     title: "Your privacy"

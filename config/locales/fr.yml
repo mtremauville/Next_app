@@ -49,8 +49,7 @@ fr:
     remember_me: "Se souvenir de moi"
     submit: "Se connecter"
     sign_up: "Créer un compte"
-    forgot_password: "Mot de passe oublié ?"
-
+    
   privacy_notice:
     title: "Ta vie privée"
     intro: "Next ne garde que ce qui sert au service :"

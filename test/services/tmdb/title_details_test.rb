@@ -84,4 +84,10 @@ class Tmdb::TitleDetailsTest < ActiveSupport::TestCase
       assert_equal "Saison 2", title.seasons.last.name
       assert_equal "2022", title.seasons.first.year
     end
+  test "the fallback season name follows the language" do
+    payload = { "id" => 1, "name" => "X", "seasons" => [ { "season_number" => 2, "name" => "", "episode_count" => 1 } ] }
+    title = I18n.with_locale(:en) { Tmdb::TitleDetails.new(client: FakeClient.new(payload)).call("tv", 1) }
+
+    assert_equal "Season 2", title.seasons.first.name
+  end
 end

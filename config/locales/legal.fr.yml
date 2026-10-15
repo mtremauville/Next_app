@@ -1,0 +1,99 @@
+fr:
+  date:
+    formats:
+      legal_date: "%d/%m/%Y"
+
+  legal:
+    back: "Retour"
+    updated: "Dernière mise à jour : %{date}"
+    days:
+      one: "%{count} jour"
+      other: "%{count} jours"
+
+    terms:
+      title: "Conditions générales d'utilisation"
+      s1_title: "1. Objet"
+      s1_body_html: |-
+        <p>Next est une application web de suivi de films et de séries : statuts, notes, playlists, progression et statistiques. C'est un projet personnel réalisé pour un portfolio, proposé gratuitement.</p>
+      s2_title: "2. Éditeur et hébergeur"
+      s2_body_html: |-
+        <p>Éditeur : %{name}, joignable à %{contact}.</p>
+        <p>Hébergeur : %{host}.</p>
+      s3_title: "3. Accès et compte"
+      s3_body_html: |-
+        <ul>
+          <li>Tu peux essayer Next sans compte avec le compte de démonstration, ou créer un compte avec une adresse email et un mot de passe.</li>
+          <li>Le compte de démonstration est partagé entre tous les visiteurs : n'y saisis aucune donnée personnelle. Son contenu peut être modifié ou réinitialisé à tout moment.</li>
+          <li>Tu es responsable de la confidentialité de ton mot de passe.</li>
+          <li>Next n'est pas destiné aux enfants de moins de 15 ans.</li>
+        </ul>
+      s4_title: "4. Usage acceptable"
+      s4_body_html: |-
+        <p>Tu t'engages à ne pas perturber le service, à ne pas tenter d'accéder aux données d'un autre utilisateur et à ne pas utiliser Next de façon automatisée et abusive.</p>
+      s5_title: "5. Données et images de films et de séries"
+      s5_body_html: |-
+        <p>Les fiches, les affiches et les photos proviennent de TMDB. Elles appartiennent à leurs titulaires. Next utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.</p>
+      s6_title: "6. Propriété intellectuelle"
+      s6_body_html: |-
+        <p>Le code et le design de Next appartiennent à l'éditeur. Tes notes, tes playlists et ta progression restent les tiens.</p>
+      s7_title: "7. Responsabilité"
+      s7_body_html: |-
+        <p>Next est fourni en l'état, sans garantie de disponibilité ni d'exactitude des informations venant de TMDB. Le service peut être interrompu ou modifié à tout moment. L'éditeur ne peut être tenu responsable d'une perte de données ou d'une indisponibilité.</p>
+      s8_title: "8. Données personnelles"
+      s8_body_html: |-
+        <p>Le traitement de tes données est décrit dans la %{privacy}.</p>
+      privacy_link: "politique de confidentialité"
+      s9_title: "9. Modification et droit applicable"
+      s9_body_html: |-
+        <p>Ces conditions peuvent évoluer ; la date de mise à jour figure en haut de la page. Elles sont soumises au droit français.</p>
+
+    privacy:
+      title: "Politique de confidentialité"
+      s1_title: "1. Responsable du traitement"
+      s1_body_html: |-
+        <p>%{name}, joignable à %{contact}.</p>
+      s2_title: "2. Données collectées"
+      s2_body_html: |-
+        <ul>
+          <li><strong>Compte</strong> : adresse email et mot de passe (stocké sous forme chiffrée, jamais en clair).</li>
+          <li><strong>Contenu que tu saisis</strong> : titres, statuts, notes, plateformes, playlists, progression des épisodes et positions de reprise.</li>
+          <li><strong>Données techniques</strong> : adresse IP, date et page demandée, enregistrées dans les journaux du serveur.</li>
+        </ul>
+      s3_title: "3. Finalités et bases légales"
+      s3_body_html: |-
+        <ul>
+          <li>Fournir le service que tu utilises (exécution du service) : compte, listes, statistiques.</li>
+          <li>Assurer la sécurité et le bon fonctionnement du serveur (intérêt légitime) : journaux techniques.</li>
+        </ul>
+        <p>Tes données ne sont ni vendues, ni utilisées pour de la publicité ou du profilage.</p>
+      s4_title: "4. Cookies et stockage local"
+      s4_body_html: |-
+        <p>Next n'utilise que des cookies strictement nécessaires, qui ne demandent pas de consentement :</p>
+        <ul>
+          <li><code>_next_app_session</code> : maintient ta connexion, supprimé à la fermeture du navigateur.</li>
+          <li><code>remember_user_token</code> : seulement si tu coches « Se souvenir de moi », pour environ deux semaines.</li>
+          <li><code>locale</code> : mémorise la langue que tu as choisie, pendant un an.</li>
+        </ul>
+        <p>Aucun cookie publicitaire, de mesure d'audience ou de suivi n'est utilisé. Ton navigateur garde aussi une entrée locale indiquant que tu as lu l'information sur la vie privée ; elle ne contient rien d'autre.</p>
+      s5_title: "5. Services tiers"
+      s5_body_html: |-
+        <ul>
+          <li><strong>TMDB</strong> : Next interroge TMDB depuis son serveur pour les fiches. Les affiches sont chargées directement par ton navigateur depuis <code>image.tmdb.org</code> : TMDB reçoit alors ton adresse IP.</li>
+          <li><strong>Google Fonts</strong> : les polices sont chargées depuis les serveurs de Google, qui reçoivent ton adresse IP.</li>
+          <li><strong>Hébergeur</strong> : %{host}.</li>
+        </ul>
+      s6_title: "6. Durée de conservation"
+      s6_body_html: |-
+        <ul>
+          <li>Compte et contenu : tant que ton compte existe, puis supprimés à ta demande ou depuis la page « Mon compte ».</li>
+          <li>Journaux techniques du serveur web : %{retention}. Les journaux de l'application sont limités en taille et renouvelés au fil des déploiements.</li>
+        </ul>
+      s7_title: "7. Compte de démonstration"
+      s7_body_html: |-
+        <p>Le compte de démonstration est partagé : ne saisis aucune donnée personnelle. Son contenu peut être effacé à tout moment.</p>
+      s8_title: "8. Tes droits"
+      s8_body_html: |-
+        <p>Tu peux demander l'accès, la rectification, l'effacement, la limitation ou la portabilité de tes données, et t'opposer à leur traitement, en écrivant à %{contact}. Si tu estimes que tes droits ne sont pas respectés, tu peux saisir la %{cnil}.</p>
+      s9_title: "9. Modifications"
+      s9_body_html: |-
+        <p>Cette politique peut évoluer ; la date de mise à jour figure en haut de la page.</p>

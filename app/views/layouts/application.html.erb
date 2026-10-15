@@ -66,6 +66,9 @@
       <%= link_to "[ #{t("nav.catalog")} ]", catalog_path %>
       <%= link_to "[ #{t("nav.stats")} ]", dashboard_path %>
       <%= link_to "[ #{t("nav.new_title")} ]", new_entry_path %>
+      <% unless current_user.guest? %>
+        <%= link_to "[ #{t("nav.account")} ]", edit_user_registration_path %>
+      <% end %>
       <%= button_to "[ #{t("nav.sign_out")} ]", destroy_user_session_path, method: :delete, class: "nerv-link-button" %>
         </nav>
       <% end %>
