@@ -2,13 +2,13 @@ module Tmdb
   class TitleDetails
     CAST_LIMIT = 12
     CREW_JOBS = {
-      "Director" => "Réalisation",
-      "Screenplay" => "Scénario",
-      "Writer" => "Scénario",
-      "Original Music Composer" => "Musique",
-      "Director of Photography" => "Photographie"
+      "Director" => "director",
+      "Screenplay" => "writer",
+      "Writer" => "writer",
+      "Original Music Composer" => "composer",
+      "Director of Photography" => "cinematography"
     }.freeze
-    CREW_ORDER = %w[Réalisation Scénario Musique Photographie].freeze
+    CREW_ORDER = %w[director writer composer cinematography].freeze
 
     Person = Struct.new(:name, :role, :photo_path, keyword_init: true)
     Season = Struct.new(:number, :name, :episode_count, :year, keyword_init: true)
@@ -24,7 +24,7 @@ module Tmdb
       raise ArgumentError, "unknown media type" unless %w[movie tv].include?(media_type)
 
       id = Integer(tmdb_id.to_s, 10)
-      data = @client.get("/#{media_type}/#{id}", language: "fr-FR", append_to_response: "credits")
+      data = @client.get("/#{media_type}/#{id}", append_to_response: "credits")
       build(data, media_type)
     end
 
@@ -53,20 +53,6 @@ module Tmdb
       )
     end
 
-    def seasons_from(data)
-      Array(data["seasons"]).filter_map do |season|
-        number = season["season_number"].to_i
-        next unless number.positive?
-
-        Season.new(
-          number: number,
-          name: season["name"].presence || "Saison #{number}",
-          episode_count: season["episode_count"],
-          year: season["air_date"]&.slice(0, 4)
-        )
-      end
-    end
-
     def runtime_for(data, media_type)
       if media_type == "movie"
         data["runtime"].presence
@@ -86,14 +72,28 @@ module Tmdb
     def crew_from(credits)
       grouped = {}
       Array(credits["crew"]).each do |member|
-        label = CREW_JOBS[member["job"]]
-        next unless label
+        key = CREW_JOBS[member["job"]]
+        next unless key
 
-        names = (grouped[label] ||= [])
+        names = (grouped[key] ||= [])
         names << member["name"] unless names.include?(member["name"])
       end
 
-      CREW_ORDER.filter_map { |label| [ label, grouped[label] ] if grouped.key?(label) }.to_h
+      CREW_ORDER.filter_map { |key| [ key, grouped[key] ] if grouped.key?(key) }.to_h
+    end
+
+    def seasons_from(data)
+      Array(data["seasons"]).filter_map do |season|
+        number = season["season_number"].to_i
+        next unless number.positive?
+
+        Season.new(
+          number: number,
+          name: season["name"].presence || I18n.t("series.fallback_season", number: number),
+          episode_count: season["episode_count"],
+          year: season["air_date"]&.slice(0, 4)
+        )
+      end
     end
   end
 end

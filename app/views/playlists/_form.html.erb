@@ -7,11 +7,11 @@
     </div>
   <% end %>
 
-  <%= f.label :name, "Nom" %>
+  <%= f.label :name, t("playlists.form.name") %>
   <%= f.text_field :name %>
 
   <div class="nerv-actions">
-    <%= f.submit "[ Enregistrer ]" %>
-    <%= link_to "[ Annuler ]", playlists_path %>
+    <%= f.submit "[ #{t("actions.save")} ]" %>
+    <%= link_to "[ #{t("actions.cancel")} ]", playlists_path %>
   </div>
 <% end %>

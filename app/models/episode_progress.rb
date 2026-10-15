@@ -20,6 +20,6 @@ class EpisodeProgress < ApplicationRecord
     return if position_seconds.blank? || runtime_minutes.blank?
     return if position_seconds <= runtime_minutes * 60
 
-    errors.add(:base, "La position dépasse la durée de l'épisode (#{runtime_minutes} min).")
+    errors.add(:base, :position_exceeds_episode, minutes: runtime_minutes)
   end
 end

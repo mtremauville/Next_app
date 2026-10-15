@@ -1,9 +1,9 @@
-<p><%= link_to "[ ← Catalogue ]", catalog_path %></p>
+<p><%= link_to "[ ← #{t("nav.catalog")} ]", catalog_path %></p>
 
 <article class="nerv-detail">
   <div class="nerv-detail-poster">
     <% if @title.poster_path.present? %>
-      <%= image_tag tmdb_image_url(@title.poster_path, "w500"), alt: "Affiche de #{@title.title}" %>
+      <%= image_tag tmdb_image_url(@title.poster_path, "w500"), alt: t("entries.poster_alt", title: @title.title) %>
     <% else %>
       <div class="nerv-poster-fallback" aria-hidden="true"><%= @title.title.to_s.first.to_s.upcase %></div>
     <% end %>
@@ -16,14 +16,15 @@
     <ul class="nerv-tags">
       <% if @title.runtime_minutes %><li><%= format_duration(@title.runtime_minutes) %></li><% end %>
       <% @title.genres.each do |genre| %><li><%= genre %></li><% end %>
-      <% if @title.rating %><li>TMDB <%= @title.rating %>/10</li><% end %>
+      <% if @title.rating %><li><%= t("title_page.tmdb_rating", rating: @title.rating) %></li><% end %>
     </ul>
 
-    <h2>Synopsis</h2>
-    <p><%= @title.overview || "Synopsis indisponible." %></p>
+    <h2><%= t("title_page.synopsis") %></h2>
+    <p><%= @title.overview || t("title_page.no_synopsis") %></p>
 
     <%= render "shared/playlist_picker", entry: @entry, playlists: @playlists,
           media_type: "movie", tmdb_id: @title.tmdb_id %>
+
     <% unless @entry&.watched? %>
       <%= render "shared/position_form",
             path: movie_position_path(tmdb_id: @title.tmdb_id),
@@ -33,4 +34,5 @@
     <% end %>
   </div>
 </article>
+
 <%= render "shared/credits", title: @title %>

@@ -1,0 +1,105 @@
+fr:
+  locale:
+    label: "Langue"
+    names:
+      fr: "Français"
+      en: "English"
+    short:
+      fr: "FR"
+      en: "EN"
+
+  common:
+    close: "Fermer"
+
+  nav:
+    home: "Accueil"
+    list: "Ma liste"
+    playlists: "Playlists"
+    catalog: "Catalogue"
+    stats: "Statistiques"
+    new_title: "Nouveau titre"
+    sign_out: "Déconnexion"
+    menu: "Menu"
+
+  statuses:
+    to_watch: "À voir"
+    watching: "En cours"
+    watched: "Vu"
+
+  series_states:
+    to_watch: "À voir"
+    watching: "En cours"
+    watched: "Série terminée"
+
+  footer:
+    legal_label: "Informations légales"
+    copyright: "© %{year} Next · projet de portfolio"
+    terms: "Conditions générales"
+    privacy: "Confidentialité"
+    credit_html: "Données et affiches fournies par %{tmdb}. Ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB."
+
+  auth:
+    tagline: "Pour tout ce qui ne veut pas être oublié"
+    pitch: "Ta watchlist de films et séries : statut, note, playlists et statistiques."
+    try_demo: "Essayer sans compte"
+    demo_hint: "Aucune inscription : une démo prête à explorer."
+    sign_in: "Connexion"
+    email: "Email"
+    password: "Mot de passe"
+    remember_me: "Se souvenir de moi"
+    submit: "Se connecter"
+    sign_up: "Créer un compte"
+    
+  privacy_notice:
+    title: "Ta vie privée"
+    intro: "Next ne garde que ce qui sert au service :"
+    item_account: "ton email et ton mot de passe (chiffré), si tu crées un compte ;"
+    item_content: "les titres, notes et playlists que tu saisis ;"
+    item_logs: "des journaux techniques du serveur (adresse IP, date)."
+    cookies: "Seuls des cookies indispensables sont utilisés (connexion et choix de la langue). Aucune publicité, aucun suivi, aucune mesure d'audience."
+    third_parties: "Les affiches sont chargées depuis TMDB et les polices depuis Google : ces services voient ton adresse IP."
+    demo: "Le compte de démonstration est partagé : n'y saisis rien de personnel."
+    ok: "J'ai compris"
+    policy: "Politique de confidentialité"
+
+  flash:
+    forbidden: "Action non autorisée."
+    guest_welcome: "Bienvenue dans la démo !"
+    guest_locked: "Le compte de démonstration ne peut pas être modifié."
+    entries:
+      created: "Titre ajouté."
+      updated: "Titre mis à jour."
+      destroyed: "Titre supprimé."
+    playlists:
+      created: "Playlist créée."
+      renamed: "Playlist renommée."
+      destroyed: "Playlist supprimée."
+    catalog:
+      added: "« %{title} » est dans la playlist « %{playlist} »."
+      removed: "Retiré de la playlist, il reste dans ta liste."
+      choose_playlist: "Choisis une playlist."
+      tmdb_down: "TMDB est indisponible, réessaie dans un instant."
+      movie_unavailable: "Ce film est indisponible pour le moment."
+      series_unavailable: "Cette série est indisponible pour le moment."
+    progress:
+      unknown_status: "Statut inconnu."
+      unknown_episode: "Épisode introuvable."
+      episode_already_watched: "Cet épisode est déjà vu : remets-le à voir pour enregistrer une position."
+      movie_already_watched: "Ce film est déjà vu : change son statut depuis [ Modifier ] pour enregistrer une position."
+      position_saved: "Position enregistrée : %{position}."
+      position_cleared: "Position effacée."
+
+  resume_position:
+    positive: "Saisis une position supérieure à 0."
+    range: "Les %{label} doivent être comprises entre %{min} et %{max}."
+    integer: "Les %{label} doivent être un nombre entier."
+    units:
+      hours: "heures"
+      minutes: "minutes"
+      seconds: "secondes"
+
+  errors:
+    messages:
+      other_user: "doit appartenir au même utilisateur"
+      position_exceeds_movie: "La position dépasse la durée du film (%{minutes} min)."
+      position_exceeds_episode: "La position dépasse la durée de l'épisode (%{minutes} min)."

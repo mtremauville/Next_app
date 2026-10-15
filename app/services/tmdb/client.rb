@@ -5,6 +5,7 @@ module Tmdb
   class Client
     BASE_URL = "https://api.themoviedb.org/3".freeze
     CACHE_TTL = 6.hours
+    LANGUAGES = { fr: "fr-FR", en: "en-US" }.freeze
 
     def initialize(token: self.class.default_token)
       @token = token
@@ -15,6 +16,7 @@ module Tmdb
     end
 
     def get(path, params = {})
+      params = params.merge(language: LANGUAGES.fetch(I18n.locale, "en-US"))
       key = [ "tmdb", path, params.sort_by { |name, _| name.to_s } ]
       Rails.cache.fetch(key, expires_in: CACHE_TTL) { request(path, params) }
     end

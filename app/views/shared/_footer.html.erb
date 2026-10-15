@@ -1,16 +1,16 @@
 <footer class="nerv-footer">
   <div class="nerv-footer-inner">
-    <p>© <%= Date.current.year %> Next · projet de portfolio</p>
+    <p><%= t("footer.copyright", year: Date.current.year) %></p>
 
-    <nav aria-label="Informations légales">
-      <%= link_to "Conditions générales", terms_path %>
-      <%= link_to "Confidentialité", privacy_path %>
+    <nav aria-label="<%= t("footer.legal_label") %>">
+      <%= link_to t("footer.terms"), terms_path %>
+      <%= link_to t("footer.privacy"), privacy_path %>
     </nav>
 
+    <%= render "shared/locale_switcher" %>
+
     <p class="nerv-footer-credit">
-      Données et affiches fournies par
-      <%= link_to "TMDB", "https://www.themoviedb.org", target: "_blank", rel: "noopener" %>.
-      Ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.
+      <%= t("footer.credit_html", tmdb: link_to("TMDB", "https://www.themoviedb.org", target: "_blank", rel: "noopener")) %>
     </p>
   </div>
 </footer>

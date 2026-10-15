@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "pages/home"
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -46,5 +46,6 @@ Rails.application.routes.draw do
   end
   get "conditions-generales", to: "legal#terms", as: :terms
   get "confidentialite", to: "legal#privacy", as: :privacy
+  patch "locale", to: "locales#update", as: :change_locale
   root "pages#home"
 end

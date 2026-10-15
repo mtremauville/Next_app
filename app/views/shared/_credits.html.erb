@@ -1,9 +1,9 @@
 <% if title.crew.any? %>
   <section class="nerv-panel nerv-section">
-    <h2>Équipe technique</h2>
+    <h2><%= t("title_page.crew") %></h2>
     <dl class="nerv-crew">
-      <% title.crew.each do |label, names| %>
-        <dt><%= label %></dt>
+      <% title.crew.each do |key, names| %>
+        <dt><%= crew_label(key) %></dt>
         <dd><%= names.join(", ") %></dd>
       <% end %>
     </dl>
@@ -12,7 +12,7 @@
 
 <% if title.cast.any? %>
   <section class="nerv-section">
-    <h2>Casting</h2>
+    <h2><%= t("title_page.cast") %></h2>
     <ul class="nerv-cast">
       <% title.cast.each do |person| %>
         <li class="nerv-cast-item nerv-panel">

@@ -1,59 +1,61 @@
 <section class="nerv-auth">
   <div class="nerv-hero">
-    <h1>Ta watchlist, enfin organisée</h1>
-    <p class="nerv-tagline">// Pour tout ce qui ne veut pas être oublié</p>
-    <p>Ta watchlist de films et séries : statut, note, playlists et statistiques.</p>
-    <%= button_to "[ Essayer sans compte ]", guest_login_path, method: :post, class: "nerv-primary" %>
-    <p class="nerv-hint">Aucune inscription : une démo prête à explorer.</p>
+    <h1>Next</h1>
+    <p class="nerv-tagline">// <%= t("auth.tagline") %></p>
+    <p><%= t("auth.pitch") %></p>
+    <%= button_to "[ #{t("auth.try_demo")} ]", guest_login_path, method: :post, class: "nerv-primary" %>
+    <p class="nerv-hint"><%= t("auth.demo_hint") %></p>
+    <%= render "shared/locale_switcher" %>
   </div>
 
   <div class="nerv-panel nerv-auth-form">
-    <h2>Connexion</h2>
+    <h2><%= t("auth.sign_in") %></h2>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <%= f.label :email, "Email" %>
+      <%= f.label :email, t("auth.email") %>
       <%= f.email_field :email, autocomplete: "email" %>
 
-      <%= f.label :password, "Mot de passe" %>
+      <%= f.label :password, t("auth.password") %>
       <%= f.password_field :password, autocomplete: "current-password" %>
 
       <% if devise_mapping.rememberable? %>
         <div class="nerv-check">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me, "Se souvenir de moi" %>
+          <%= f.label :remember_me, t("auth.remember_me") %>
         </div>
       <% end %>
 
       <div class="nerv-actions">
-        <%= f.submit "[ Se connecter ]" %>
+        <%= f.submit "[ #{t("auth.submit")} ]" %>
       </div>
     <% end %>
 
     <%= render "devise/shared/links" %>
   </div>
 </section>
+
 <div data-controller="privacy-notice">
   <dialog class="nerv-modal nerv-modal--wide" aria-labelledby="privacy-notice-title"
           data-privacy-notice-target="dialog" data-action="close->privacy-notice#remember">
     <div class="nerv-panel">
-      <h2 id="privacy-notice-title">Ta vie privée</h2>
+      <h2 id="privacy-notice-title"><%= t("privacy_notice.title") %></h2>
 
       <div class="nerv-modal-body">
-        <p>Next ne garde que ce qui sert au service :</p>
+        <p><%= t("privacy_notice.intro") %></p>
         <ul>
-          <li>ton email et ton mot de passe (chiffré), si tu crées un compte ;</li>
-          <li>les titres, notes et playlists que tu saisis ;</li>
-          <li>des journaux techniques du serveur (adresse IP, date).</li>
+          <li><%= t("privacy_notice.item_account") %></li>
+          <li><%= t("privacy_notice.item_content") %></li>
+          <li><%= t("privacy_notice.item_logs") %></li>
         </ul>
-        <p>Seuls des cookies indispensables sont utilisés (connexion). Aucune publicité, aucun suivi, aucune mesure d'audience.</p>
-        <p>Les affiches sont chargées depuis TMDB et les polices depuis Google : ces services voient ton adresse IP.</p>
-        <p>Le compte de démonstration est partagé : n'y saisis rien de personnel.</p>
+        <p><%= t("privacy_notice.cookies") %></p>
+        <p><%= t("privacy_notice.third_parties") %></p>
+        <p><%= t("privacy_notice.demo") %></p>
       </div>
 
       <div class="nerv-actions">
-        <button type="button" class="nerv-primary" data-action="privacy-notice#close">[ J'ai compris ]</button>
-        <%= link_to "[ Politique de confidentialité ]", privacy_path %>
+        <button type="button" class="nerv-primary" data-action="privacy-notice#close">[ <%= t("privacy_notice.ok") %> ]</button>
+        <%= link_to "[ #{t("privacy_notice.policy")} ]", privacy_path %>
       </div>
     </div>
-  </dialog>
+  </div>
 </div>

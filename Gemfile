@@ -64,3 +64,6 @@ gem "vite_rails", "~> 3.11"
 gem "ruby_llm", "~> 2.1"
 
 gem "minitest-mock", "~> 5.27", group: :test
+
+gem "rails-i18n", "~> 8.1"
+gem "devise-i18n", "~> 1.16"

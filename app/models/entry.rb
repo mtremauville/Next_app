@@ -54,7 +54,7 @@ class Entry < ApplicationRecord
   def playlist_belongs_to_same_user
     return if playlist.nil? || playlist.user_id == user_id
 
-    errors.add(:playlist, "must belong to the same user")
+    errors.add(:playlist, :other_user)
   end
 
   def set_watched_at
@@ -69,6 +69,6 @@ class Entry < ApplicationRecord
     return if tv? || position_seconds.blank? || runtime_minutes.blank?
     return if position_seconds <= runtime_minutes * 60
 
-    errors.add(:base, "La position dépasse la durée du film (#{runtime_minutes} min).")
+    errors.add(:base, :position_exceeds_movie, minutes: runtime_minutes)
   end
 end

@@ -1,0 +1,27 @@
+en:
+  nav:
+    account: "My account"
+
+  series:
+    fallback_season: "Season %{number}"
+    fallback_episode: "Episode %{number}"
+
+  account:
+    sign_up_title: "Create an account"
+    sign_up_submit: "Create my account"
+    edit_title: "My account"
+    password_hint: "(%{count} characters minimum)"
+    password_confirmation: "Password confirmation"
+    new_password: "New password"
+    keep_password: "(leave blank to keep the current one)"
+    current_password: "Current password"
+    current_password_hint: "(needed to confirm the changes)"
+    update: "Update"
+    back: "Back"
+    cancel_title: "Delete my account"
+    cancel_text: "Your titles, your playlists and your progress will be permanently deleted."
+    cancel_button: "Delete my account"
+    cancel_confirm: "Permanently delete your account and all your data?"
+    errors_title: "The form contains errors:"
+
+    

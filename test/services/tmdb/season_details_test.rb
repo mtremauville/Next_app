@@ -47,7 +47,7 @@ class Tmdb::SeasonDetailsTest < ActiveSupport::TestCase
     assert_equal "Mark commence", first.overview
     assert_equal 57, first.runtime_minutes
     assert_equal 8, first.guests.size
-    assert_equal({ "Réalisation" => [ "Ben Stiller" ], "Scénario" => [ "Dan Erickson" ] }, first.crew)
+    assert_equal({ "director" => [ "Ben Stiller" ], "writer" => [ "Dan Erickson" ] }, first.crew)
   end
 
   test "an episode without a name or synopsis gets safe defaults" do
@@ -64,5 +64,10 @@ class Tmdb::SeasonDetailsTest < ActiveSupport::TestCase
     assert_raises(ArgumentError) { service.call("../x", 1) }
     assert_raises(ArgumentError) { service.call(95396, "abc") }
     assert_raises(ArgumentError) { service.call(95396, 0) }
+  end
+  test "the fallback episode name follows the language" do
+    season = I18n.with_locale(:en) { Tmdb::SeasonDetails.new(client: FakeClient.new(payload)).call(95396, 1) }
+
+    assert_equal "Episode 2", season.episodes.last.name
   end
 end

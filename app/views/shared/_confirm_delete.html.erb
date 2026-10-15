@@ -1,5 +1,5 @@
 <div data-controller="confirm-modal">
-  <button type="button" class="nerv-link-button" data-action="confirm-modal#open">[ Supprimer ]</button>
+  <button type="button" class="nerv-link-button" data-action="confirm-modal#open">[ <%= t("actions.delete") %> ]</button>
 
   <dialog class="nerv-modal" data-confirm-modal-target="dialog"
           data-action="click->confirm-modal#closeOnBackdrop">
@@ -7,8 +7,8 @@
       <h2><%= title %></h2>
       <p><%= message %></p>
       <div class="nerv-actions">
-        <%= button_to "[ Confirmer ]", path, method: :delete, class: "nerv-danger" %>
-        <button type="button" data-action="confirm-modal#close">[ Annuler ]</button>
+        <%= button_to "[ #{t("actions.confirm")} ]", path, method: :delete, class: "nerv-danger" %>
+        <button type="button" data-action="confirm-modal#close">[ <%= t("actions.cancel") %> ]</button>
       </div>
     </div>
   </dialog>

@@ -1,38 +1,38 @@
-<p><%= link_to "[ ← Playlists ]", playlists_path %></p>
+<p><%= link_to "[ ← #{t("nav.playlists")} ]", playlists_path %></p>
 
 <h1><%= @playlist.name %></h1>
-<p class="nerv-hint"><%= pluralize(@entries.size, "titre") %></p>
+<p class="nerv-hint"><%= t("playlists.titles", count: @entries.size) %></p>
 
 <div class="nerv-actions nerv-actions--page">
-  <%= link_to "[ Ajouter un titre ]", new_entry_path(playlist_id: @playlist.id) %>
-  <%= link_to "[ Renommer ]", edit_playlist_path(@playlist) %>
+  <%= link_to "[ #{t("actions.add_title")} ]", new_entry_path(playlist_id: @playlist.id) %>
+  <%= link_to "[ #{t("actions.rename")} ]", edit_playlist_path(@playlist) %>
 </div>
 
 <% if @entries.empty? %>
   <section class="nerv-panel nerv-section">
-    <p>Cette playlist est vide.</p>
+    <p><%= t("playlists.show.empty") %></p>
     <p class="nerv-hint">
-      Ajoute un titre depuis le <%= link_to "[ Catalogue ]", catalog_path %> ou avec le bouton ci-dessus.
+      <%= t("playlists.show.empty_hint_html", catalog: link_to("[ #{t("nav.catalog")} ]", catalog_path)) %>
     </p>
   </section>
 <% else %>
   <div data-controller="filter">
     <div class="nerv-filters">
-      <select data-filter-target="status" data-action="change->filter#apply" aria-label="Filtrer par statut">
-        <option value="">Tous les statuts</option>
+      <select data-filter-target="status" data-action="change->filter#apply" aria-label="<%= t("entries.filters.status") %>">
+        <option value=""><%= t("entries.filters.all_statuses") %></option>
         <% status_options.each do |label, value| %>
           <option value="<%= value %>"><%= label %></option>
         <% end %>
       </select>
-      <select data-filter-target="genre" data-action="change->filter#apply" aria-label="Filtrer par genre">
-        <option value="">Tous les genres</option>
+      <select data-filter-target="genre" data-action="change->filter#apply" aria-label="<%= t("entries.filters.genre") %>">
+        <option value=""><%= t("entries.filters.all_genres") %></option>
         <% @entries.flat_map(&:genre_list).uniq.sort.each do |genre| %>
           <option value="<%= genre %>"><%= genre %></option>
         <% end %>
       </select>
     </div>
 
-    <p data-filter-target="empty" hidden>Aucun titre ne correspond à ces filtres.</p>
+    <p data-filter-target="empty" hidden><%= t("entries.filters.none") %></p>
 
     <div class="nerv-grid nerv-grid--cards">
       <%= render partial: "entries/card", collection: @entries, as: :entry, locals: { show_playlist: false } %>

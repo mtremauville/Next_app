@@ -46,8 +46,8 @@ class Tmdb::TitleDetailsTest < ActiveSupport::TestCase
     assert_equal 7.8, title.rating
     assert_equal [ "Science-Fiction" ], title.genres
     assert_equal 12, title.cast.size
-    assert_equal %w[Réalisation Scénario Musique Photographie], title.crew.keys
-    assert_equal [ "Jon Spaihts", "Eric Roth" ], title.crew["Scénario"]
+    assert_equal %w[director writer composer cinematography], title.crew.keys
+    assert_equal [ "Jon Spaihts", "Eric Roth" ], title.crew["writer"]
   end
 
   test "a TV show runtime is episode length times episode count" do
@@ -84,4 +84,10 @@ class Tmdb::TitleDetailsTest < ActiveSupport::TestCase
       assert_equal "Saison 2", title.seasons.last.name
       assert_equal "2022", title.seasons.first.year
     end
+  test "the fallback season name follows the language" do
+    payload = { "id" => 1, "name" => "X", "seasons" => [ { "season_number" => 2, "name" => "", "episode_count" => 1 } ] }
+    title = I18n.with_locale(:en) { Tmdb::TitleDetails.new(client: FakeClient.new(payload)).call("tv", 1) }
+
+    assert_equal "Season 2", title.seasons.first.name
+  end
 end

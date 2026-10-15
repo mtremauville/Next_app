@@ -1,31 +1,105 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  locale:
+    label: "Language"
+    names:
+      fr: "Français"
+      en: "English"
+    short:
+      fr: "FR"
+      en: "EN"
+
+  common:
+    close: "Close"
+
+  nav:
+    home: "Home"
+    list: "My list"
+    playlists: "Playlists"
+    catalog: "Catalog"
+    stats: "Statistics"
+    new_title: "New title"
+    sign_out: "Sign out"
+    menu: "Menu"
+
+  statuses:
+    to_watch: "To watch"
+    watching: "In progress"
+    watched: "Watched"
+
+  series_states:
+    to_watch: "To watch"
+    watching: "In progress"
+    watched: "Series finished"
+
+  footer:
+    legal_label: "Legal information"
+    copyright: "© %{year} Next · portfolio project"
+    terms: "Terms of use"
+    privacy: "Privacy"
+    credit_html: "Data and posters provided by %{tmdb}. This product uses the TMDB API but is not endorsed or certified by TMDB."
+
+  auth:
+    tagline: "For everything that shouldn't be forgotten"
+    pitch: "Your movie and TV watchlist: status, rating, playlists and statistics."
+    try_demo: "Try without an account"
+    demo_hint: "No sign-up: a ready-to-explore demo."
+    sign_in: "Sign in"
+    email: "Email"
+    password: "Password"
+    remember_me: "Remember me"
+    submit: "Sign in"
+    sign_up: "Create an account"
+
+  privacy_notice:
+    title: "Your privacy"
+    intro: "Next only keeps what the service needs:"
+    item_account: "your email and your password (encrypted), if you create an account;"
+    item_content: "the titles, ratings and playlists you enter;"
+    item_logs: "technical server logs (IP address, date)."
+    cookies: "Only essential cookies are used (sign-in and language choice). No advertising, no tracking, no audience measurement."
+    third_parties: "Posters are loaded from TMDB and fonts from Google: these services see your IP address."
+    demo: "The demo account is shared: do not enter anything personal in it."
+    ok: "Got it"
+    policy: "Privacy policy"
+
+  flash:
+    forbidden: "Action not allowed."
+    guest_welcome: "Welcome to the demo!"
+    guest_locked: "The demo account cannot be modified."
+    entries:
+      created: "Title added."
+      updated: "Title updated."
+      destroyed: "Title deleted."
+    playlists:
+      created: "Playlist created."
+      renamed: "Playlist renamed."
+      destroyed: "Playlist deleted."
+    catalog:
+      added: "\"%{title}\" is in the playlist \"%{playlist}\"."
+      removed: "Removed from the playlist, it stays in your list."
+      choose_playlist: "Choose a playlist."
+      tmdb_down: "TMDB is unavailable, try again in a moment."
+      movie_unavailable: "This movie is unavailable right now."
+      series_unavailable: "This series is unavailable right now."
+    progress:
+      unknown_status: "Unknown status."
+      unknown_episode: "Episode not found."
+      episode_already_watched: "This episode is already watched: set it back to watch to save a position."
+      movie_already_watched: "This movie is already watched: change its status from [ Edit ] to save a position."
+      position_saved: "Position saved: %{position}."
+      position_cleared: "Position cleared."
+
+  resume_position:
+    positive: "Enter a position greater than 0."
+    range: "The %{label} must be between %{min} and %{max}."
+    integer: "The %{label} must be a whole number."
+    units:
+      hours: "hours"
+      minutes: "minutes"
+      seconds: "seconds"
+
+  errors:
+    messages:
+      other_user: "must belong to the same user"
+      position_exceeds_movie: "The position exceeds the movie runtime (%{minutes} min)."
+      position_exceeds_episode: "The position exceeds the episode runtime (%{minutes} min)."

@@ -13,7 +13,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
       tmdb_id: 438631, media_type: "movie", title: "Dune", year: "2021", overview: "Sur Arrakis",
       genres: [ "Science-Fiction" ], runtime_minutes: 155, rating: 7.8,
       cast: [ Tmdb::TitleDetails::Person.new(name: "Timothée Chalamet", role: "Paul Atreides") ],
-      crew: { "Réalisation" => [ "Denis Villeneuve" ] }
+      crew: { "director" => [ "Denis Villeneuve" ] }
     )
   end
 

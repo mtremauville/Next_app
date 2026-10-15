@@ -10,7 +10,7 @@ class SeriesController < ApplicationController
     @season_number = pick_season(@title.seasons)
     load_season if @season_number
   rescue Tmdb::Error
-    redirect_to catalog_path, alert: "Cette série est indisponible pour le moment."
+    redirect_to catalog_path, alert: t("flash.catalog.series_unavailable")
   end
 
   private

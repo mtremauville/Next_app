@@ -1,0 +1,99 @@
+en:
+  date:
+    formats:
+      legal_date: "%B %-d, %Y"
+
+  legal:
+    back: "Back"
+    updated: "Last updated: %{date}"
+    days:
+      one: "%{count} day"
+      other: "%{count} days"
+
+    terms:
+      title: "Terms of use"
+      s1_title: "1. Purpose"
+      s1_body_html: |-
+        <p>Next is a web application to track movies and TV shows: statuses, ratings, playlists, progress and statistics. It is a personal portfolio project, offered free of charge.</p>
+      s2_title: "2. Publisher and host"
+      s2_body_html: |-
+        <p>Publisher: %{name}, reachable at %{contact}.</p>
+        <p>Host: %{host}.</p>
+      s3_title: "3. Access and account"
+      s3_body_html: |-
+        <ul>
+          <li>You can try Next without an account using the demo account, or create an account with an email address and a password.</li>
+          <li>The demo account is shared by all visitors: do not enter any personal data in it. Its content may be changed or reset at any time.</li>
+          <li>You are responsible for keeping your password confidential.</li>
+          <li>Next is not intended for children under 15.</li>
+        </ul>
+      s4_title: "4. Acceptable use"
+      s4_body_html: |-
+        <p>You agree not to disrupt the service, not to try to access another user's data, and not to use Next in an automated or abusive way.</p>
+      s5_title: "5. Movie and TV show data and images"
+      s5_body_html: |-
+        <p>Titles, posters and photos come from TMDB and belong to their owners. Next uses the TMDB API but is not endorsed or certified by TMDB.</p>
+      s6_title: "6. Intellectual property"
+      s6_body_html: |-
+        <p>The code and the design of Next belong to the publisher. Your ratings, your playlists and your progress remain yours.</p>
+      s7_title: "7. Liability"
+      s7_body_html: |-
+        <p>Next is provided as is, with no guarantee of availability or of the accuracy of the information coming from TMDB. The service may be interrupted or changed at any time. The publisher cannot be held liable for any data loss or downtime.</p>
+      s8_title: "8. Personal data"
+      s8_body_html: |-
+        <p>How your data is processed is described in the %{privacy}.</p>
+      privacy_link: "privacy policy"
+      s9_title: "9. Changes and applicable law"
+      s9_body_html: |-
+        <p>These terms may change; the date of the last update is shown at the top of the page. They are governed by French law.</p>
+
+    privacy:
+      title: "Privacy policy"
+      s1_title: "1. Data controller"
+      s1_body_html: |-
+        <p>%{name}, reachable at %{contact}.</p>
+      s2_title: "2. Data collected"
+      s2_body_html: |-
+        <ul>
+          <li><strong>Account</strong>: email address and password (stored encrypted, never in clear text).</li>
+          <li><strong>Content you enter</strong>: titles, statuses, ratings, platforms, playlists, episode progress and resume positions.</li>
+          <li><strong>Technical data</strong>: IP address, date and requested page, recorded in the server logs.</li>
+        </ul>
+      s3_title: "3. Purposes and legal bases"
+      s3_body_html: |-
+        <ul>
+          <li>Providing the service you use (performance of the service): account, lists, statistics.</li>
+          <li>Keeping the server secure and working (legitimate interest): technical logs.</li>
+        </ul>
+        <p>Your data is neither sold nor used for advertising or profiling.</p>
+      s4_title: "4. Cookies and local storage"
+      s4_body_html: |-
+        <p>Next only uses strictly necessary cookies, which do not require consent:</p>
+        <ul>
+          <li><code>_next_app_session</code>: keeps you signed in, deleted when you close the browser.</li>
+          <li><code>remember_user_token</code>: only if you tick "Remember me", for about two weeks.</li>
+          <li><code>locale</code>: remembers the language you chose, for one year.</li>
+        </ul>
+        <p>No advertising, audience measurement or tracking cookie is used. Your browser also keeps a local entry showing that you read the privacy notice; it contains nothing else.</p>
+      s5_title: "5. Third-party services"
+      s5_body_html: |-
+        <ul>
+          <li><strong>TMDB</strong>: Next queries TMDB from its server for titles. Posters are loaded directly by your browser from <code>image.tmdb.org</code>: TMDB then receives your IP address.</li>
+          <li><strong>Google Fonts</strong>: fonts are loaded from Google's servers, which receive your IP address.</li>
+          <li><strong>Host</strong>: %{host}.</li>
+        </ul>
+      s6_title: "6. Retention"
+      s6_body_html: |-
+        <ul>
+          <li>Account and content: as long as your account exists, then deleted on request or from the "My account" page.</li>
+          <li>Web server technical logs: %{retention}. Application logs are size-limited and renewed with deployments.</li>
+        </ul>
+      s7_title: "7. Demo account"
+      s7_body_html: |-
+        <p>The demo account is shared: do not enter any personal data in it. Its content may be erased at any time.</p>
+      s8_title: "8. Your rights"
+      s8_body_html: |-
+        <p>You can ask for access, rectification, erasure, restriction or portability of your data, and object to its processing, by writing to %{contact}. If you believe your rights are not respected, you can lodge a complaint with the %{cnil}.</p>
+      s9_title: "9. Changes"
+      s9_body_html: |-
+        <p>This policy may change; the date of the last update is shown at the top of the page.</p>

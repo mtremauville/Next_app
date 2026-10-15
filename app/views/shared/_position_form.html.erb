@@ -4,25 +4,25 @@
 <div class="nerv-position">
   <% if prefill %>
     <p class="nerv-resume status-watching">
-      <span class="nerv-led"></span>Reprendre à <%= format_position(seconds) %>
+      <span class="nerv-led"></span><%= t("position.resume", position: format_position(seconds)) %>
     </p>
   <% end %>
 
   <%= form_with url: path, method: :patch do %>
     <fieldset>
       <legend>
-        Position de reprise<% if runtime_minutes %> <span class="nerv-hint">(durée : <%= format_duration(runtime_minutes) %>)</span><% end %>
+        <%= t("position.legend") %><% if runtime_minutes %> <span class="nerv-hint"><%= t("position.runtime", duration: format_duration(runtime_minutes)) %></span><% end %>
       </legend>
       <div class="nerv-position-fields">
-        <label><%= number_field_tag :hours, (hours if prefill), min: 0, max: 99, step: 1, placeholder: "0", id: nil, aria: { label: "Heures" } %> h</label>
-        <label><%= number_field_tag :minutes, (minutes if prefill), min: 0, max: 59, step: 1, placeholder: "0", id: nil, aria: { label: "Minutes" } %> min</label>
-        <label><%= number_field_tag :seconds, (secs if prefill), min: 0, max: 59, step: 1, placeholder: "0", id: nil, aria: { label: "Secondes" } %> s</label>
-        <%= submit_tag "[ Enregistrer la position ]", name: nil %>
+        <label><%= number_field_tag :hours, (hours if prefill), min: 0, max: 99, step: 1, placeholder: "0", id: nil, aria: { label: t("position.hours") } %> h</label>
+        <label><%= number_field_tag :minutes, (minutes if prefill), min: 0, max: 59, step: 1, placeholder: "0", id: nil, aria: { label: t("position.minutes") } %> min</label>
+        <label><%= number_field_tag :seconds, (secs if prefill), min: 0, max: 59, step: 1, placeholder: "0", id: nil, aria: { label: t("position.seconds") } %> s</label>
+        <%= submit_tag "[ #{t("position.save")} ]", name: nil %>
       </div>
     </fieldset>
   <% end %>
 
   <% if prefill %>
-    <%= button_to "[ Effacer la position ]", removal_path, method: :delete, class: "nerv-link-button" %>
+    <%= button_to "[ #{t("position.clear")} ]", removal_path, method: :delete, class: "nerv-link-button" %>
   <% end %>
 </div>

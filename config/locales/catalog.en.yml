@@ -1,0 +1,84 @@
+en:
+  date:
+    formats:
+      air_date: "%B %-d, %Y"
+
+  crew:
+    director: "Director"
+    writer: "Writing"
+    composer: "Music"
+    cinematography: "Cinematography"
+
+  catalog:
+    title: "Catalog"
+    types_label: "Type of title"
+    movies: "Movies"
+    series: "Series"
+    search_placeholder: "Search for a movie or a series"
+    search_label: "Search"
+    search: "Search"
+    unavailable: "The catalog is temporarily unavailable. Try again in a moment."
+    no_results: "No results for “%{query}”."
+    results: "Results"
+    popular: "Popular"
+    pagination: "Pagination"
+    previous: "Previous"
+    next: "Next"
+    page: "Page %{page} / %{total}"
+    add_to_playlist: "Add to a playlist"
+    add_title_to_playlist: "Add “%{title}” to a playlist"
+    modal:
+      playlist: "Playlist"
+      new_playlist: "+ New playlist…"
+      new_playlist_name: "Name of the new playlist"
+      add: "Add"
+
+  title_page:
+    synopsis: "Synopsis"
+    no_synopsis: "Synopsis not available."
+    crew: "Crew"
+    cast: "Cast"
+    tmdb_rating: "TMDB %{rating}/10"
+
+  series:
+    seasons:
+      one: "%{count} season"
+      other: "%{count} seasons"
+    created_by: "Created by %{names}"
+    progress: "%{watched}/%{total} episodes · %{percent}%"
+    series_progress_label: "Series progress"
+    season_progress_label: "Season progress"
+    episodes: "Episodes"
+    seasons_label: "Seasons"
+    no_seasons: "No seasons available."
+    season_unavailable: "The episodes of this season are unavailable right now."
+    no_episodes: "No episodes listed for this season."
+    season_state_html: "<strong>Season %{number}</strong>: %{state}"
+    season_title: "%{name}: %{state}"
+    mark_season_watched: "Mark all as watched"
+    reset_season: "Reset all to watch"
+    in_progress: "In progress"
+    reset_episode: "Set back to watch"
+    guests_and_crew: "Guests and crew"
+
+  position:
+    resume: "Resume at %{position}"
+    legend: "Resume position"
+    runtime: "(runtime: %{duration})"
+    hours: "Hours"
+    minutes: "Minutes"
+    seconds: "Seconds"
+    save: "Save the position"
+    clear: "Clear the position"
+
+  playlist_picker:
+    title: "Playlist"
+    in_list: "In your list: %{status}"
+    in_playlist_html: "In the playlist %{name}"
+    remove: "Remove from the playlist"
+    move_to: "Move to"
+    add_to: "Add to a playlist"
+    move: "Move"
+    add: "Add"
+    none: "No playlists yet."
+    create: "Create a playlist"

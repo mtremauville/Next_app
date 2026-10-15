@@ -1,0 +1,110 @@
+en:
+  date:
+    formats:
+      month_year: "%B %Y"
+
+  activerecord:
+    attributes:
+      entry:
+        title: "Title"
+        status: "Status"
+        rating: "Rating"
+        platform: "Platform"
+        playlist: "Playlist"
+      playlist:
+        name: "Name"
+
+  actions:
+    delete: "Delete"
+    confirm: "Confirm"
+    cancel: "Cancel"
+    save: "Save"
+    edit: "Edit"
+    rename: "Rename"
+    open: "Open"
+    add_title: "Add a title"
+    mark_watched: "Mark as watched"
+
+  home:
+    title: "Home"
+    empty_title: "Welcome to Next"
+    empty_text: "Your list is empty. Look up a movie or a series: the poster and the genres fill in by themselves."
+    add_first: "Add the first title"
+    watched: "Titles watched"
+    in_list: "In your list"
+    time: "Estimated time"
+    in_progress: "In progress"
+    nothing_in_progress: "Nothing in progress. Start a title from the column on the right."
+    up_next: "Up next"
+    nothing_up_next: "Nothing left to watch: add a new title."
+    see_all: "See my whole list"
+
+  entries:
+    poster_alt: "Poster of %{title}"
+    index:
+      empty: "No titles yet."
+      add_first: "Add the first one"
+    filters:
+      status: "Filter by status"
+      all_statuses: "All statuses"
+      playlist: "Filter by playlist"
+      all_playlists: "All playlists"
+      genre: "Filter by genre"
+      all_genres: "All genres"
+      none: "No title matches these filters."
+    card:
+      episodes: "%{watched}/%{total} episodes"
+    resume:
+      movie: "Resume at %{position}"
+      series: "Resume S%{season}E%{episode} at %{position}"
+    delete:
+      title: "Delete this title?"
+      message: "“%{title}” will be removed from your list."
+    form:
+      new_title: "New title"
+      edit_title: "Edit title"
+      title: "Title"
+      status: "Status"
+      platform: "Platform"
+      rating: "Rating (1 to 5)"
+      playlist: "Playlist"
+      no_playlist: "None"
+
+  playlists:
+    titles:
+      zero: "No titles"
+      one: "%{count} title"
+      other: "%{count} titles"
+    index:
+      title: "Playlists"
+      new: "New playlist"
+      empty: "No playlists yet. Create one to organise your titles."
+    show:
+      empty: "This playlist is empty."
+      empty_hint_html: "Add a title from the %{catalog} or with the button above."
+    form:
+      new_title: "New playlist"
+      edit_title: "Rename the playlist"
+      name: "Name"
+    delete:
+      title: "Delete this playlist?"
+      message: "“%{name}” will be deleted. Its titles will be kept."
+
+  dashboard:
+    title: "Statistics"
+    empty: "Add a few titles to see your statistics."
+    watched: "Titles watched"
+    episodes: "Episodes watched"
+    total: "Total"
+    rating: "Average rating"
+    time: "Estimated time"
+    time_hint: "Movies watched and episodes watched"
+    resume: "To resume"
+    resume_at: "at %{position}"
+    resume_left: "%{remaining} left"
+    series: "Series"
+    series_counts: "In progress: %{watching} · To watch: %{to_watch} · Finished: %{watched}"
+    series_progress: "Progress of %{title}"
+    by_status: "By status"
+    by_month: "Watched per month"
+    genres: "Most watched genres"
