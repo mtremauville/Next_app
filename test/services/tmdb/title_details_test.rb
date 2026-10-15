@@ -46,8 +46,8 @@ class Tmdb::TitleDetailsTest < ActiveSupport::TestCase
     assert_equal 7.8, title.rating
     assert_equal [ "Science-Fiction" ], title.genres
     assert_equal 12, title.cast.size
-    assert_equal %w[Réalisation Scénario Musique Photographie], title.crew.keys
-    assert_equal [ "Jon Spaihts", "Eric Roth" ], title.crew["Scénario"]
+    assert_equal %w[director writer composer cinematography], title.crew.keys
+    assert_equal [ "Jon Spaihts", "Eric Roth" ], title.crew["writer"]
   end
 
   test "a TV show runtime is episode length times episode count" do

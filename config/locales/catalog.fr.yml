@@ -1,0 +1,84 @@
+fr:
+  date:
+    formats:
+      air_date: "%d/%m/%Y"
+
+  crew:
+    director: "Réalisation"
+    writer: "Scénario"
+    composer: "Musique"
+    cinematography: "Photographie"
+
+  catalog:
+    title: "Catalogue"
+    types_label: "Type de titre"
+    movies: "Films"
+    series: "Séries"
+    search_placeholder: "Rechercher un film ou une série"
+    search_label: "Recherche"
+    search: "Rechercher"
+    unavailable: "Le catalogue est momentanément indisponible. Réessaie dans un instant."
+    no_results: "Aucun résultat pour « %{query} »."
+    results: "Résultats"
+    popular: "Populaires"
+    pagination: "Pagination"
+    previous: "Précédent"
+    next: "Suivant"
+    page: "Page %{page} / %{total}"
+    add_to_playlist: "Ajouter à une playlist"
+    add_title_to_playlist: "Ajouter « %{title} » à une playlist"
+    modal:
+      playlist: "Playlist"
+      new_playlist: "+ Nouvelle playlist…"
+      new_playlist_name: "Nom de la nouvelle playlist"
+      add: "Ajouter"
+
+  title_page:
+    synopsis: "Synopsis"
+    no_synopsis: "Synopsis indisponible."
+    crew: "Équipe technique"
+    cast: "Casting"
+    tmdb_rating: "TMDB %{rating}/10"
+
+  series:
+    seasons:
+      one: "%{count} saison"
+      other: "%{count} saisons"
+    created_by: "Créée par %{names}"
+    progress: "%{watched}/%{total} épisodes · %{percent} %"
+    series_progress_label: "Progression de la série"
+    season_progress_label: "Progression de la saison"
+    episodes: "Épisodes"
+    seasons_label: "Saisons"
+    no_seasons: "Aucune saison disponible."
+    season_unavailable: "Les épisodes de cette saison sont indisponibles pour le moment."
+    no_episodes: "Aucun épisode renseigné pour cette saison."
+    season_state_html: "<strong>Saison %{number}</strong> : %{state}"
+    season_title: "%{name} : %{state}"
+    mark_season_watched: "Tout marquer vu"
+    reset_season: "Tout remettre à voir"
+    in_progress: "En cours"
+    reset_episode: "Remettre à voir"
+    guests_and_crew: "Invités et équipe"
+
+  position:
+    resume: "Reprendre à %{position}"
+    legend: "Position de reprise"
+    runtime: "(durée : %{duration})"
+    hours: "Heures"
+    minutes: "Minutes"
+    seconds: "Secondes"
+    save: "Enregistrer la position"
+    clear: "Effacer la position"
+
+  playlist_picker:
+    title: "Playlist"
+    in_list: "Dans ta liste : %{status}"
+    in_playlist_html: "Dans la playlist %{name}"
+    remove: "Retirer de la playlist"
+    move_to: "Déplacer vers"
+    add_to: "Ajouter à une playlist"
+    move: "Déplacer"
+    add: "Ajouter"
+    none: "Aucune playlist pour l'instant."
+    create: "Créer une playlist"

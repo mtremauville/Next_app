@@ -1,22 +1,22 @@
-<h1>Catalogue</h1>
+<h1><%= t("catalog.title") %></h1>
 
-<nav class="nerv-tabs" aria-label="Type de titre">
-  <%= link_to "[ Films ]", catalog_path(type: "movie", q: @query.presence), class: ("is-active" if @media_type == "movie") %>
-  <%= link_to "[ Séries ]", catalog_path(type: "tv", q: @query.presence), class: ("is-active" if @media_type == "tv") %>
+<nav class="nerv-tabs" aria-label="<%= t("catalog.types_label") %>">
+  <%= link_to "[ #{t("catalog.movies")} ]", catalog_path(type: "movie", q: @query.presence), class: ("is-active" if @media_type == "movie") %>
+  <%= link_to "[ #{t("catalog.series")} ]", catalog_path(type: "tv", q: @query.presence), class: ("is-active" if @media_type == "tv") %>
 </nav>
 
 <%= form_with url: catalog_path, method: :get, class: "nerv-search" do %>
   <%= hidden_field_tag :type, @media_type %>
-  <%= search_field_tag :q, @query, placeholder: "Rechercher un film ou une série", "aria-label": "Recherche" %>
-  <%= submit_tag "[ Rechercher ]", name: nil %>
+  <%= search_field_tag :q, @query, placeholder: t("catalog.search_placeholder"), "aria-label": t("catalog.search_label") %>
+  <%= submit_tag "[ #{t("catalog.search")} ]", name: nil %>
 <% end %>
 
 <% if @unavailable %>
-  <p class="nerv-flash nerv-flash--alert">Le catalogue est momentanément indisponible. Réessaie dans un instant.</p>
+  <p class="nerv-flash nerv-flash--alert"><%= t("catalog.unavailable") %></p>
 <% elsif @result.items.empty? %>
-  <p>Aucun résultat pour « <%= @query %> ».</p>
+  <p><%= t("catalog.no_results", query: @query) %></p>
 <% else %>
-  <h2><%= @query.length >= 2 ? "Résultats" : "Populaires" %></h2>
+  <h2><%= @query.length >= 2 ? t("catalog.results") : t("catalog.popular") %></h2>
 
   <div data-controller="add-to-playlist">
     <div class="nerv-gallery">
@@ -26,38 +26,38 @@
     <dialog class="nerv-modal" data-add-to-playlist-target="dialog"
             data-action="click->add-to-playlist#closeOnBackdrop">
       <div class="nerv-panel">
-        <h2>Ajouter à une playlist</h2>
+        <h2><%= t("catalog.add_to_playlist") %></h2>
         <p class="nerv-modal-title" data-add-to-playlist-target="title"></p>
 
         <%= form_with url: catalog_path, method: :post, data: { add_to_playlist_target: "form" } do %>
-          <%= label_tag :playlist_id, "Playlist" %>
+          <%= label_tag :playlist_id, t("catalog.modal.playlist") %>
           <%= select_tag :playlist_id,
                 options_from_collection_for_select(@playlists, :id, :name) +
-                tag.option("+ Nouvelle playlist…", value: "new"),
+                tag.option(t("catalog.modal.new_playlist"), value: "new"),
                 data: { add_to_playlist_target: "select", action: "change->add-to-playlist#toggle" } %>
 
           <div data-add-to-playlist-target="newField" hidden>
-            <%= label_tag :new_playlist_name, "Nom de la nouvelle playlist" %>
+            <%= label_tag :new_playlist_name, t("catalog.modal.new_playlist_name") %>
             <%= text_field_tag :new_playlist_name, nil, maxlength: 60, autocomplete: "off", disabled: true,
                   data: { add_to_playlist_target: "newName" } %>
           </div>
 
           <div class="nerv-actions">
-            <%= submit_tag "[ Ajouter ]", name: nil %>
-            <button type="button" data-action="add-to-playlist#close">[ Annuler ]</button>
+            <%= submit_tag "[ #{t("catalog.modal.add")} ]", name: nil %>
+            <button type="button" data-action="add-to-playlist#close">[ <%= t("actions.cancel") %> ]</button>
           </div>
         <% end %>
       </div>
     </dialog>
   </div>
 
-  <nav class="nerv-pagination" aria-label="Pagination">
+  <nav class="nerv-pagination" aria-label="<%= t("catalog.pagination") %>">
     <% if @result.page > 1 %>
-      <%= link_to "[ Précédent ]", catalog_path(type: @media_type, q: @query.presence, page: @result.page - 1) %>
+      <%= link_to "[ #{t("catalog.previous")} ]", catalog_path(type: @media_type, q: @query.presence, page: @result.page - 1) %>
     <% end %>
-    <span>Page <%= @result.page %> / <%= @result.total_pages %></span>
+    <span><%= t("catalog.page", page: @result.page, total: @result.total_pages) %></span>
     <% if @result.page < @result.total_pages %>
-      <%= link_to "[ Suivant ]", catalog_path(type: @media_type, q: @query.presence, page: @result.page + 1) %>
+      <%= link_to "[ #{t("catalog.next")} ]", catalog_path(type: @media_type, q: @query.presence, page: @result.page + 1) %>
     <% end %>
   </nav>
 <% end %>

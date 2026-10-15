@@ -47,7 +47,7 @@ class Tmdb::SeasonDetailsTest < ActiveSupport::TestCase
     assert_equal "Mark commence", first.overview
     assert_equal 57, first.runtime_minutes
     assert_equal 8, first.guests.size
-    assert_equal({ "Réalisation" => [ "Ben Stiller" ], "Scénario" => [ "Dan Erickson" ] }, first.crew)
+    assert_equal({ "director" => [ "Ben Stiller" ], "writer" => [ "Dan Erickson" ] }, first.crew)
   end
 
   test "an episode without a name or synopsis gets safe defaults" do
