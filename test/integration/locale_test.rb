@@ -83,7 +83,7 @@ class LocaleTest < ActionDispatch::IntegrationTest
     get entries_path
 
     assert_select "footer a", text: "Terms of use"
-    assert_select "nav#main-nav a", text: "[ My list ]"
+    assert_select "nav#side-menu a", text: "[ My list ]"
   end
   test "the footer no longer offers the language switch, but the sign-in page does" do
     get new_user_session_path

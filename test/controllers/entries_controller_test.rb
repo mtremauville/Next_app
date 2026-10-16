@@ -91,12 +91,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_select "[data-controller='filter']"
     assert_select "article[data-status]"
   end
-  test "navigation exposes the mobile menu toggle" do
-    get entries_path
-    assert_select "header[data-controller='nav']"
-    assert_select "button[data-nav-target='button'][aria-expanded='false']"
-    assert_select "nav#main-nav a", minimum: 4
-  end
+
   test "each card has a header, a content area and a footer" do
     get entries_path
     assert_select "article.nerv-card > header.nerv-card-header"
