@@ -35,10 +35,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
   </head>
-
   <body>
-    <header class="nerv-header" data-controller="nav" data-action="turbo:before-visit@document->nav#close">
-      <%#= link_to "NEXT", (user_signed_in? ? entries_path : root_path), class: "nerv-logo" %>
+    <%= tag.div class: "nerv-app",
+          data: (user_signed_in? ? { controller: "side-menu", action: "keydown.esc->side-menu#close turbo:before-cache@document->side-menu#reset" } : {}) do %>
+      <header class="nerv-header">
+        <% if user_signed_in? %>
+          <button type="button" class="nerv-menu-toggle" data-side-menu-target="button"
+                  data-action="side-menu#toggle" aria-controls="side-menu" aria-expanded="false"
+                  aria-label="<%= t("nav.menu") %>">
+            <span class="nerv-burger" aria-hidden="true"></span>
+          </button>
+        <% end %>
+        <%= link_to "NEXT", root_path, class: "nerv-logo" %>
+      </header>
+
       <% flash_messages = { "notice" => notice, "alert" => alert }.compact_blank %>
       <% if flash_messages.any? %>
         <div class="nerv-toasts" data-turbo-temporary>
@@ -49,33 +59,42 @@
                 data-controller="toast" data-toast-delay-value="<%= is_alert ? 8000 : 4000 %>"
                 data-action="mouseenter->toast#pause mouseleave->toast#resume focusin->toast#pause focusout->toast#resume">
               <p><%= message %></p>
-              <button type="button" class="nerv-link-button" data-action="toast#dismiss" aria-label="Fermer">[ × ]</button>
+              <button type="button" class="nerv-link-button" data-action="toast#dismiss" aria-label="<%= t("common.close") %>">[ × ]</button>
               <span class="nerv-toast-bar" style="animation-duration: <%= is_alert ? 8 : 4 %>s"></span>
             </div>
           <% end %>
         </div>
       <% end %>
-      <%= link_to "NEXT", root_path, class: "nerv-logo" %>
-      <% if user_signed_in? %>
-        <button type="button" class="nerv-menu-button" data-nav-target="button"
-                data-action="nav#toggle" aria-expanded="false" aria-controls="main-nav">[ Menu ]</button>
-        <nav id="main-nav" data-nav-target="menu">
-      <%= link_to "[ #{t("nav.home")} ]", root_path %>
-      <%= link_to "[ #{t("nav.list")} ]", entries_path %>
-      <%= link_to "[ #{t("nav.playlists")} ]", playlists_path %>
-      <%= link_to "[ #{t("nav.catalog")} ]", catalog_path %>
-      <%= link_to "[ #{t("nav.stats")} ]", dashboard_path %>
-      <%= link_to "[ #{t("nav.new_title")} ]", new_entry_path %>
-      <% unless current_user.guest? %>
-        <%= link_to "[ #{t("nav.account")} ]", edit_user_registration_path %>
-      <% end %>
-      <%= button_to "[ #{t("nav.sign_out")} ]", destroy_user_session_path, method: :delete, class: "nerv-link-button" %>
-        </nav>
-      <% end %>
-    </header>
-    <main class="nerv-main">
-      <%= yield %>
-    </main>
-    <%= render "shared/footer" %>
+
+      <div class="nerv-shell <%= "nerv-shell--no-menu" unless user_signed_in? %>">
+        <% if user_signed_in? %>
+          <nav id="side-menu" class="nerv-side" data-side-menu-target="panel" aria-label="<%= t("nav.label") %>">
+            <div class="nerv-side-links">
+              <%= side_link(:home, root_path, %r{\A/\z}) %>
+              <%= side_link(:list, entries_path, %r{\A/entries(?!/new)}) %>
+              <%= side_link(:playlists, playlists_path, %r{\A/playlists}) %>
+              <%= side_link(:catalog, catalog_path, %r{\A/(catalog|movies|series)}) %>
+              <%= side_link(:stats, dashboard_path, %r{\A/dashboard}) %>
+              <%= side_link(:new_title, new_entry_path, %r{\A/entries/new}) %>
+            </div>
+
+            <div class="nerv-side-foot">
+              <% unless current_user.guest? %>
+                <%= side_link(:account, edit_user_registration_path, %r{\A/users/edit}) %>
+              <% end %>
+              <%= button_to "[ #{t("nav.sign_out")} ]", destroy_user_session_path, method: :delete, class: "nerv-link-button" %>
+            </div>
+          </nav>
+          <div class="nerv-side-backdrop" data-side-menu-target="backdrop" data-action="click->side-menu#close" hidden></div>
+        <% end %>
+
+        <div class="nerv-content" data-side-menu-target="inert">
+          <main class="nerv-main">
+            <%= yield %>
+          </main>
+          <%= render "shared/footer" %>
+        </div>
+      </div>
+    <% end %>
   </body>
 </html>
