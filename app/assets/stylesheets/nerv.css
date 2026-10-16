@@ -640,7 +640,9 @@ label .nerv-hint { margin-left: 0.4rem; }
 .nerv-burger::after { content: ""; position: absolute; left: 0; }
 .nerv-burger::before { top: -6px; }
 .nerv-burger::after { top: 6px; }
-
+.nerv-side [data-controller="confirm-modal"] { margin: 0; }
+.nerv-side .nerv-modal button { width: auto; padding: 0.4rem 0.8rem; }
+.nerv-side .nerv-modal .nerv-panel { text-align: left; }
 /* Structure */
 .nerv-app { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 .nerv-shell { flex: 1; display: flex; flex-direction: column; }

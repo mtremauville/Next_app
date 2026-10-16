@@ -82,7 +82,13 @@
               <% unless current_user.guest? %>
                 <%= side_link(:account, edit_user_registration_path, %r{\A/users/edit}) %>
               <% end %>
-              <%= button_to "[ #{t("nav.sign_out")} ]", destroy_user_session_path, method: :delete, class: "nerv-link-button" %>
+              <%= render "shared/confirm_delete",
+                  title: t("sign_out.title"),
+                  message: t("sign_out.message"),
+                  path: destroy_user_session_path,
+                  trigger: t("nav.sign_out"),
+                  confirm: t("sign_out.confirm"),
+                  danger: false %>
             </div>
           </nav>
           <div class="nerv-side-backdrop" data-side-menu-target="backdrop" data-action="click->side-menu#close" hidden></div>

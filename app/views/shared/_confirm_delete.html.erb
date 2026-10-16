@@ -1,5 +1,11 @@
+<%# Required locals: title, message, path. Optional: trigger, confirm, method, trigger_class, danger %>
+<% trigger = local_assigns.fetch(:trigger, t("actions.delete")) %>
+<% confirm = local_assigns.fetch(:confirm, t("actions.confirm")) %>
+<% http_method = local_assigns.fetch(:method, :delete) %>
+<% trigger_class = local_assigns.fetch(:trigger_class, "nerv-link-button") %>
+<% danger = local_assigns.fetch(:danger, true) %>
 <div data-controller="confirm-modal">
-  <button type="button" class="nerv-link-button" data-action="confirm-modal#open">[ <%= t("actions.delete") %> ]</button>
+  <button type="button" class="<%= trigger_class %>" data-action="confirm-modal#open">[ <%= trigger %> ]</button>
 
   <dialog class="nerv-modal" data-confirm-modal-target="dialog"
           data-action="click->confirm-modal#closeOnBackdrop">
@@ -7,7 +13,7 @@
       <h2><%= title %></h2>
       <p><%= message %></p>
       <div class="nerv-actions">
-        <%= button_to "[ #{t("actions.confirm")} ]", path, method: :delete, class: "nerv-danger" %>
+        <%= button_to "[ #{confirm} ]", path, method: http_method, class: ("nerv-danger" if danger) %>
         <button type="button" data-action="confirm-modal#close">[ <%= t("actions.cancel") %> ]</button>
       </div>
     </div>
