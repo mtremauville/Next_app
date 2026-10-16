@@ -1,0 +1,5 @@
+fr:
+  sign_out:
+    title: "Se déconnecter ?"
+    message: "Tu devras te reconnecter pour retrouver ta liste."
+    confirm: "Se déconnecter"

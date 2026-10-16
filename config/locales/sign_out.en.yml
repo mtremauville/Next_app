@@ -1,0 +1,5 @@
+en:
+  sign_out:
+    title: "Sign out?"
+    message: "You will need to sign in again to get back to your list."
+    confirm: "Sign out"

@@ -80,4 +80,34 @@ class SideMenuTest < ActionDispatch::IntegrationTest
     assert_select ".nerv-side-backdrop[hidden]"
     assert_not_includes response.body, "next:side-menu"
   end
+  test "signing out asks for a confirmation" do
+    sign_in users(:one)
+    get entries_path
+
+    assert_select "nav#side-menu [data-controller='confirm-modal']" do
+      assert_select "button[data-action='confirm-modal#open']", text: "[ Déconnexion ]"
+      assert_select "dialog h2", "Se déconnecter ?"
+      assert_select "dialog form[action=?]", destroy_user_session_path
+      assert_select "dialog input[name='_method'][value='delete']"
+    end
+  end
+
+  test "the sign out confirmation is translated" do
+    sign_in users(:one)
+    patch change_locale_path, params: { locale: "en" }
+    get entries_path
+
+    assert_select "dialog h2", "Sign out?"
+    assert_select "dialog button", text: "[ Sign out ]"
+  end
+
+  test "the confirmation really signs the user out" do
+    sign_in users(:one)
+
+    delete destroy_user_session_path
+    assert_redirected_to root_path
+
+    get entries_path
+    assert_redirected_to new_user_session_path
+  end
 end
